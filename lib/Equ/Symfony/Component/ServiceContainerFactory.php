@@ -2,7 +2,8 @@
 namespace Equ\Symfony\Component;
 use
   Symfony\Component\DependencyInjection,
-  Equ\Exception\UnexpectedValueException;
+  Equ\Exception\UnexpectedValueException,
+  Symfony\Component\Config\FileLocator;
 
 class ServiceContainerFactory {
 
@@ -22,11 +23,11 @@ class ServiceContainerFactory {
     $loader = null;
     switch ($suffix) {
       case 'xml':
-        $loader = new DependencyInjection\Loader\XmlFileLoader(self::$_container);
+        $loader = new DependencyInjection\Loader\XmlFileLoader(self::$_container, new FileLocator());
         break;
 
       case 'yml':
-        $loader = new DependencyInjection\Loader\YamlFileLoader(self::$_container);
+        $loader = new DependencyInjection\Loader\YamlFileLoader(self::$_container, new FileLocator());
         break;
 
       default:
