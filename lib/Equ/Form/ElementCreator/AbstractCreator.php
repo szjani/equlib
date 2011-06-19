@@ -1,6 +1,10 @@
 <?php
 namespace Equ\Form\ElementCreator;
-use Equ\Form\ElementCreator\Exception\InvalidArgumentException;
+use
+  Equ\Form\OptionFlags,
+  Equ\Form\ElementCreator\Exception\InvalidArgumentException,
+  Equ\Validate as Validator,
+  Equ\Form\IOptionFlaggable;
 
 /**
  * Abstract form element creator class.
@@ -11,14 +15,7 @@ use Equ\Form\ElementCreator\Exception\InvalidArgumentException;
  * @version     $Revision$
  * @author      Szurovecz János <szjani@szjani.hu>
  */
-abstract class AbstractCreator {
-
-  const PLACEHOLDER          = 0x1;
-  const LABEL                = 0x2;
-  const IMPLICIT_VALIDATORS  = 0x4;
-  const EXPLICIT_VALIDATORS  = 0x8;
-
-  private $flags = 0;
+abstract class AbstractCreator implements IOptionFlaggable {
 
   /**
    * @var array
@@ -42,59 +39,64 @@ abstract class AbstractCreator {
   private $placeholder = null;
 
   /**
-   * @var array
+   * @var Validator
    */
-  private $validators = array();
+  private $validator;
+  
+  /**
+   * @var OptionFlags
+   */
+  private $optionFlags = null;
 
   /**
    * @param int $flags
    * @param string $namespace
    */
-  public function __construct($namespace = '', $flags = 14) {
-    $this
-      ->setNamespace($namespace)
-      ->setFlags($flags);
+  public function __construct($namespace = '', OptionFlags $flags = null) {
+    $this->setNamespace($namespace);
+    $this->optionFlags = $flags;
   }
+  
+  protected function validatorAdded(\Zend_Form_Element $element, \Zend_Validate_Abstract $validator) {}
 
-  public function addFlag($const) {
-    $this->flags = $this->flags | (int)$const;
+  /**
+   * @return \Zend_Form_Element
+   */
+  protected abstract function buildElement($fieldName);
+  
+  /**
+   * @param OptionFlags $flags
+   * @return AbstractCreator 
+   */
+  public function setOptionFlags(OptionFlags $flags) {
+    $this->optionFlags = $flags;
     return $this;
   }
-
-  public function removeFlag($const) {
-    $this->flags = $this->flags & ~$const;
-    return $this;
+  
+  /**
+   * @return OptionFlags 
+   */
+  public function getOptionFlags() {
+    if (null === $this->optionFlags) {
+      $this->optionFlags = new OptionFlags();
+    }
+    return $this->optionFlags;
   }
 
-  public function hasFlag($const) {
-    return 0 < ($this->flags & $const);
-  }
-
-  public function setFlag($const, $boolean) {
-    return $boolean ? $this->addFlag($const) : $this->removeFlag($const);
-  }
-
-  public function setFlags($flags) {
-    $this->flags = $flags;
-    return $this;
-  }
-
+  /**
+   * @param string $namespace
+   * @return AbstractCreator 
+   */
   public function setNamespace($namespace) {
     $this->namespace = \rtrim($namespace, '/');
     return $this;
   }
 
+  /**
+   * @return string
+   */
   public function getNamespace() {
     return $this->namespace;
-  }
-
-  /**
-   * @param \Zend_Validate_Abstract $validator
-   * @return AbstractCreator
-   */
-  public function addValidator(\Zend_Validate_Abstract $validator) {
-    $this->validators[] = $validator;
-    return $this;
   }
 
   /**
@@ -130,19 +132,19 @@ abstract class AbstractCreator {
   }
 
   /**
-   * @param array $validators
+   * @param Validator $validator
    * @return AbstractCreator
    */
-  public function setValidators(array $validators) {
-    $this->validators = $validators;
+  public function setValidator(Validator $validator) {
+    $this->validator = $validator;
     return $this;
   }
 
   /**
-   * @return array
+   * @return Validator
    */
-  public function getValidators() {
-    return $this->validators;
+  public function getValidator() {
+    return $this->validator;
   }
   
   /**
@@ -156,16 +158,16 @@ abstract class AbstractCreator {
   public function createElement($fieldName, array $values = array()) {
     $this->values = $values;
     $element = $this->buildElement($fieldName);
-    if ($this->hasFlag(self::IMPLICIT_VALIDATORS)) {
+    if ($this->getOptionFlags()->hasFlag(OptionFlags::IMPLICIT_VALIDATORS)) {
       $this->createImplicitValidators($element);
     }
-    if ($this->hasFlag(self::EXPLICIT_VALIDATORS)) {
+    if ($this->getOptionFlags()->hasFlag(OptionFlags::EXPLICIT_VALIDATORS)) {
       $this->createExplicitValidators($element);
     }
-    if ($this->hasFlag(self::LABEL)) {
+    if ($this->getOptionFlags()->hasFlag(OptionFlags::LABEL)) {
       $this->createLabel($element);
     }
-    if ($this->hasFlag(self::PLACEHOLDER)) {
+    if ($this->getOptionFlags()->hasFlag(OptionFlags::PLACEHOLDER)) {
       $this->createPlaceholder($element);
     }
     return $element;
@@ -177,12 +179,17 @@ abstract class AbstractCreator {
    * @return AbstractCreator
    */
   protected function createImplicitValidators(\Zend_Form_Element $element) {
-    foreach ($this->getValidators() as $validator) {
-      if (!($validator instanceof \Zend_Validate_Abstract)) {
-        throw new InvalidArgumentException("Validator object must extends \Zend_Validate_Abstract");
+    if (is_object($this->getValidator())) {
+      foreach ($this->getValidator() as $validator) {
+        if (!($validator instanceof \Zend_Validate_Interface)) {
+          throw new InvalidArgumentException("Validator object must implements \Zend_Validate_Interface");
+        }
+        $element->addValidator($validator, true);
+        if ($validator instanceof \Zend_Validate_NotEmpty) {
+          $element->setRequired();
+        }
+        $this->validatorAdded($element, $validator);
       }
-      $element->addValidator($validator);
-      $this->validatorAdded($element, $validator);
     }
     return $this;
   }
@@ -225,15 +232,7 @@ abstract class AbstractCreator {
    */
   protected function createPlaceholder(\Zend_Form_Element $element) {
     if ($this->getPlaceHolder() === null) {
-      $this->setPlaceHolder($this->getNamespace() . '/' . $element->getName());
+      $this->setPlaceHolder(ltrim($this->getNamespace() . '/' . $element->getName(), '/'));
     }
   }
-
-  protected function validatorAdded(\Zend_Form_Element $element, \Zend_Validate_Abstract $validator) {}
-
-  /**
-   * @return \Zend_Form_Element
-   */
-  protected abstract function buildElement($fieldName);
-
 }

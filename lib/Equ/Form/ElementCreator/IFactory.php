@@ -15,21 +15,35 @@ interface IFactory {
 
   /**
    * @param string $ns
-   * @return Factory
+   * @return IFactory
    */
   public function setNamespace($ns);
+  
+  /**
+   * @param string $nsPart
+   * @return IFactory
+   */
+  public function appendNamespacePart($nsPart);
 
   /**
    * @param boolean $use
    * @return Factory
    */
   public function usePlaceHolders($use = true);
-  
+
   /**
    * @return boolean
    */
   public function isUsedPlaceHolders();
 
+  /**
+   * Retrieves a creator by $type
+   * 
+   * @param  string $type
+   * @return AbstractCreator
+   */
+  public function createCreator($type);
+  
   /**
    * @return AbstractCreator
    */
@@ -99,5 +113,10 @@ interface IFactory {
    * @return AbstractCreator
    */
   public function createSubmitCreator();
+  
+  /**
+   * @return AbstractCreator
+   */
+  public function createPasswordCreator();
 
 }

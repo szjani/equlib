@@ -96,5 +96,13 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
   public function createObjectCreator() {
     return new StringCreator($this->getNamespace());
   }
+  
+  /**
+   * @return \Zend_Form_Element
+   */
+  public function createPasswordCreator() {
+    return new PasswordCreator($this->getNamespace());
+  }
+
 
 }
