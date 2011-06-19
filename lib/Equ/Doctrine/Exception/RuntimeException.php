@@ -1,4 +1,4 @@
 <?php
-namespace Equ\Form\Exception;
+namespace Equ\Doctrine\Exception;
 
-class RuntimeException extends \RuntimeException implements \Equ\Form\Exception {}
+class RuntimeException extends \RuntimeException implements \Equ\Doctrine\Exception {}

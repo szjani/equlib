@@ -1,4 +1,4 @@
 <?php
-namespace Equ\Form\Exception;
+namespace Equ\Doctrine\Exception;
 
-class InvalidArgumentException extends \InvalidArgumentException implements \Equ\Form\Exception {}
+class InvalidArgumentException extends \InvalidArgumentException implements \Equ\Doctrine\Exception {}
