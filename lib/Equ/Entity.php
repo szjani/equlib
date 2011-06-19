@@ -1,10 +1,9 @@
 <?php
 namespace Equ;
 use
-  Equ\Entity\IFormBase,
-  Equ\Entity\IEntityVisitor,
   Equ\Exception\RuntimeException,
-  Equ\Exception\BadMethodCallException;
+  Equ\Object\Validatable,
+  Equ\Object\Validator;
 
 /**
  * Abstract entity class
@@ -17,82 +16,56 @@ use
  * @MappedSuperclass
  * @HasLifecycleCallbacks
  */
-abstract class Entity implements IFormBase, \ArrayAccess {
+abstract class Entity implements \ArrayAccess {
 
-  private $fieldValidators = array();
-  
-  public function __construct() {
-    $this->init();
-  }
-  
-  public function init() {}
+  /**
+   * @var Validator 
+   */
+  private $validator;
   
   /**
-   * @see Equ\Entity.IVisitable::accept()
+   * @param Validator $validator
+   * @return Entity 
    */
-  public function accept(IEntityVisitor $visitor) {
-    $visitor->visitEntity($this);
-  }
-  
-  /**
-   * @param string $fieldName
-   * @param \Zend_Validate_Abstract $validator
-   * @return Entity
-   */
-  public function addFieldValidator($fieldName, \Zend_Validate_Abstract $validator) {
-    if (!array_key_exists($fieldName, $this->fieldValidators)) {
-      $this->fieldValidators[$fieldName] = array();
-    }
-    $this->fieldValidators[$fieldName][] = $validator;
+  public function setValidator(Validator $validator) {
+    $this->validator = $validator;
     return $this;
   }
   
   /**
-   * @param string $fieldName
-   * @return Entity
+   * @return type 
    */
-  public function clearFieldValidators($fieldName) {
-    if (array_key_exists($fieldName, $this->fieldValidators)) {
-      unset($this->fieldValidators[$fieldName]);
-    }
-    return $this;
-  }
-
-  /**
-   * @see Equ\Entity.FormBase::getFieldValidators()
-   * @param string $fieldName
-   * @return \Zend_Validate_Abstract[]
-   */
-  public function getFieldValidators($fieldName) {
-    if (array_key_exists($fieldName, $this->fieldValidators)) {
-      return $this->fieldValidators[$fieldName];
-    }
-    return array();
+  public function getValidator() {
+    return $this->validator;
   }
   
   /**
    * @PrePersist @PreUpdate
    */
   public function validate() {
-    foreach ($this as $field => $value) {
-      /* @var $validator \Zend_Validate_Abstract */
-      foreach ($this->getFieldValidators($field) as $validator) {
-        if (!$validator->isValid($this->$field)) {
-          throw new RuntimeException(implode(PHP_EOL, $validator->getMessages()));
-        }
+    if ($this instanceof Validatable && is_object($this->validator)) {
+      if (!$this->validator->isValid($this)) {
+        throw new RuntimeException(implode(PHP_EOL, $this->validator->getMessages()));
       }
     }
   }
 
   public function offsetExists($offset) {
-    $method = 'get' . \ucfirst($offset);
-    return \method_exists($this, $method);
+    $objectHelper = new \Equ\Object\Helper($this);
+    try {
+      $objectHelper->get($offset);
+      return true;
+    } catch (\Exception $e) {
+      return false;
+    }
   }
 
   public function offsetGet($offset) {
-    $method = 'get' . \ucfirst($offset);
-    if (\method_exists($this, $method)) {
-      return $this->$method();
+    $objectHelper = new \Equ\Object\Helper($this);
+    try {
+      return $objectHelper->get($offset);
+    } catch (\Exception $e) {
+      return null;
     }
   }
 
@@ -102,13 +75,6 @@ abstract class Entity implements IFormBase, \ArrayAccess {
 
   public function offsetUnset($offset) {
     throw new BadMethodCallException("ArrayAccess readonly!");
-  }
-
-  /**
-   * @param ClassMetadata $metadata
-   */
-  public static function loadValidatorMetadata(ClassMetadata $metadata) {
-//    $metadata->addPropertyValidator('name', new \Zend_Validate_NotEmpty());
   }
 
 }
