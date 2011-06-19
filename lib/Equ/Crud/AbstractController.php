@@ -220,13 +220,12 @@ abstract class AbstractController extends \Zend_Controller_Action {
    * lists items with Zend_Paginator
    */
   public function listAction() {
+    $filters = $this->getEntityClass();
     try {
-      /* @var $paginatorCreator IPaginatorCreator */
-      $paginatorCreator = $this->_helper->serviceContainer('paginatorCreator');
-      $filters          = $this->getEntityClass();
       $this->view->keys        = \array_diff($this->getTableFieldNames(), $this->getIgnoredFields());
       $this->view->currentSort = $this->_getParam('sort');
       $this->view->nextOrder   = $this->_getParam('order', 'ASC') == 'ASC' ? 'DESC' : 'ASC';
+      $filterForm = null;
       
       // create filter form
       if ($this->useFilterForm) {
@@ -234,25 +233,32 @@ abstract class AbstractController extends \Zend_Controller_Action {
         /* @var $filterForm \Zend_Form */
         $filterForm = $builder->getForm();
         $filterForm->setMethod(\Zend_Form::METHOD_GET);
-        if (!$builder->getMapper()->isValid($this->_request)) {
+        $namespace = $filterForm->getElementsBelongTo();
+        if (is_array($this->_request->getParam($namespace)) && !$builder->getMapper()->isValid($this->_request)) {
           throw new RuntimeException('Invalid values in form');
         }
-        $filters    = $builder->getMapper()->getObject();
-        $this->view->filterForm  = $filterForm;
+        $filters = $builder->getMapper()->getObject();
       }
       
-      // create paginator
-      $this->view->paginator = $paginatorCreator->createPaginator(
-        $filters,
-        $this->_getParam('page', 1),
-        $this->_getParam('items', 10),
-        $this->_getParam('sort'),
-        $this->_getParam('order', 'ASC')
-      );
     } catch (\Exception $e) {
       $this->_helper->serviceContainer('log')->err($e);
       $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
     }
+    
+    if ($this->useFilterForm) {
+      $this->view->filterForm  = $filterForm;
+    }
+    
+    // create paginator
+    /* @var $paginatorCreator IPaginatorCreator */
+    $paginatorCreator = $this->_helper->serviceContainer('paginatorCreator');
+    $this->view->paginator = $paginatorCreator->createPaginator(
+      $filters,
+      $this->_getParam('page', 1),
+      $this->_getParam('items', 10),
+      $this->_getParam('sort'),
+      $this->_getParam('order', 'ASC')
+    );
     $this->renderScript('list.phtml');
   }
 

@@ -74,10 +74,11 @@ class Mapper implements IMapper {
    */
   public function isValid(Request $request) {
     $valid = false;
+    $namespace = $this->form->getElementsBelongTo();
     if ($this->form->getMethod() == Form::METHOD_POST) {
-      $valid = $this->form->isValid($request->getPost());
+      $valid = $this->form->isValid($request->getPost($namespace, array()));
     } else {
-      $valid = $this->form->isValid($request->getParams());
+      $valid = $this->form->isValid($request->getParam($namespace, array()));
     }
     if ($valid) {
       $this->map();

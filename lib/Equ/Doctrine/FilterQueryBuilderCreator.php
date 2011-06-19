@@ -37,7 +37,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
   protected function addAndWhereForBoolean(QueryBuilder $queryBuilder, $field, $value) {
     $queryBuilder
       ->andWhere("m.{$field} = :{$field}")
-      ->setParameter('$field', $value);
+      ->setParameter($field, $value);
   }
   
   protected function addAndWhereForString(QueryBuilder $queryBuilder, $field, $value) {
@@ -116,7 +116,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
     foreach ($metadata->fieldMappings as $field => $map) {
       try {
         $value = $objectHelper->get($field);
-        if (!empty($value)) {
+        if (!in_array($value, array('', null), true)) {
           $this->addAndWhere($queryBuilder, $map['fieldName'], $value);
         }
       } catch (\InvalidArgumentException $e) {}
