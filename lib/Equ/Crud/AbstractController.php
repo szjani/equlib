@@ -8,7 +8,8 @@ use
   Equ\Crud\Exception\InvalidArgumentException,
   Equ\Crud\Exception\UnexpectedValueException,
   Equ\Crud\Exception\RuntimeException,
-  Equ\Doctrine\IPaginatorCreator;
+  Equ\Doctrine\IPaginatorCreator,
+  Equ\Form\IBuilder;
 
 /**
  * Controller of CRUD operations
@@ -51,6 +52,41 @@ abstract class AbstractController extends \Zend_Controller_Action {
    * @return \Equ\Form\IMappedType
    */
   public abstract function getFilterForm();
+  
+  /**
+   * @param IBuilder $builder 
+   */
+  protected function formBuilderCreated(IBuilder $builder) {}
+  
+  /**
+   * @param object $entity 
+   */
+  protected function prePersist($entity) {}
+  
+  /**
+   * @param object $entity 
+   */
+  protected function postPersist($entity) {}
+  
+  /**
+   * @param object $entity
+   */
+  protected function preFlush($entity) {}
+  
+  /**
+   * @param object $entity
+   */
+  protected function postFlush($entity) {}
+  
+  /**
+   * @param object $entity
+   */
+  protected function preRemove($entity) {}
+  
+  /**
+   * @param object $entity
+   */
+  protected function postRemove($entity) {}
   
   /**
    * @return \Equ\Form\IMappedType 
@@ -133,7 +169,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       parent::renderScript($script, $name);
     }
   }
-
+  
   /**
    * Redirects to listAction
    */
@@ -148,14 +184,20 @@ abstract class AbstractController extends \Zend_Controller_Action {
     $form = null;
     try {
       $builder = $this->_helper->createFormBuilder($this->getCreateForm(), $this->getEntityClass());
-      $form    = $builder->getForm();
-      $em = $this->getEntityManager();
+      $this->formBuilderCreated($builder);
+      $form = $builder->getForm();
+      $em   = $this->getEntityManager();
       if ($this->_request->isPost()) {
         if (!$builder->getMapper()->isValid($this->_request)) {
           throw new RuntimeException('Invalid values in form');
         }
-        $em->persist($builder->getMapper()->getObject());
+        $entity = $builder->getMapper()->getObject();
+        $this->prePersist($entity);
+        $em->persist($entity);
+        $this->postPersist($entity);
+        $this->preFlush($entity);
         $em->flush();
+        $this->postFlush($entity);
         $this->_helper->flashMessenger('Crud/Create/Success');
         $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
       }
@@ -177,12 +219,15 @@ abstract class AbstractController extends \Zend_Controller_Action {
     try {
       $em      = $this->getEntityManager();
       $builder = $this->_helper->createFormBuilder($this->getUpdateForm(), $em->find($this->getEntityClass(), $id));
+      $this->formBuilderCreated($builder);
       $form    = $builder->getForm();
       if ($this->_request->isPost()) {
         if (!$builder->getMapper()->isValid($this->_request)) {
           throw new RuntimeException('Invalid values in form');
         }
+        $this->preFlush($entity);
         $em->flush();
+        $this->postFlush($entity);
         $this->_helper->flashMessenger('Crud/Update/Success');
         $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
       }
@@ -201,11 +246,16 @@ abstract class AbstractController extends \Zend_Controller_Action {
     $id = $this->_getParam('id');
     try {
       $em = $this->getEntityManager();
-      $object = $em->find($this->getEntityClass(), $id);
-      if (!$object) {
+      $entity = $em->find($this->getEntityClass(), $id);
+      if (!$entity) {
         throw new Exception\InvalidArgumentException("Invalid id: '$id'");
       }
-      $em->remove($object);
+      $this->preRemove($entity);
+      $em->remove($entity);
+      $this->postRemove($entity);
+      $this->preFlush($entity);
+      $em->flush();
+      $this->postFlush($entity);
       $this->_helper->flashMessenger('Crud/Delete/Success');
       $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
     } catch (\Exception $e) {
@@ -233,6 +283,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
         /* @var $filterForm \Zend_Form */
         $filterForm = $builder->getForm();
         $filterForm->setMethod(\Zend_Form::METHOD_GET);
+        $this->formBuilderCreated($builder);
         $namespace = $filterForm->getElementsBelongTo();
         if (is_array($this->_request->getParam($namespace)) && !$builder->getMapper()->isValid($this->_request)) {
           throw new RuntimeException('Invalid values in form');
