@@ -26,7 +26,7 @@ interface IBuilder extends IOptionFlaggable {
   /**
    * @return IBuilder
    */
-  public function addSub($field, IMappedType $type);
+  public function addSub($field, IMappedType $type, $collection = false);
   
   /**
    * @return \Zend_Form
