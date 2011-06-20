@@ -7,7 +7,9 @@ use
   Form\Fixture\Comment,
   Form\Fixture\Author,
   Form\Fixture\AuthorForm,
-  Form\Fixture\CommentType;
+  Form\Fixture\CommentType,
+  Form\Fixture\ArticleType,
+  Form\Fixture\Article;
 
 class BuilderTest extends PHPUnit_Framework_TestCase {
 
@@ -78,6 +80,56 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
     self::assertNotNull($authorForm->getElement('email'));
     self::assertEquals('author@host.com', $authorForm->getElement('email')->getValue());
     self::assertEquals('author-name_orig', $authorForm->getElement('name')->getValue());
+  }
+  
+  public function testMapPOPOCollectionByObjects() {
+    $author1  = new Author('author1-name_orig');
+    $comment1 = new Comment($author1);
+    $author1->setEmail('author1@host.com');
+    $comment1->setText('comment1-text');
+    $author2  = new Author('author2-name_orig');
+    $comment2 = new Comment($author2);
+    $author2->setEmail('author2@host.com');
+    $comment2->setText('comment2-text');
+    
+    $article = new Article('article-text');
+    $article->setComments(array($comment1, $comment2));
+    
+    $builder = new Builder($article, new \Equ\Form\ElementCreator\Dojo\Factory());
+    $builder->setEntityManager($this->em);
+    $formType = new ArticleType();
+    $formType->buildForm($builder);
+    $articleForm = $builder->getForm();
+    
+    self::assertEquals('article', $articleForm->getElementsBelongTo());
+    self::assertNotNull($articleForm->getElement('text'));
+    self::assertEquals('article-text', $articleForm->getElement('text')->getValue());
+    
+    self::assertNotNull($articleForm->getSubForm('comments0'));
+    self::assertNotNull($articleForm->getSubForm('comments1'));
+    
+    $commentForm0 = $articleForm->getSubForm('comments0');
+    self::assertNotNull($commentForm0->getElement('text'));
+    self::assertEquals('comment1-text', $commentForm0->getElement('text')->getValue());
+    
+    $commentForm1 = $articleForm->getSubForm('comments1');
+    self::assertNotNull($commentForm1->getElement('text'));
+    self::assertEquals('comment2-text', $commentForm1->getElement('text')->getValue());
+    
+    self::assertNotNull($commentForm0->getSubForm('author'));
+    $authorCommentForm0 = $commentForm0->getSubForm('author');
+    
+    self::assertNotNull($commentForm1->getSubForm('author'));
+    $authorCommentForm1 = $commentForm1->getSubForm('author');
+    
+    self::assertNotNull($authorCommentForm0->getElement('email'));
+    self::assertNotNull($authorCommentForm0->getElement('name'));
+    self::assertNotNull($authorCommentForm1->getElement('email'));
+    self::assertNotNull($authorCommentForm1->getElement('name'));
+    self::assertEquals('author1@host.com', $authorCommentForm0->getElement('email')->getValue());
+    self::assertEquals('author1-name_orig', $authorCommentForm0->getElement('name')->getValue());
+    self::assertEquals('author2@host.com', $authorCommentForm1->getElement('email')->getValue());
+    self::assertEquals('author2-name_orig', $authorCommentForm1->getElement('name')->getValue());
   }
   
 }
