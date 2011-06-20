@@ -22,9 +22,15 @@ class Mapper implements IMapper {
    */
   private $form;
   
+  /**
+   * @var ObjectHelper
+   */
   private $objectHelper;
   
-  private $propertyClassMap;
+  /**
+   * @var \ArrayObject
+   */
+  private $objectHelpers;
   
   /**
    * @var EntityManager
@@ -32,14 +38,17 @@ class Mapper implements IMapper {
   protected $entityManager = null;
   
   /**
-   *
+   * You should care about that if a field is existing as a key
+   * in $objectHelpers than it handle it as a foreign-key/ID
+   * 
    * @param Form $form
-   * @param mixed $objectHelper Object or the class name of an object
+   * @param type $key
+   * @param \ArrayObject $objectHelpers 
    */
-  public function __construct(Form $form, ObjectHelper $objectHelper, array $propertyClassMap) {
+  public function __construct(Form $form, $key, \ArrayObject $objectHelpers) {
     $this->form = $form;
-    $this->objectHelper = $objectHelper;
-    $this->propertyClassMap = $propertyClassMap;
+    $this->objectHelper  = $objectHelpers[$key];
+    $this->objectHelpers = $objectHelpers;
   }
   
   /**
@@ -62,6 +71,9 @@ class Mapper implements IMapper {
     return $this;
   }
   
+  /**
+   * @return object
+   */
   public function getObject() {
     return $this->objectHelper->getObject();
   }
@@ -96,9 +108,13 @@ class Mapper implements IMapper {
     foreach ($this->form->getElements() as $field => $element) {
       try {
         $value = $element->getValue();
-        if (array_key_exists($field, $this->propertyClassMap)) {
+        // property $field is a relation, $value is probably an ID
+        if ($this->objectHelpers->offsetExists($field)) {
           if (!empty($value)) {
-            $value = $this->getEntityManager()->getReference($this->propertyClassMap[$field], $element->getValue());
+            $value = $this->getEntityManager()->getReference(
+              $this->objectHelpers[$field]->getType(),
+              $element->getValue()
+            );
             $this->objectHelper->set($field, $value);
           }
         } else {
@@ -107,6 +123,7 @@ class Mapper implements IMapper {
       } catch (\InvalidArgumentException $e) {}
     }
     
+    // map all subforms
     foreach ($this->form->getSubForms() as $name => $subForm) {
       $this->subMap($name, $subForm);
     }
@@ -120,7 +137,7 @@ class Mapper implements IMapper {
    * @param SubForm $subForm 
    */
   private function subMap($relation, SubForm $subForm) {
-    $subMapper = new self($subForm, new ObjectHelper($this->propertyClassMap[$relation]), $this->propertyClassMap);
+    $subMapper = new self($subForm, $relation, $this->objectHelpers);
     $subMapper->map();
     $this->objectHelper->set($relation, $subMapper->getObject());
   }

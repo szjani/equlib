@@ -3,6 +3,7 @@ define('APPLICATION_ENV', 'testing');
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
+  '/development/Frameworks/ZF_1.11_svn/library',
   '/development/Frameworks/zf1-classmap/library',
 )));
 

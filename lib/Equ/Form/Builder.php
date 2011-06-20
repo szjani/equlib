@@ -46,9 +46,9 @@ class Builder implements IBuilder {
   /**
    * array(propertyName => className, ...)
    * 
-   * @var array
+   * @var \ArrayObject
    */
-  private $propertyClassMap = array();
+  private $objectHelpers;
   
   /**
    *
@@ -62,11 +62,34 @@ class Builder implements IBuilder {
   private $optionFlags = null;
 
   /**
-   * @param mixed $object Object or type
+   * @param mixed $object
+   * @param ElementCreator\IFactory $elementCreatorFactory
+   * @param \ArrayObject $objectHelpers 
    */
-  public function __construct($object, ElementCreator\IFactory $elementCreatorFactory) {
+  public function __construct($object, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null) {
     $this->objectHelper = new ObjectHelper($object);
+    if (null === $this->objectHelpers) {
+      $this->objectHelpers = new \ArrayObject(array(
+        $this->getFormKey() => $this->objectHelper
+      ));
+    } else {
+      $this->objectHelpers = $objectHelpers;
+    }
     $this->setElementCreatorFactory($elementCreatorFactory);
+  }
+  
+  /**
+   * @return \ArrayObject 
+   */
+  public function getObjectHelpers() {
+    return $this->objectHelpers;
+  }
+  
+  /**
+   * @return ObjectHelper 
+   */
+  public function getObjectHelper() {
+    return $this->objectHelper;
   }
   
   /**
@@ -137,8 +160,8 @@ class Builder implements IBuilder {
    * @param array  $def
    * @return \Zend_Form_Element
    */
-  protected function createForeignElement($elementName, array $def) {
-    $elementCreator = $this->getElementCreatorFactory()->createArrayCreator();
+  protected function createForeignElement($elementName, array $def, $type = 'array') {
+    $elementCreator = $this->getElementCreatorFactory()->createCreator($type);
     $elementCreator->setOptionFlags($this->getOptionFlags());
     $select = $elementCreator->createElement($elementName);
     $select->addMultiOption('0', '');
@@ -152,13 +175,28 @@ class Builder implements IBuilder {
       );
     }
 
+//    $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
+//      ->getFieldValue($this->objectHelper->getObject(), $elementName);
+//    
+//    if ($value instanceof $def['targetEntity']) {
+//      $select->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
+//    }
+    return $select;
+  }
+  
+  /**
+   * @param \Zend_Form_Element $element
+   * @param type $elementName
+   * @param array $def 
+   */
+  protected function fillForeignElement(\Zend_Form_Element $element, $elementName, array $def) {
+    $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
     $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
       ->getFieldValue($this->objectHelper->getObject(), $elementName);
     
     if ($value instanceof $def['targetEntity']) {
-      $select->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
+      $element->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
     }
-    return $select;
   }
   
   /**
@@ -169,9 +207,6 @@ class Builder implements IBuilder {
    * @return Builder 
    */
   public function add($field, $type = null) {
-    if (null === $type) {
-      $type = 'text';
-    }
     $fieldValue = null;
     try {
       $fieldValue = $this->objectHelper->get($field);
@@ -179,29 +214,50 @@ class Builder implements IBuilder {
     $element = null;
     try {
       $metadata = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType());
+      
+      // $field property is a foreign-key/ID
       if ($metadata->hasAssociation($field)
         && array_key_exists('isOwningSide', $metadata->associationMappings[$field])
         && $metadata->associationMappings[$field]['isOwningSide']) {
         
-        $element = $this->createForeignElement($field, $metadata->associationMappings[$field]);
-        $this->propertyClassMap[$field] = $metadata->associationMappings[$field]['targetEntity'];
+        if ($type instanceof \Zend_Form_Element) {
+          $element = $type;
+        } else {
+          $element = $this->createForeignElement($field, $metadata->associationMappings[$field]);
+        }
+        $this->fillForeignElement($element, $field, $metadata->associationMappings[$field]);
+        $this->objectHelpers[$field] = new ObjectHelper($metadata->associationMappings[$field]['targetEntity']);
       }
       else {
+        if (null === $type) {
+          $type = 'text';
+        }
         $elementCreator = $this->createElementCreator($type);
         $elementCreator->setOptionFlags($this->getOptionFlags());
         $this->addValidatorsFromObjectClass($elementCreator, $field);
-        if (array_key_exists($field, $metadata->fieldMappings)) {
-          $element = $elementCreator->createElement($field, $metadata->fieldMappings[$field]);
+        if ($type instanceof \Zend_Form_Element) {
+          $element = $type;
         } else {
-          $element = $elementCreator->createElement($field);
+          if (array_key_exists($field, $metadata->fieldMappings)) {
+            $element = $elementCreator->createElement($field, $metadata->fieldMappings[$field]);
+          } else {
+            $element = $elementCreator->createElement($field);
+          }
         }
         $element->setValue((string)$fieldValue);
       }
     } catch (\Doctrine\ORM\Mapping\MappingException $e) {
+      if (null === $type) {
+        $type = 'text';
+      }
       $elementCreator = $this->createElementCreator($type);
       $elementCreator->setOptionFlags($this->getOptionFlags());
       $this->addValidatorsFromObjectClass($elementCreator, $field);
-      $element = $elementCreator->createElement($field);
+      if ($type instanceof \Zend_Form_Element) {
+        $element = $type;
+      } else {
+        $element = $elementCreator->createElement($field);
+      }
       $element->setValue((string)$fieldValue);
     }
     $this->getForm()->addElement($element);
@@ -263,15 +319,16 @@ class Builder implements IBuilder {
    * @param int $index 
    */
   private function buildSubForm($subObject, $field, IMappedType $type, $index = null) {
-    $builder = new self($subObject, $this->getElementCreatorFactory());
+    $builder = new self($subObject, $this->getElementCreatorFactory(), $this->objectHelpers);
+    $builder->setEntityManager($this->getEntityManager());
     $subForm = new \Zend_Form_SubForm();
     if (null !== $index) {
       $this->getForm()->addSubForm($subForm, $field . $index);
-      $this->propertyClassMap[$field . $index] = $type->getObjectClass();
+      $this->objectHelpers[$field . $index] = $builder->getObjectHelper();
       $subForm->setElementsBelongTo($field . '[' . $index . ']');
     } else {
       $this->getForm()->addSubForm($subForm, $field);
-      $this->propertyClassMap[$field] = $type->getObjectClass();
+      $this->objectHelpers[$field] = $builder->getObjectHelper();
     }
     $builder->setForm($subForm);
     $type->buildForm($builder);
@@ -285,6 +342,11 @@ class Builder implements IBuilder {
     $this->form = $form;
     return $this;
   }
+  
+  private function getFormKey() {
+    $nameArray = explode('\\', $this->objectHelper->getType());
+    return lcfirst(array_pop($nameArray));
+  }
 
     /**
    * @return \Zend_Form
@@ -292,7 +354,7 @@ class Builder implements IBuilder {
   public function getForm() {
     if ($this->form === null) {
       $this->form = new \Zend_Form();
-      if ($this->optionFlags->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
+      if ($this->getOptionFlags()->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
         $nameArray = explode('\\', $this->objectHelper->getType());
         $this->form->setElementsBelongTo(lcfirst(array_pop($nameArray)));
       }
@@ -310,7 +372,7 @@ class Builder implements IBuilder {
    */
   public function getMapper() {
     if (null === $this->mapper) {
-      $this->mapper = new Mapper($this->getForm(), $this->objectHelper, $this->propertyClassMap);
+      $this->mapper = new Mapper($this->getForm(), $this->getFormKey(), $this->objectHelpers);
     }
     return $this->mapper;
   }

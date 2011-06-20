@@ -7,7 +7,7 @@ use
 
 interface IMapper {
   
-  public function __construct(Form $form, ObjectHelper $objectHelper, array $propertyClassMap);
+  public function __construct(Form $form, $key, \ArrayObject $objectHelpers);
   
   public function isValid(Request $request);
   
