@@ -8,6 +8,7 @@ class ArticleType implements IMappedType {
   
   public function buildForm(IBuilder $builder) {
     $builder->add('text');
+    $builder->addSub('author', new AuthorType());
     $builder->addSub('comments', new CommentType(), true);
   }
   

@@ -8,12 +8,23 @@ class Article {
   
   private $text;
   
-  private $comments = array();
+  private $author;
   
-  public function __construct($text) {
+  private $comments = null;
+  
+  public function __construct($text, Author $author) {
     $this->setText($text);
+    $this->setAuthor($author);
   }
   
+  public function getAuthor() {
+    return $this->author;
+  }
+
+  public function setAuthor(Author $author) {
+    $this->author = $author;
+  }
+
   public function setText($text) {
     $this->text = $text;
   }
@@ -23,10 +34,13 @@ class Article {
   }
   
   public function getComments() {
+    if ($this->comments === null) {
+      $this->setComments(new \ArrayObject());
+    }
     return $this->comments;
   }
   
-  public function setComments(array $comments) {
+  public function setComments(\ArrayObject $comments) {
     $this->comments = $comments;
   }
   

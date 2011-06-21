@@ -43,6 +43,8 @@ class Builder implements IBuilder {
    */
   private $form = null;
   
+  private $formKey = null;
+  
   /**
    * array(propertyName => className, ...)
    * 
@@ -66,9 +68,10 @@ class Builder implements IBuilder {
    * @param ElementCreator\IFactory $elementCreatorFactory
    * @param \ArrayObject $objectHelpers 
    */
-  public function __construct($object, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null) {
+  public function __construct($object, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null) {
     $this->objectHelper = new ObjectHelper($object);
-    if (null === $this->objectHelpers) {
+    $this->formKey = $key;
+    if (null === $objectHelpers) {
       $this->objectHelpers = new \ArrayObject(array(
         $this->getFormKey() => $this->objectHelper
       ));
@@ -318,18 +321,15 @@ class Builder implements IBuilder {
    * @param IMappedType $type
    * @param int $index 
    */
-  private function buildSubForm($subObject, $field, IMappedType $type, $index = null) {
-    $builder = new self($subObject, $this->getElementCreatorFactory(), $this->objectHelpers);
+  private function buildSubForm($subObject, $field, IMappedType $type, $index = '') {
+    $subFormKey  = $this->getFormKey() . '-' . $field . ($index === '' ? $index : ('[' . $index . ']'));
+    $subFormName = $field . ($index === '' ? $index : ('[' . $index . ']'));
+    $builder     = new self($subObject, $this->getElementCreatorFactory(), $this->objectHelpers, $subFormKey);
     $builder->setEntityManager($this->getEntityManager());
     $subForm = new \Zend_Form_SubForm();
-    if (null !== $index) {
-      $this->getForm()->addSubForm($subForm, $field . $index);
-      $this->objectHelpers[$field . $index] = $builder->getObjectHelper();
-      $subForm->setElementsBelongTo($field . '[' . $index . ']');
-    } else {
-      $this->getForm()->addSubForm($subForm, $field);
-      $this->objectHelpers[$field] = $builder->getObjectHelper();
-    }
+    $subForm->setElementsBelongTo($subFormName);
+    $this->getForm()->addSubForm($subForm, $subFormName);
+    $this->objectHelpers[$subFormKey] = $builder->getObjectHelper();
     $builder->setForm($subForm);
     $type->buildForm($builder);
   }
@@ -344,8 +344,11 @@ class Builder implements IBuilder {
   }
   
   private function getFormKey() {
-    $nameArray = explode('\\', $this->objectHelper->getType());
-    return lcfirst(array_pop($nameArray));
+    if (null === $this->formKey) {
+      $nameArray = explode('\\', $this->objectHelper->getType());
+      $this->formKey = lcfirst(array_pop($nameArray));
+    }
+    return $this->formKey;
   }
 
     /**
@@ -355,8 +358,7 @@ class Builder implements IBuilder {
     if ($this->form === null) {
       $this->form = new \Zend_Form();
       if ($this->getOptionFlags()->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
-        $nameArray = explode('\\', $this->objectHelper->getType());
-        $this->form->setElementsBelongTo(lcfirst(array_pop($nameArray)));
+        $this->form->setElementsBelongTo($this->getFormKey());
       }
       $submit = $this->getElementCreatorFactory()->createSubmitCreator()->createElement('OK');
       $submit->setOrder('999');

@@ -6,7 +6,8 @@ use
   Form\Fixture\CommentForm,
   Form\Fixture\Comment,
   Form\Fixture\Author,
-  Form\Fixture\AuthorForm;
+  Form\Fixture\AuthorForm,
+  Form\Fixture\ArticleForm;
 
 class MapperTest extends PHPUnit_Framework_TestCase {
 
@@ -46,8 +47,8 @@ class MapperTest extends PHPUnit_Framework_TestCase {
     $subform->getElement('name')->setValue('authorName');
     
     $objectHelpers = new \ArrayObject();
-    $objectHelpers['comment'] = new ObjectHelper('Form\Fixture\Comment');
-    $objectHelpers['author']  = new ObjectHelper('Form\Fixture\Author');
+    $objectHelpers['comment']         = new ObjectHelper('Form\Fixture\Comment');
+    $objectHelpers['comment-author']  = new ObjectHelper('Form\Fixture\Author');
     
     $mapper = new Mapper($form, 'comment', $objectHelpers);
     $mapper->map();
@@ -74,8 +75,8 @@ class MapperTest extends PHPUnit_Framework_TestCase {
     $subform->removeElement('name');
     
     $objectHelpers = new \ArrayObject();
-    $objectHelpers['comment'] = new ObjectHelper($comment);
-    $objectHelpers['author']  = new ObjectHelper($author);
+    $objectHelpers['comment']         = new ObjectHelper($comment);
+    $objectHelpers['comment-author']  = new ObjectHelper($author);
     
     $mapper = new Mapper($form, 'comment', $objectHelpers);
     $mapper->map();
@@ -83,6 +84,45 @@ class MapperTest extends PHPUnit_Framework_TestCase {
     self::assertEquals('formCommentText',   $comment->getText());
     self::assertEquals('formtest@host.com', $comment->getAuthor()->getEmail());
     self::assertEquals('author-name_orig',  $comment->getAuthor()->getName());
+  }
+  
+  public function testMapPOPOCollection() {
+    $form = new ArticleForm();
+    $form->getElement('text')->setValue('articleText');
+    $subform = $form->getSubForm('author');
+    $subform->getElement('email')->setValue('test@host.com');
+    $subform->getElement('name')->setValue('authorName');
+    $comment0 = $form->getSubForm('comments[0]');
+    $comment0Author = $comment0->getSubForm('author');
+    $comment0Author->getElement('name')->setValue('c1AuthorName');
+    $comment0Author->getElement('email')->setValue('c1AuthorEmail');
+    $comment1 = $form->getSubForm('comments[1]');
+    $comment1->getElement('text')->setValue('comment2Text');
+    $comment1Author = $comment1->getSubForm('author');
+    $comment1Author->getElement('name')->setValue('c2AuthorName');
+    $comment1Author->getElement('email')->setValue('c2AuthorEmail');
+    
+    $objectHelpers = new \ArrayObject();
+    $objectHelpers['article']             = new ObjectHelper('Form\Fixture\Article');
+    $objectHelpers['article-author']      = new ObjectHelper('Form\Fixture\Author');
+    $objectHelpers['article-comments[0]'] = new ObjectHelper('Form\Fixture\Comment');
+    $objectHelpers['article-comments[1]'] = new ObjectHelper('Form\Fixture\Comment');
+    $objectHelpers['article-comments[0]-author']  = new ObjectHelper('Form\Fixture\Author');
+    $objectHelpers['article-comments[1]-author']  = new ObjectHelper('Form\Fixture\Author');
+    
+    $mapper = new Mapper($form, 'article', $objectHelpers);
+    $mapper->map();
+    $article = $mapper->getObject();
+    
+    self::assertEquals('articleText', $article->getText());
+    self::assertType('\ArrayObject',  $article->getComments());
+    $comments = $article->getComments();
+    self::assertEquals(2, $comments->count());
+    self::assertEquals('comment2Text', $comments[1]->getText());
+    self::assertEquals('c1AuthorName', $comments[0]->getAuthor()->getName());
+    self::assertEquals('c2AuthorName', $comments[1]->getAuthor()->getName());
+    self::assertEquals('c1AuthorEmail', $comments[0]->getAuthor()->getEmail());
+    self::assertEquals('c2AuthorEmail', $comments[1]->getAuthor()->getEmail());
   }
   
 }

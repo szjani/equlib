@@ -92,8 +92,11 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
     $author2->setEmail('author2@host.com');
     $comment2->setText('comment2-text');
     
-    $article = new Article('article-text');
-    $article->setComments(array($comment1, $comment2));
+    $articleAuthor = new Author('article-author');
+    $articleAuthor->setEmail('article-author@host.com');
+    
+    $article = new Article('article-text', $articleAuthor);
+    $article->setComments(new \ArrayObject(array($comment1, $comment2)));
     
     $builder = new Builder($article, new \Equ\Form\ElementCreator\Dojo\Factory());
     $builder->setEntityManager($this->em);
@@ -105,14 +108,19 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
     self::assertNotNull($articleForm->getElement('text'));
     self::assertEquals('article-text', $articleForm->getElement('text')->getValue());
     
-    self::assertNotNull($articleForm->getSubForm('comments0'));
-    self::assertNotNull($articleForm->getSubForm('comments1'));
+    self::assertNotNull($articleForm->getSubForm('author'));
+    $articleAuthorForm = $articleForm->getSubForm('author');
+    self::assertEquals('article-author', $articleAuthorForm->getElement('name')->getValue());
+    self::assertEquals('article-author@host.com', $articleAuthorForm->getElement('email')->getValue());
     
-    $commentForm0 = $articleForm->getSubForm('comments0');
+    self::assertNotNull($articleForm->getSubForm('comments[0]'));
+    self::assertNotNull($articleForm->getSubForm('comments[1]'));
+    
+    $commentForm0 = $articleForm->getSubForm('comments[0]');
     self::assertNotNull($commentForm0->getElement('text'));
     self::assertEquals('comment1-text', $commentForm0->getElement('text')->getValue());
     
-    $commentForm1 = $articleForm->getSubForm('comments1');
+    $commentForm1 = $articleForm->getSubForm('comments[1]');
     self::assertNotNull($commentForm1->getElement('text'));
     self::assertEquals('comment2-text', $commentForm1->getElement('text')->getValue());
     
@@ -130,6 +138,8 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
     self::assertEquals('author1-name_orig', $authorCommentForm0->getElement('name')->getValue());
     self::assertEquals('author2@host.com', $authorCommentForm1->getElement('email')->getValue());
     self::assertEquals('author2-name_orig', $authorCommentForm1->getElement('name')->getValue());
+    
+//    var_dump($builder->getObjectHelpers());
   }
   
 }

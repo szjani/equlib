@@ -16,7 +16,7 @@ interface IBuilder extends IOptionFlaggable {
    * @param ElementCreator\IFactory $elementCreatorFactory
    * @param \ArrayObject $objectHelpers
    */
-  public function __construct($object, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null);
+  public function __construct($object, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null);
   
   /**
    * @return IBuilder
