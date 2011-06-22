@@ -131,7 +131,6 @@ class Mapper implements IMapper {
     
     /* @var $subForm \Zend_Form_Subform */
     foreach ($this->form->getSubForms() as $name => $subForm) {
-//      var_dump($name, get_class($subForm));
       $subMapper = $this->createSubMapper($name, $subForm);
       // subform collection
       if (preg_match('#^(.+)\[(.+)\]$#', $name, $matches)) {
@@ -148,15 +147,11 @@ class Mapper implements IMapper {
       if (!is_array($subMapper)) {
         $this->objectHelper->set($name, $subMapper->getObject());
       } else {
-//        var_dump($name, $this->objectHelper->getType(), '...');
         $existingFields = $this->objectHelper->get($name);
         if (null === $existingFields) {
           $existingFields = new \Doctrine\Common\Collections\ArrayCollection();
         }
-//        var_dump(get_class($existingFields), $existingFields->count());
         foreach ($subMapper as $key => $manySubMapper) {
-//          var_dump(get_class($existingFields));
-//          \Doctrine\Common\Util\Debug::dump($manySubMapper->getObject());
           $existingFields[$key] = $manySubMapper->getObject();
         }
       }
