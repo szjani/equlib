@@ -44,4 +44,15 @@ interface IBuilder extends IOptionFlaggable {
    */
   public function getMapper();
   
+  /**
+   * @return ElementCreator\IFactory
+   */
+  public function getElementCreatorFactory();
+  
+  /**
+   * @param  ElementCreator\IFactory $factory
+   * @return Builder
+   */
+  public function setElementCreatorFactory(ElementCreator\IFactory $factory);
+  
 }
