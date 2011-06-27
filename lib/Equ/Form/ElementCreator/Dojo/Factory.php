@@ -15,30 +15,28 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
    * @return \Zend_Form_Element
    */
   public function createStringCreator() {
-    $stringCreator = new StringCreator($this->getNamespace());
-    $stringCreator->setFlag(StringCreator::PLACEHOLDER, $this->isUsedPlaceHolders());
-    return $stringCreator;
+    return new StringCreator($this->getNamespace());
   }
 
   /**
    * @return \Zend_Form_Element
    */
   public function createIntegerCreator() {
-    return new StringCreator($this->getNamespace());
+    return new IntegerCreator($this->getNamespace());
   }
   
   /**
    * @return \Zend_Form_Element
    */
   public function createSmallintCreator() {
-    return new StringCreator($this->getNamespace());
+    return new IntegerCreator($this->getNamespace());
   }
 
   /**
    * @return \Zend_Form_Element
    */
   public function createBigintCreator() {
-    return new StringCreator($this->getNamespace());
+    return new IntegerCreator($this->getNamespace());
   }
 
   /**
@@ -52,7 +50,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
    * @return \Zend_Form_Element
    */
   public function createFloatCreator() {
-    return new StringCreator($this->getNamespace());
+    return new FloatCreator($this->getNamespace());
   }
   
   /**
