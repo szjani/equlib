@@ -220,8 +220,8 @@ class Builder implements IBuilder {
       
       // $field property is a foreign-key/ID
       if ($metadata->hasAssociation($field)
-        && array_key_exists('isOwningSide', $metadata->associationMappings[$field])
-        && $metadata->associationMappings[$field]['isOwningSide']) {
+        /*&& array_key_exists('isOwningSide', $metadata->associationMappings[$field])
+        && $metadata->associationMappings[$field]['isOwningSide']*/) {
         
         if ($type instanceof \Zend_Form_Element) {
           $element = $type;
@@ -233,7 +233,7 @@ class Builder implements IBuilder {
       }
       else {
         if (null === $type) {
-          $type = 'text';
+          $type = $metadata->fieldMappings[$field]['type'];
         }
         $elementCreator = $this->createElementCreator($type);
         $elementCreator->setOptionFlags($this->getOptionFlags());
