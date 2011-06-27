@@ -22,21 +22,21 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
    * @return \Zend_Form_Element
    */
   public function createIntegerCreator() {
-    return new IntegerCreator($this->getNamespace());
+    return new NumberCreator($this->getNamespace());
   }
   
   /**
    * @return \Zend_Form_Element
    */
   public function createSmallintCreator() {
-    return new IntegerCreator($this->getNamespace());
+    return new NumberCreator($this->getNamespace());
   }
 
   /**
    * @return \Zend_Form_Element
    */
   public function createBigintCreator() {
-    return new IntegerCreator($this->getNamespace());
+    return new NumberCreator($this->getNamespace());
   }
 
   /**
@@ -50,7 +50,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
    * @return \Zend_Form_Element
    */
   public function createFloatCreator() {
-    return new FloatCreator($this->getNamespace());
+    return new NumberCreator($this->getNamespace());
   }
   
   /**
