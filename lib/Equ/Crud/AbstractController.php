@@ -218,7 +218,8 @@ abstract class AbstractController extends \Zend_Controller_Action {
     $form = null;
     try {
       $em      = $this->getEntityManager();
-      $builder = $this->_helper->createFormBuilder($this->getUpdateForm(), $em->find($this->getEntityClass(), $id));
+      $entity  = $em->find($this->getEntityClass(), $id);
+      $builder = $this->_helper->createFormBuilder($this->getUpdateForm(), $entity);
       $this->formBuilderCreated($builder);
       $form    = $builder->getForm();
       if ($this->_request->isPost()) {
