@@ -18,6 +18,9 @@
         $field = $record[$key];
         if (is_bool($field)) {
           echo $field ? $this->translate('Crud/True') : $this->translate('Crud/False');
+        } elseif ($field instanceof DateTime) {
+          $date = new Zend_Date($field->getTimestamp());
+          echo $date->toString();
         } elseif (is_object($field)) {
           echo (string)$field;
         }
