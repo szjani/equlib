@@ -167,7 +167,9 @@ class Builder implements IBuilder {
     $elementCreator = $this->getElementCreatorFactory()->createCreator($type);
     $elementCreator->setOptionFlags($this->getOptionFlags());
     $select = $elementCreator->createElement($elementName);
-    $select->addMultiOption('0', '');
+    if ($type === 'array') {
+      $select->addMultiOption('0', '');
+    }
     $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
     foreach ($this->getEntityManager()->getRepository($def['targetEntity'])->findAll() as $entity) {
       $select->addMultiOption(
@@ -226,7 +228,7 @@ class Builder implements IBuilder {
         if ($type instanceof \Zend_Form_Element) {
           $element = $type;
         } else {
-          $element = $this->createForeignElement($field, $metadata->associationMappings[$field]);
+          $element = $this->createForeignElement($field, $metadata->associationMappings[$field], $type);
         }
         $this->fillForeignElement($element, $field, $metadata->associationMappings[$field]);
         $this->objectHelpers[$field] = new ObjectHelper($metadata->associationMappings[$field]['targetEntity']);

@@ -102,5 +102,8 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
     return new PasswordCreator($this->getNamespace());
   }
 
+  public function createMultiCreator() {
+    return new MultiCreator($this->getNamespace());
+  }
 
 }

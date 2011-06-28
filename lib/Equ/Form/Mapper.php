@@ -114,11 +114,26 @@ class Mapper implements IMapper {
         // property $field is a relation, $value is probably an ID
         if ($this->objectHelpers->offsetExists($field)) {
           if (!empty($value)) {
-            $value = $this->getEntityManager()->getReference(
-              $this->objectHelpers[$field]->getType(),
-              $element->getValue()
-            );
-            $this->objectHelper->set($field, $value);
+            if (is_array($value)) { // multiselect, etc
+              $existingFields = $this->objectHelper->get($field);
+              if (null === $existingFields) {
+                $existingFields = new \Doctrine\Common\Collections\ArrayCollection();
+                $this->objectHelper->set($field, $existingFields);
+              }
+              foreach ($value as $id) {
+                $rel = $this->getEntityManager()->getReference(
+                  $this->objectHelpers[$field]->getType(),
+                  $id
+                );
+                $existingFields->add($rel);
+              }
+            } else {
+              $value = $this->getEntityManager()->getReference(
+                $this->objectHelpers[$field]->getType(),
+                $element->getValue()
+              );
+              $this->objectHelper->set($field, $value);
+            }
           }
         } else {
           $this->objectHelper->set($field, $value);
