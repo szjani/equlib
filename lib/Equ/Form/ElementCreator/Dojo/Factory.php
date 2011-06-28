@@ -85,7 +85,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
    * @return \Zend_Form_Element
    */
   public function createTextCreator() {
-    return new StringCreator($this->getNamespace());
+    return new TextCreator($this->getNamespace());
   }
 
   /**
