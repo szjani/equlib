@@ -87,7 +87,7 @@ class Mapper implements IMapper {
    * @param  Request $request
    * @return boolean
    */
-  public function isValid(Request $request) {
+  public function isValid(Request $request, $autoMapping = true) {
     $valid = false;
     $namespace = $this->form->getElementsBelongTo();
     if ($this->form->getMethod() == Form::METHOD_POST) {
@@ -95,7 +95,7 @@ class Mapper implements IMapper {
     } else {
       $valid = $this->form->isValid($request->getParam($namespace, array()));
     }
-    if ($valid) {
+    if ($valid && $autoMapping) {
       $this->map();
     }
     return $valid;

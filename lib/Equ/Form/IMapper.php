@@ -9,7 +9,7 @@ interface IMapper {
   
   public function __construct(Form $form, $key, \ArrayObject $objectHelpers);
   
-  public function isValid(Request $request);
+  public function isValid(Request $request, $autoMapping = true);
   
   public function map();
   
