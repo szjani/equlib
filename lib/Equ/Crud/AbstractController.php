@@ -286,8 +286,11 @@ abstract class AbstractController extends \Zend_Controller_Action {
         $filterForm->setMethod(\Zend_Form::METHOD_GET);
         $this->formBuilderCreated($builder);
         $namespace = $filterForm->getElementsBelongTo();
-        if (is_array($this->_request->getParam($namespace)) && !$builder->getMapper()->isValid($this->_request)) {
-          throw new RuntimeException('Invalid values in form');
+        if (is_array($this->_request->getParam($namespace))) {
+          if (!$builder->getMapper()->isValid($this->_request, false)) {
+            throw new RuntimeException('Invalid values in form');
+          }
+          $builder->getMapper()->map();
         }
         $filters = $builder->getMapper()->getObject();
       }
