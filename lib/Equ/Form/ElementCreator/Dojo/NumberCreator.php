@@ -13,7 +13,11 @@ class NumberCreator extends \Equ\Form\ElementCreator\AbstractCreator {
    */
   protected function createPlaceholder(\Zend_Form_Element $element) {
     parent::createPlaceholder($element);
-    $element->setDijitParam('placeHolder', \Zend_Form::getDefaultTranslator()->translate($this->getPlaceHolder()));
+    if (\Zend_Form::hasDefaultTranslator()) {
+      $element->setDijitParam('placeHolder', \Zend_Form::getDefaultTranslator()->translate($this->getPlaceHolder()));
+    } else {
+      $element->setDijitParam('placeHolder', $this->getPlaceHolder());
+    }
     return $this;
   }
 
