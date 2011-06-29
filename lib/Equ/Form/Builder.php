@@ -164,6 +164,9 @@ class Builder implements IBuilder {
    * @return \Zend_Form_Element
    */
   protected function createForeignElement($elementName, array $def, $type = 'array') {
+    if ($type === null) {
+      $type = 'array';
+    }
     $elementCreator = $this->getElementCreatorFactory()->createCreator($type);
     $elementCreator->setOptionFlags($this->getOptionFlags());
     $select = $elementCreator->createElement($elementName);
