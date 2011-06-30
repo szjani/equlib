@@ -58,4 +58,11 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
   public function createSubmitCreator() {
     return new SubmitCreator($this->getNamespace());
   }
+  
+  /**
+   * @return AbstractCreator
+   */
+  public function createPasswordCreator() {
+    return new PasswordCreator($this->getNamespace());
+  }
 }

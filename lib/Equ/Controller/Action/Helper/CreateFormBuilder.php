@@ -11,10 +11,11 @@ class CreateFormBuilder extends \Zend_Controller_Action_Helper_Abstract {
   }
   
   public function create(IMappedType $mappedType, $object) {
-    $formBuilder = new FormBuilder(
-      $object,
-      $this->getActionController()->getHelper('serviceContainer')->getContainer()->get('form.elementcreator.factory')
-    );
+    $container = $this->getActionController()->getHelper('serviceContainer')->getContainer();
+    $formBuilder = new FormBuilder($object, $container->get('form.elementcreator.factory'));
+    $formBuilder
+      ->setSubFormClass($container->getParameter('form.subFormClass'))
+      ->setFormClass($container->getParameter('form.formClass'));
     $mappedType->buildForm($formBuilder);
     return $formBuilder;
   }

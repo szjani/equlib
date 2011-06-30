@@ -62,6 +62,10 @@ class Builder implements IBuilder {
    * @var OptionFlags
    */
   private $optionFlags = null;
+  
+  private $formClass = '\Zend_Form';
+  
+  private $subFormClass = '\Zend_Form_SubForm';
 
   /**
    * @param mixed $object
@@ -80,6 +84,39 @@ class Builder implements IBuilder {
     }
     $this->setElementCreatorFactory($elementCreatorFactory);
   }
+
+  /**
+   * @return string
+   */
+  public function getFormClass() {
+    return $this->formClass;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSubFormClass() {
+    return $this->subFormClass;
+  }
+  
+  /**
+   * @param string $class
+   * @return Builder 
+   */
+  public function setFormClass($class) {
+    $this->formClass = $class;
+    return $this;
+  }
+  
+  /**
+   * @param string $class
+   * @return Builder 
+   */
+  public function setSubFormClass($class) {
+    $this->subFormClass = $class;
+    return $this;
+  }
+
   
   /**
    * @return \ArrayObject 
@@ -331,7 +368,8 @@ class Builder implements IBuilder {
     $subFormName = $field . ($index === '' ? $index : ('[' . $index . ']'));
     $builder     = new self($subObject, $this->getElementCreatorFactory(), $this->objectHelpers, $subFormKey);
     $builder->setEntityManager($this->getEntityManager());
-    $subForm = new \Zend_Form_SubForm();
+    $class = $this->getSubFormClass();
+    $subForm = new $class;
     $subForm->setElementsBelongTo($subFormName);
     $this->getForm()->addSubForm($subForm, $subFormName);
     $this->objectHelpers[$subFormKey] = $builder->getObjectHelper();
@@ -361,7 +399,8 @@ class Builder implements IBuilder {
    */
   public function getForm() {
     if ($this->form === null) {
-      $this->form = new \Zend_Form();
+      $class = $this->getFormClass();
+      $this->form = new $class;
       if ($this->getOptionFlags()->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
         $this->form->setElementsBelongTo($this->getFormKey());
       }

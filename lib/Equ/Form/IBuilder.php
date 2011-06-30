@@ -55,4 +55,12 @@ interface IBuilder extends IOptionFlaggable {
    */
   public function setElementCreatorFactory(ElementCreator\IFactory $factory);
   
+  public function getFormClass();
+  
+  public function setFormClass($class);
+  
+  public function getSubFormClass();
+  
+  public function setSubFormClass($class);
+  
 }
