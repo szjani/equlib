@@ -32,8 +32,10 @@
       <?php endforeach ?>
       <td>
         <div class="methods-list">
-          <a href="<?php echo $this->url(array('action' => 'update', 'id' => $record->getId())) ?>"><?php echo $this->translate('Crud/Update/Label') ?></a>
-          | <a onclick="javascript: return confirm('<?php echo $this->translate('Crud/Delete/Confirm')?>')" href="<?php echo $this->url(array('action' => 'delete', 'id' => $record->getId())) ?>"><?php echo $this->translate('Crud/Delete/Label') ?></a>
+          <ul>
+            <li><a href="<?php echo $this->url(array('action' => 'update', 'id' => $record->getId())) ?>"><?php echo $this->translate('Crud/Update/Label') ?></a></li>
+            <li><a onclick="javascript: return confirm('<?php echo $this->translate('Crud/Delete/Confirm')?>')" href="<?php echo $this->url(array('action' => 'delete', 'id' => $record->getId())) ?>"><?php echo $this->translate('Crud/Delete/Label') ?></a></li>
+          </ul>
         </div>
       </td>
     </tr>
