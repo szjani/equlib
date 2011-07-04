@@ -9,7 +9,8 @@ use
   Equ\Crud\Exception\UnexpectedValueException,
   Equ\Crud\Exception\RuntimeException,
   Equ\Doctrine\IPaginatorCreator,
-  Equ\Form\IBuilder;
+  Equ\Form\IBuilder,
+  Equ\Form\IMappedType;
 
 /**
  * Controller of CRUD operations
@@ -103,6 +104,16 @@ abstract class AbstractController extends \Zend_Controller_Action {
   }
   
   /**
+   *
+   * @param IMappedType $mappedType
+   * @param mixed $object
+   * @return FormBuilder 
+   */
+  protected function createFormBuilder(IMappedType $mappedType, $object) {
+    return $this->_helper->createFormBuilder($mappedType, $object);
+  }
+  
+  /**
    * @return array of column names
    */
   public function getTableFieldNames() {
@@ -183,7 +194,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
   public function createAction() {
     $form = null;
     try {
-      $builder = $this->_helper->createFormBuilder($this->getCreateForm(), $this->getEntityClass());
+      $builder = $this->createFormBuilder($this->getCreateForm(), $this->getEntityClass());
       $this->formBuilderCreated($builder);
       $form = $builder->getForm();
       $em   = $this->getEntityManager();
@@ -219,7 +230,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
     try {
       $em      = $this->getEntityManager();
       $entity  = $em->find($this->getEntityClass(), $id);
-      $builder = $this->_helper->createFormBuilder($this->getUpdateForm(), $entity);
+      $builder = $this->createFormBuilder($this->getUpdateForm(), $entity);
       $this->formBuilderCreated($builder);
       $form    = $builder->getForm();
       if ($this->_request->isPost()) {
@@ -280,7 +291,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       
       // create filter form
       if ($this->useFilterForm) {
-        $builder = $this->_helper->createFormBuilder($this->getFilterForm(), $this->getEntityClass());
+        $builder = $this->createFormBuilder($this->getFilterForm(), $this->getEntityClass());
         /* @var $filterForm \Zend_Form */
         $filterForm = $builder->getForm();
         $filterForm->setMethod(\Zend_Form::METHOD_GET);
