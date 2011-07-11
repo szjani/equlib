@@ -23,10 +23,9 @@ class MvcPermission extends \Zend_Controller_Plugin_Abstract {
       $container = \Zend_Controller_Front::getInstance()->getParam('bootstrap')->getContainer();
       /* @var $em \Doctrine\ORM\EntityManager */
       $em = $container->get('doctrine.entitymanager');
-      $entity = $em->getRepository('entities\User')->findOneBy(array('role' => $user));
-      if ($entity) {
-        $user = $entity;
-      }
+      try {
+        $user = $em->getRepository('entities\User')->getAuthenticatedUser();
+      } catch (\RuntimeException $e) {}
       $resource = 'mvc:'.$request->getModuleName().'.'.$request->getControllerName().'.'.$request->getActionName();
       if (!$container->get('acl')->isAllowed($user, $resource, 'list')) {
         throw new RuntimeException("You don't have permission to view this page!");
