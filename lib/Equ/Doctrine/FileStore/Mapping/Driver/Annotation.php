@@ -31,7 +31,7 @@ class Annotation implements Driver {
    * @param string $field
    * @return boolean
    */
-  protected function isValidField(ClassMetadata $meta, $field, $types) {
+  protected function isValidField($meta, $field, $types) {
     $mapping = $meta->getFieldMapping($field);
     return $mapping && in_array($mapping['type'], $types);
   }
@@ -40,7 +40,7 @@ class Annotation implements Driver {
    * @param ClassMetadata $meta
    * @param array $config
    */
-  public function readExtendedMetadata(ClassMetadata $meta, array &$config) {
+  public function readExtendedMetadata($meta, array &$config) {
     require_once __DIR__ . '/../Annotations.php';
     $reader = new AnnotationReader();
     $reader->setAnnotationNamespaceAlias('Equ\Doctrine\FileStore\Mapping\\', 'equ');
@@ -128,7 +128,7 @@ class Annotation implements Driver {
    * @param ClassMetadata $meta
    * @param array $config
    */
-  public function validateFullMetadata(ClassMetadata $meta, array $config) {
+  public function validateFullMetadata($meta, array $config) {
     $missingFields = array();
     if (!isset($config['filename'])) {
       $missingFields[] = 'filename';
@@ -136,6 +136,16 @@ class Annotation implements Driver {
     if ($missingFields) {
       throw new InvalidMappingException("Missing properties: " . implode(', ', $missingFields) . " in class - {$meta->name}");
     }
+  }
+  
+  /**
+   * Passes in the original driver
+   *
+   * @param $driver
+   * @return void
+   */
+  public function setOriginalDriver($driver) {
+    
   }
 
 }
