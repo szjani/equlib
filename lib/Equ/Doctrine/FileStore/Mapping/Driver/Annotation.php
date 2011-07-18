@@ -133,9 +133,9 @@ class Annotation implements Driver {
     if (!isset($config['filename'])) {
       $missingFields[] = 'filename';
     }
-    if ($missingFields) {
-      throw new InvalidMappingException("Missing properties: " . implode(', ', $missingFields) . " in class - {$meta->name}");
-    }
+    //if ($missingFields) {
+    //  throw new InvalidMappingException("Missing properties: " . implode(', ', $missingFields) . " in class - {$meta->name}");
+    //}
   }
   
   /**
