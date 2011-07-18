@@ -241,6 +241,9 @@ class Builder implements IBuilder {
     
     if ($value instanceof $def['targetEntity']) {
       $element->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
+      if ($element instanceof \Zend_Dojo_Form_Element_ComboBox && $element->getAutocomplete()) {
+        $element->setAttrib('displayedValue', (string)$value);
+      }
     }
   }
   
