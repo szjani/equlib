@@ -240,9 +240,13 @@ class Builder implements IBuilder {
       ->getFieldValue($this->objectHelper->getObject(), $elementName);
     
     if ($value instanceof $def['targetEntity']) {
-      $element->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
+      $id = $targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName());
       if ($element instanceof \Zend_Dojo_Form_Element_ComboBox && $element->getAutocomplete()) {
+        $element->addMultiOption(array($id, (string)$value));
+        $element->setAttrib('value', (string)$value);
         $element->setAttrib('displayedValue', (string)$value);
+      } else {
+        $element->setValue($id);
       }
     }
   }
