@@ -284,12 +284,12 @@ class Builder implements IBuilder {
         if (null === $type) {
           $type = $metadata->fieldMappings[$field]['type'];
         }
-        $elementCreator = $this->createElementCreator($type);
-        $elementCreator->setOptionFlags($this->getOptionFlags());
-        $this->addValidatorsFromObjectClass($elementCreator, $field);
         if ($type instanceof \Zend_Form_Element) {
           $element = $type;
         } else {
+          $elementCreator = $this->createElementCreator($type);
+          $elementCreator->setOptionFlags($this->getOptionFlags());
+          $this->addValidatorsFromObjectClass($elementCreator, $field);
           if (array_key_exists($field, $metadata->fieldMappings)) {
             $element = $elementCreator->createElement($field, $metadata->fieldMappings[$field]);
           } else {
@@ -302,12 +302,12 @@ class Builder implements IBuilder {
       if (null === $type) {
         $type = 'text';
       }
-      $elementCreator = $this->createElementCreator($type);
-      $elementCreator->setOptionFlags($this->getOptionFlags());
-      $this->addValidatorsFromObjectClass($elementCreator, $field);
       if ($type instanceof \Zend_Form_Element) {
         $element = $type;
       } else {
+        $elementCreator = $this->createElementCreator($type);
+        $elementCreator->setOptionFlags($this->getOptionFlags());
+        $this->addValidatorsFromObjectClass($elementCreator, $field);
         $element = $elementCreator->createElement($field);
       }
       $element->setValue((string)$fieldValue);
