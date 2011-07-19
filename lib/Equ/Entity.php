@@ -24,6 +24,16 @@ abstract class Entity implements \ArrayAccess {
   private $validator;
   
   /**
+   * Retrieves the class name,
+   * usefull for parameter of $em->getRepository() method
+   * 
+   * @return string
+   */
+  public final static function className() {
+    return get_called_class();
+  }
+  
+  /**
    * @param Validator $validator
    * @return Entity 
    */
