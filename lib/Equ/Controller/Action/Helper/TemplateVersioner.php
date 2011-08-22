@@ -22,6 +22,9 @@ class TemplateVersioner extends \Zend_Controller_Action_Helper_Abstract {
   }
   
   public function init() {
+    if (null !== $this->getRequest()->getParam(PageVersionViewRenderer::PAGE_VERSION, null)) {
+      return;
+    }
     $now = new \DateTime();
     $this->versionChanges->ksort();
     $correctVersion = 0;
