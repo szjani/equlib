@@ -20,6 +20,16 @@ class FormDate extends \Zend_View_Helper_FormElement {
     $dayAttribs = isset($attribs['dayAttribs']) ? $attribs['dayAttribs'] : array();
     $monthAttribs = isset($attribs['monthAttribs']) ? $attribs['monthAttribs'] : array();
     $yearAttribs = isset($attribs['yearAttribs']) ? $attribs['yearAttribs'] : array();
+    
+    if (isset($attribs['class'])) {
+      $dayAttribs['class'] = $attribs['class'];
+    }
+    if (isset($attribs['class'])) {
+      $monthAttribs['class'] = $attribs['class'];
+    }
+    if (isset($attribs['class'])) {
+      $yearAttribs['class'] = $attribs['class'];
+    }
 
     $dayMultiOptions = array('' => '');
     for ($i = 1; $i < 32; $i++) {
@@ -28,7 +38,10 @@ class FormDate extends \Zend_View_Helper_FormElement {
     }
     $monthMultiOptions = array('' => '');
     $months = \Zend_Locale::getTranslationList('Months');
-    $monthMultiOptions += $months['format']['abbreviated'];
+    foreach ($months['format']['abbreviated'] as $key => $value) {
+      $index = str_pad($key, 2, '0', STR_PAD_LEFT);
+      $monthMultiOptions[$index] = $value;
+    } 
 
     $startYear = 1910;
     if (isset($attribs['startYear'])) {
