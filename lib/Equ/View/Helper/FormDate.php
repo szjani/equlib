@@ -43,13 +43,13 @@ class FormDate extends \Zend_View_Helper_FormElement {
       $monthMultiOptions[$index] = $value;
     } 
 
-    $startYear = 1910;
+    $startYear = date('Y');
     if (isset($attribs['startYear'])) {
       $startYear = $attribs['startYear'];
       unset($attribs['startYear']);
     }
 
-    $stopYear = date('Y');
+    $stopYear = 1910;
     if (isset($attribs['stopYear'])) {
       $stopYear = $attribs['stopYear'];
       unset($attribs['stopYear']);
