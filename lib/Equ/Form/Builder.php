@@ -197,6 +197,15 @@ class Builder implements IBuilder {
   
   /**
    * @param string $elementName
+   * @param string $targetEntity
+   * @return array
+   */
+  protected function getForeignEntities($elementName, $targetEntity) {
+    return $this->getEntityManager()->getRepository($targetEntity)->findAll();
+  }
+  
+  /**
+   * @param string $elementName
    * @param array  $def
    * @return \Zend_Form_Element
    */
@@ -211,7 +220,7 @@ class Builder implements IBuilder {
       $select->addMultiOption('0', '');
     }
     $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
-    foreach ($this->getEntityManager()->getRepository($def['targetEntity'])->findAll() as $entity) {
+    foreach ($this->getForeignEntities($elementName, $def['targetEntity']) as $entity) {
       $select->addMultiOption(
         $targetMetaData->getFieldValue(
           $entity,
