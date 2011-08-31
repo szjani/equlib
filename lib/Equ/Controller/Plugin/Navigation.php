@@ -15,7 +15,7 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
       $navContainer = $container->get('navigation');
       /* @var $em \Doctrine\ORM\EntityManager */
       $em = $container->get('doctrine.entitymanager');
-      $query = $em->createQuery('SELECT m, p FROM entities\Mvc m LEFT JOIN m.parent p ORDER BY m.lvl');
+      $query = $em->createQuery('SELECT m, p FROM entities\Mvc m LEFT JOIN m.parent p ORDER BY m.lvl, m.lft');
       foreach ($query->getResult() as $mvc) {
         if (false !== strpos((string)$mvc->getNavigationPage()->getResource(), 'update')) {
           $mvc->getNavigationPage()->setVisible(false);
