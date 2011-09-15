@@ -1,35 +1,54 @@
 <?php
 namespace Equ\Controller\Plugin;
+use
+  Zend_Cache_Core,
+  Zend_Navigation,
+  Equ\Navigation\Item as NavigationItem,
+  Equ\Navigation\ItemRepository as NavigationItemRepository;
 
 class Navigation extends \Zend_Controller_Plugin_Abstract {
 
+  /**
+   * @var Zend_Navigation
+   */
+  private $navigation;
+  
+  /**
+   *
+   * @var NavigationItemRepository
+   */
+  private $itemRepo;
+  
+  /**
+   *
+   * @var Zend_Cache_Core
+   */
+  private $cache;
+  
+  /**
+   * @param Zend_Navigation $navigation
+   * @param NavigationItemRepository $itemRepo
+   * @param Zend_Cache_Core $cache 
+   */
+  public function __construct(Zend_Navigation $navigation, NavigationItemRepository $itemRepo, Zend_Cache_Core $cache) {
+    $this->navigation = $navigation;
+    $this->itemRepo   = $itemRepo;
+    $this->cache      = $cache;
+  }
+  
   public function routeShutdown(\Zend_Controller_Request_Abstract $request) {
     if ($request->getParam('format') == 'ajax') {
       return;
     }
-    $container = \Zend_Controller_Front::getInstance()->getParam('bootstrap')->getContainer();
-    $cache = $container->get('cache.system');
-    if ($navContainer = ($cache->load('navigation'))) {
-      $container->set('navigation', $navContainer);
-    } else {
-      $navContainer = $container->get('navigation');
-      /* @var $em \Doctrine\ORM\EntityManager */
-      $em = $container->get('doctrine.entitymanager');
-      $query = $em->createQuery('SELECT m, p FROM entities\Mvc m LEFT JOIN m.parent p ORDER BY m.lvl, m.lft');
-      foreach ($query->getResult() as $mvc) {
-        if (false !== strpos((string)$mvc->getNavigationPage()->getResource(), 'update')) {
-          $mvc->getNavigationPage()->setVisible(false);
-        }
-        $parentNav = $mvc->getParent() ? $mvc->getParent()->getNavigationPage() : $navContainer;
-        $parentNav->addPage($mvc->getNavigationPage());
+    /* @var $item NavigationItem */
+    foreach ($this->itemRepo->getNavigationItems() as $item) {
+      if (false !== strpos((string)$item->getNavigationPage()->getResource(), 'update')) {
+        $item->getNavigationPage()->setVisible(false);
       }
-      $cache->save($navContainer, 'navigation');
+      $parentNav = $item->getParent() ? $item->getParent()->getNavigationPage() : $this->navigation;
+      $parentNav->addPage($item->getNavigationPage());
     }
-
-    $view = \Zend_Layout::getMvcInstance()->getView();
-    $view->getHelper('navigation')->setContainer($container->get('navigation'));
-    $view->getHelper('navigation')->setAcl($container->get('acl'));
-    $view->getHelper('navigation')->setRole(\Zend_Auth::getInstance()->getIdentity());
+    $this->cache->save($this->navigation, 'navigation');
   }
 
 }
