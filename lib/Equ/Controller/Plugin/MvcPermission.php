@@ -1,6 +1,9 @@
 <?php
 namespace Equ\Controller\Plugin;
-use Equ\Controller\Exception\RuntimeException;
+use
+  Equ\Controller\Exception\RuntimeException,
+  Equ\Auth\AuthenticatedUserStorage,
+  Zend_Acl;
 
 /**
  * Check that user have or don't have permission to view current page
@@ -14,20 +17,36 @@ use Equ\Controller\Exception\RuntimeException;
 class MvcPermission extends \Zend_Controller_Plugin_Abstract {
 
   /**
+   * @var AuthenticatedUserStorage
+   */
+  private $storage;
+  
+  /**
+   *
+   * @var Zend_Acl
+   */
+  private $acl;
+  
+  /**
+   * @param AuthenticatedUserStorage $storage 
+   */
+  public function __construct(AuthenticatedUserStorage $storage, Zend_Acl $acl) {
+    $this->storage = $storage;
+    $this->acl     = $acl;
+  }
+  
+  /**
    * @param \Zend_Controller_Request_Abstract $request
    */
   public function preDispatch(\Zend_Controller_Request_Abstract $request) {
     try {
       $auth = \Zend_Auth::getInstance();
       $user = $auth->hasIdentity() ? $auth->getIdentity() : null;
-      $container = \Zend_Controller_Front::getInstance()->getParam('bootstrap')->getContainer();
-      /* @var $em \Doctrine\ORM\EntityManager */
-      $em = $container->get('doctrine.entitymanager');
       try {
-        $user = $em->getRepository('entities\User')->getAuthenticatedUser();
+        $user = $this->storage->getAuthenticatedUser();
       } catch (\RuntimeException $e) {}
       $resource = 'mvc:'.$request->getModuleName().'.'.$request->getControllerName().'.'.$request->getActionName();
-      if (!$container->get('acl')->isAllowed($user, $resource, 'list')) {
+      if (!$this->acl->isAllowed($user, $resource, 'list')) {
         throw new RuntimeException("You don't have permission to view this page!");
       }
     } catch (RuntimeException $e) {
