@@ -1,7 +1,7 @@
 <?php
 namespace Equ\Controller\Plugin;
 use
-  Equ\Controller\Exception\RuntimeException,
+  Equ\Controller\Exception\PermissionException,
   Equ\Auth\AuthenticatedUserStorage,
   Zend_Acl;
 
@@ -48,7 +48,7 @@ class MvcPermission extends \Zend_Controller_Plugin_Abstract {
       } catch (\RuntimeException $e) {}
       $resource = 'mvc:'.$request->getModuleName().'.'.$request->getControllerName().'.'.$request->getActionName();
       if (!$this->acl->isAllowed($user, $resource, 'list')) {
-        throw new RuntimeException("You don't have permission to view this page!");
+        throw new PermissionException("You don't have permission to view this page!");
       }
     } catch (RuntimeException $e) {
       $request
