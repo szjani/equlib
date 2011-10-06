@@ -66,16 +66,33 @@ class FormDate extends \Zend_View_Helper_FormElement {
         $yearMultiOptions[$i] = $i;
       }
     }
-
-    // return the 3 selects separated by &nbsp;
-    return
-      $this->view->formSelect(
+    $res = '';
+    if (!array_key_exists('format', $attribs)) {
+      $res = $this->view->formSelect(
         $name . '[day]', $day, $dayAttribs, $dayMultiOptions) .
       $this->view->formSelect(
         $name . '[month]', $month, $monthAttribs, $monthMultiOptions) .
       $this->view->formSelect(
         $name . '[year]', $year, $yearAttribs, $yearMultiOptions
-    );
+      );
+    } else {
+      for ($i = 0; $i < strlen($attribs['format']); $i++) {
+        switch ($attribs['format'][$i]) {
+          case 'y':
+            $res .= $this->view->formSelect($name . '[year]', $year, $yearAttribs, $yearMultiOptions);
+            break;
+          case 'm':
+            $res .= $this->view->formSelect($name . '[month]', $month, $monthAttribs, $monthMultiOptions);
+            break;
+          case 'd':
+            $res .= $this->view->formSelect($name . '[day]', $day, $dayAttribs, $dayMultiOptions);
+            break;
+          default:
+            throw new \InvalidArgumentException("Invalid date format: {$attribs['format']}");
+        }
+      }
+    }
+    return $res;
   }
 
 }
