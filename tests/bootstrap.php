@@ -5,6 +5,7 @@ define('APPLICATION_ENV', 'testing');
 set_include_path(implode(PATH_SEPARATOR, array(
   '/development/Frameworks/ZF_1.11_svn/library',
   '/development/Frameworks/zf1-classmap/library',
+  get_include_path()
 )));
 
 require_once 'ZendX/Loader/AutoloaderFactory.php';
