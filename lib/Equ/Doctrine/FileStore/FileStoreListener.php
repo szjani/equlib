@@ -1,14 +1,12 @@
 <?php
-
 namespace Equ\Doctrine\FileStore;
 
-use
-  Doctrine\ORM\Events,
-  Doctrine\Common\EventArgs,
-  Doctrine\ORM\Event\PreUpdateEventArgs,
-  Doctrine\Common\Persistence\ObjectManager,
-  Gedmo\Mapping\MappedEventSubscriber,
-  Equ\Exception\InvalidArgumentException;
+use Doctrine\ORM\Events,
+    Doctrine\Common\EventArgs,
+    Doctrine\ORM\Event\PreUpdateEventArgs,
+    Doctrine\Common\Persistence\ObjectManager,
+    Equ\Doctrine\Mapping\MappedEventSubscriber,
+    Equ\Exception\InvalidArgumentException;
 
 class FileStoreListener extends MappedEventSubscriber {
 

@@ -5,15 +5,16 @@ namespace Equ\Doctrine\FileStore\Mapping\Driver;
 use Gedmo\Mapping\Driver,
  Doctrine\Common\Annotations\AnnotationReader,
  Doctrine\Common\Persistence\Mapping\ClassMetadata,
- Gedmo\Exception\InvalidMappingException;
+ Gedmo\Exception\InvalidMappingException,
+ Gedmo\Mapping\Driver\AnnotationDriverInterface;
 
-class Annotation implements Driver {
-  const ANNOTATION_FILESTORE = 'Equ\Doctrine\FileStore\Mapping\FileStore';
-  const ANNOTATION_FILENAME = 'Equ\Doctrine\FileStore\Mapping\Filename';
-  const ANNOTATION_ORIGINAL_FILENAME = 'Equ\Doctrine\FileStore\Mapping\OriginalFilename';
-  const ANNOTATION_SIZE = 'Equ\Doctrine\FileStore\Mapping\Size';
-  const ANNOTATION_MD5HASH = 'Equ\Doctrine\FileStore\Mapping\Md5Hash';
-  const ANNOTATION_MIMETYPE = 'Equ\Doctrine\FileStore\Mapping\MimeType';
+class Annotation implements AnnotationDriverInterface {
+  const ANNOTATION_FILESTORE = 'Equ\\Doctrine\\Mapping\\Annotation\\FileStore';
+  const ANNOTATION_FILENAME = 'Equ\\Doctrine\\Mapping\\Annotation\\Filename';
+  const ANNOTATION_ORIGINAL_FILENAME = 'Equ\\Doctrine\\Mapping\\Annotation\\OriginalFilename';
+  const ANNOTATION_SIZE = 'Equ\\Doctrine\\Mapping\\Annotation\\Size';
+  const ANNOTATION_MD5HASH = 'Equ\\Doctrine\\Mapping\\Annotation\\Md5Hash';
+  const ANNOTATION_MIMETYPE = 'Equ\\Doctrine\\Mapping\\Annotation\\MimeType';
 
   private $validStringTypes = array(
     'string',
@@ -23,6 +24,20 @@ class Annotation implements Driver {
     'smallint',
     'bigint',
   );
+  
+  /**
+   * Annotation reader instance
+   *
+   * @var object
+   */
+  private $reader;
+
+  /**
+   * {@inheritDoc}
+   */
+  public function setAnnotationReader($reader) {
+    $this->reader = $reader;
+  }
 
   /**
    * Checks if $field type is valid
@@ -40,16 +55,11 @@ class Annotation implements Driver {
    * @param ClassMetadata $meta
    * @param array $config
    */
-  public function readExtendedMetadata($meta, array &$config) {
-    require_once __DIR__ . '/../Annotations.php';
-    $reader = new AnnotationReader();
-    $reader->setAnnotationNamespaceAlias('Equ\Doctrine\FileStore\Mapping\\', 'equ');
-
+  public function readExtendedMetadata(ClassMetadata $meta, array &$config) {
+    $reader = $this->reader;
     $class = $meta->getReflectionClass();
-    // class annotations
-    $classAnnotations = $reader->getClassAnnotations($class);
-    if (isset($classAnnotations[self::ANNOTATION_FILESTORE])) {
-      $annot = $classAnnotations[self::ANNOTATION_FILESTORE];
+    
+    if ($annot = $reader->getClassAnnotation($class, self::ANNOTATION_FILESTORE)) {
       if (!file_exists($annot->path) || !is_writable($annot->path) || !is_dir($annot->path)) {
         throw new InvalidMappingException("Directory '{$annot->path}' has be a writtable directory!");
       }
@@ -128,7 +138,7 @@ class Annotation implements Driver {
    * @param ClassMetadata $meta
    * @param array $config
    */
-  public function validateFullMetadata($meta, array $config) {
+  public function validateFullMetadata(ClassMetadata $meta, array $config) {
     $missingFields = array();
     if (!isset($config['filename'])) {
       $missingFields[] = 'filename';
