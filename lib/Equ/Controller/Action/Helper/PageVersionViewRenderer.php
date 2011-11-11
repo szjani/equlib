@@ -15,8 +15,8 @@ class PageVersionViewRenderer extends \Zend_Controller_Action_Helper_ViewRendere
   public function render($action = null, $name = null, $noController = null) {
     $action = $action ?: ($this->_scriptAction ?: $this->getRequest()->getActionName());
     try {
-      $version = $this->version ?: '';
-      return parent::render($action . $version, $name, $noController);
+      $suffix = $this->version ? ('-' . $this->version) : '';
+      return parent::render($action . $suffix, $name, $noController);
     } catch (\Zend_View_Exception $e) {
       return parent::render($action, $name, $noController);
     }
