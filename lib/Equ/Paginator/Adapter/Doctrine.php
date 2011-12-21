@@ -22,14 +22,13 @@ class Doctrine extends PaginationAdapter {
       },
       $ids
     );
-//      var_dump($this->query->getDQL());
-      $res = $this->createWhereInQuery($ids)->execute();
-      foreach ($res as $obj) {
-//        var_dump(get_class($obj));
-//        \Doctrine\Common\Util\Debug::dump($obj);
-      }
-//      exit;
-    return $this->createWhereInQuery($ids)->execute();
+    $ids = array_unique($ids);
+    $ids = array_values($ids);
+    if ($this->arrayResult) {
+      return $this->createWhereInQuery($ids)->getArrayResult();
+    } else {
+      return $this->createWhereInQuery($ids)->getResult();
+    }
   }
 
 }
