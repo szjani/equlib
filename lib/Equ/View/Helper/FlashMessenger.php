@@ -1,6 +1,9 @@
 <?php
 namespace Equ\View\Helper;
-use Equ\Message;
+use
+  Equ\Message,
+  Equ\Controller\Action\Helper\FlashMessenger as ActionHelperFlashMessenger,
+  Equ\View\InvalidArgumentException;
 
 /**
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
@@ -17,20 +20,11 @@ class FlashMessenger extends \Zend_View_Helper_Abstract {
    */
   public function flashMessenger($namespace = 'default') {
     $flashMessenger = \Zend_Controller_Action_HelperBroker::getStaticHelper('flashMessenger');
-    $flashMessenger->setNamespace($namespace);
-    $messages = $flashMessenger->getMessages() + $flashMessenger->getCurrentMessages();
-    $flashMessenger->clearMessages();
-    $flashMessenger->clearCurrentMessages();
-    $viewTypes = array();
-    foreach ($messages as $message) {
-      if ($message instanceof Message) {
-        if (!array_key_exists($message->getType(), $viewTypes)) {
-          $viewTypes[$message->getType()] = array();
-        }
-        $viewTypes[$message->getType()][] = $message->getMessage();
-      }
+    if (!($flashMessenger instanceof ActionHelperFlashMessenger)) {
+      throw new InvalidArgumentException("Action helper flashMessenger has to be an instance of 'Equ\Controller\Action\Helper\FlashMessenger'");
     }
-    $this->view->messageTypes = $viewTypes;
+    $flashMessenger->setNamespace($namespace);
+    $this->view->messageTypes = $flashMessenger->collectMessages();
     return $this->view->render('message.phtml');
   }
 
