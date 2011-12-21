@@ -18,7 +18,7 @@ class Doctrine implements SQLLogger {
 
   public function startQuery($sql, array $params = null, array $types = null) {
     $this->time = \microtime(true);
-    $this->log->info(print_r(\func_get_args(), true));
+    $this->log->info('Doctrine SQL query: ' . print_r(\func_get_args(), true));
   }
 
   public function stopQuery() {
