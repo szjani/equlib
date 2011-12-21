@@ -9,6 +9,33 @@ class FlashMessenger extends \Zend_Controller_Action_Helper_FlashMessenger {
   }
   
   /**
+   * @return array
+   */
+  public function collectMessages() {
+    $messages = $this->getMessages() + $this->getCurrentMessages();
+    $this->clearMessages();
+    $this->clearCurrentMessages();
+    $viewTypes = array();
+    foreach ($messages as $message) {
+      if ($message instanceof Message) {
+        if (!array_key_exists($message->getType(), $viewTypes)) {
+          $viewTypes[$message->getType()] = array();
+        }
+        $viewTypes[$message->getType()][] = $message->getMessage();
+      }
+    }
+    return $viewTypes;
+  }
+  
+  public function postDispatch() {
+    $controller = $this->getActionController();
+    if ($controller->getRequest()->isXmlHttpRequest()) {
+      $controller->view->messages = $this->collectMessages();
+    }
+    parent::postDispatch();
+  }
+  
+  /**
    * Add a message object to flashmessenger
    *
    * @param string|Exception $message
