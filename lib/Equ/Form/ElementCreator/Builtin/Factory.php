@@ -48,7 +48,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
   }
   
   public function createTextCreator() {
-    return new StringCreator($this->getNamespace());
+    return new TextCreator($this->getNamespace());
   }
   
   public function createTimeCreator() {
@@ -57,5 +57,9 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
   
   public function createSubmitCreator() {
     return new SubmitCreator($this->getNamespace());
+  }
+  
+  public function createPasswordCreator() {
+    return new PasswordCreator($this->getNamespace());
   }
 }
