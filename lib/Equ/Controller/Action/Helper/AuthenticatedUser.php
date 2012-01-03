@@ -21,7 +21,12 @@ class AuthenticatedUser extends \Zend_Controller_Action_Helper_Abstract {
   }
   
   public function preDispatch() {
-    $this->getActionController()->view->authenticatedUser = $this->storage->getAuthenticatedUser();
+    $user = $this->storage->getAuthenticatedUser();
+    if ($this->_actionController->getRequest()->isXmlHttpRequest() && method_exists($user, 'toArray')) {
+      $this->_actionController->view->authenticatedUser = $user->toArray();
+    } else {
+      $this->_actionController->view->authenticatedUser = $user;
+    }
   }
   
 }
