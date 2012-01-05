@@ -9,8 +9,9 @@
     <?php endforeach ?>
     <th><?php echo $this->translate('Crud/Methods') ?></th>
   </tr>
+  <?php $i = 1; ?>
   <?php foreach ($this->paginator as $record): ?>
-    <tr>
+    <tr class="<?php echo ($i++ & 1 ? 'odd' : 'even') ?>">
       <?php foreach ($this->keys as $key): ?>
         <td>
         <?php
