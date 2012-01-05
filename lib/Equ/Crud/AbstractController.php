@@ -40,8 +40,23 @@ abstract class AbstractController extends \Zend_Controller_Action {
     parent::init();
     $this->view->addScriptPath(dirname(__FILE__) . '/views/scripts');
     $title = $this->view->pageTitle =
-    	"Navigation/{$this->_getParam('module')}/{$this->_getParam('controller')}/{$this->_getParam('action')}/label";
-    $this->view->headTitle($this->view->translate($title));
+      $this->view->translate(
+        "Navigation/{$this->_getParam('module')}/{$this->_getParam('controller')}/{$this->_getParam('action')}/label"
+      );
+    $this->view->headTitle($title);
+    
+    $contextSwitch = $this->_helper->getHelper('contextSwitch');
+    $contextSwitch
+      ->addActionContext('delete', 'json')
+      ->addActionContext('update', 'json')
+      ->addActionContext('list', 'json')
+      ->initContext();
+  }
+  
+  public function postDispatch() {
+    if (!$this->_request->isXmlHttpRequest()) {
+      $this->renderScript($this->_request->getParam('action') . '.phtml');
+    }
   }
   
   /**
@@ -210,14 +225,15 @@ abstract class AbstractController extends \Zend_Controller_Action {
         $em->flush();
         $this->postFlush($entity);
         $this->_helper->flashMessenger('Crud/Create/Success');
-        $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
+        if (!$this->_request->isXmlHttpRequest()) {
+          $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
+        }
       }
     } catch (\Exception $e) {
       $this->_helper->serviceContainer('log')->err($e);
       $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
     }
     $this->view->createForm = $form;
-    $this->renderScript('create.phtml');
   }
 
   /**
@@ -241,14 +257,15 @@ abstract class AbstractController extends \Zend_Controller_Action {
         $em->flush();
         $this->postFlush($entity);
         $this->_helper->flashMessenger('Crud/Update/Success');
-        $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
+        if (!$this->_request->isXmlHttpRequest()) {
+          $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
+        }
       }
     } catch (\Exception $e) {
       $this->_helper->serviceContainer('log')->err($e);
       $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
     }
     $this->view->updateForm = $form;
-    $this->renderScript('update.phtml');
   }
 
   /**
@@ -269,12 +286,13 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $em->flush();
       $this->postFlush($entity);
       $this->_helper->flashMessenger('Crud/Delete/Success');
-      $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
+      if (!$this->_request->isXmlHttpRequest()) {
+        $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
+      }
     } catch (\Exception $e) {
       $this->_helper->serviceContainer('log')->err($e);
       $this->_helper->flashMessenger('Crud/Delete/UnSuccess', Message::ERROR);
     }
-    $this->renderScript('delete.phtml');
   }
 
   /**
@@ -323,9 +341,13 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $this->_getParam('page', 1),
       $this->_getParam('items', 10),
       $this->_getParam('sort'),
-      $this->_getParam('order', 'ASC')
+      $this->_getParam('order', 'ASC'),
+      null,
+      $this->_request->isXmlHttpRequest()
     );
-    $this->renderScript('list.phtml');
+    if ($this->_request->isXmlHttpRequest()) {
+      $this->view->paginator = $this->view->paginator->getCurrentItems()->getArrayCopy();
+    }
   }
 
 }

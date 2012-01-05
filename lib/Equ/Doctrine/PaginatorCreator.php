@@ -27,14 +27,17 @@ class PaginatorCreator implements IPaginatorCreator {
    * @param string $sort database field name
    * @param string $order order direction (ASC/DESC)
    * @param QueryBuilder $queryBuilder
+   * @param boolean $useArrayResult
    * @return Zend_Paginator
    */
-  public function createPaginator($filters, $page = 1, $itemPerPage = 10, $sort = null, $order = 'ASC', QueryBuilder $queryBuilder = null) {
+  public function createPaginator($filters, $page = 1, $itemPerPage = 10, $sort = null, $order = 'ASC', QueryBuilder $queryBuilder = null, $useArrayResult = false) {
     if ($queryBuilder === null) {
       $queryBuilder = $this->queryBuilderCreator->create($filters, $sort, $order);
     }
 //    var_dump($queryBuilder->getQuery()->getDQL(), $queryBuilder->getQuery()->getParameters());
-    $paginator = new Zend_Paginator(new DoctrinePaginatorAdapter($queryBuilder->getQuery()));
+    $adapter = new DoctrinePaginatorAdapter($queryBuilder->getQuery());
+    $adapter->useArrayResult($useArrayResult);
+    $paginator = new Zend_Paginator($adapter);
     $paginator
       ->setCurrentPageNumber($page)
       ->setItemCountPerPage($itemPerPage);
