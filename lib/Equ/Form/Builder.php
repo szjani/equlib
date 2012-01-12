@@ -215,7 +215,12 @@ class Builder implements IBuilder {
     }
     $elementCreator = $this->getElementCreatorFactory()->createCreator($type);
     $elementCreator->setOptionFlags($this->getOptionFlags());
-    $select = $elementCreator->createElement($elementName, $def['joinColumns'][0]);
+    $select = null;
+    if (array_key_exists('joinColumns', $def)) {
+      $select = $elementCreator->createElement($elementName, $def['joinColumns'][0]);
+    } else {
+      $select = $elementCreator->createElement($elementName, array());
+    }
     if ($type === 'array') {
       $select->addMultiOption('0', '');
     }
