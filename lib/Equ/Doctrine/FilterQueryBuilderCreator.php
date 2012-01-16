@@ -129,7 +129,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
       } catch (\InvalidArgumentException $e) {}
     }
 
-    if ($sort !== null) {
+    if ($sort !== null && array_key_exists($sort, $metadata->fieldMappings)) {
       $queryBuilder->orderBy('m.' . $sort, $order == 'ASC' ? 'ASC' : 'DESC');
     }
 
