@@ -105,6 +105,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
    */
   public function create($object, $sort = null, $order = 'ASC') {
     $objectHelper = new ObjectHelper($object);
+    $order = ($order == 'ASC' ? 'ASC' : 'DESC');
     
     $metadata = $this->entityManager->getClassMetadata($objectHelper->getType());
 
@@ -129,8 +130,19 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
       } catch (\InvalidArgumentException $e) {}
     }
 
-    if ($sort !== null && array_key_exists($sort, $metadata->fieldMappings)) {
-      $queryBuilder->orderBy('m.' . $sort, $order == 'ASC' ? 'ASC' : 'DESC');
+    if ($sort !== null) {
+      if (array_key_exists($sort, $metadata->fieldMappings)) {
+        $queryBuilder->orderBy('m.' . $sort, $order);
+      }
+      elseif (array_key_exists($sort, $metadata->associationMappings)) {
+        $targetEntity = $metadata->associationMappings[$sort]['targetEntity'];
+        if (method_exists($targetEntity, 'getSortField')) {
+          $queryBuilder
+            ->select("m, $sort")
+            ->innerJoin("m.$sort", $sort)
+            ->orderBy("$sort." . $targetEntity::getSortField(), $order);
+        }
+      }
     }
 
     return $queryBuilder;
