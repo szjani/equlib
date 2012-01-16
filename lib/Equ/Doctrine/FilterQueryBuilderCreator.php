@@ -139,7 +139,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
         if (method_exists($targetEntity, 'getSortField')) {
           $queryBuilder
             ->select("m, $sort")
-            ->innerJoin("m.$sort", $sort)
+            ->leftJoin("m.$sort", $sort)
             ->orderBy("$sort." . $targetEntity::getSortField(), $order);
         }
       }
