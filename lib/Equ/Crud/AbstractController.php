@@ -294,6 +294,10 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $this->_helper->flashMessenger('Crud/Delete/UnSuccess', Message::ERROR);
     }
   }
+  
+  protected function getListQueryBuilder() {
+    return null;
+  }
 
   /**
    * Calls list method of service,
@@ -342,7 +346,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $this->_getParam('items', 10),
       $this->_getParam('sort'),
       $this->_getParam('order', 'ASC'),
-      null,
+      $this->getListQueryBuilder(),
       $this->_request->isXmlHttpRequest()
     );
     if ($this->_request->isXmlHttpRequest()) {
