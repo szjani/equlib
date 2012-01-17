@@ -262,6 +262,12 @@ class Builder implements IBuilder {
       } else {
         $element->setValue($id);
       }
+    } elseif ($value instanceof \Traversable) {
+      $selected = array();
+      foreach ($value as $valueElement) {
+        $selected[] = $targetMetaData->getFieldValue($valueElement, $targetMetaData->getSingleIdentifierFieldName());
+      }
+      $element->setValue($selected);
     }
   }
   

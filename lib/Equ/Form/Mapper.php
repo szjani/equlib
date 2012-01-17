@@ -120,6 +120,7 @@ class Mapper implements IMapper {
                 $existingFields = new \Doctrine\Common\Collections\ArrayCollection();
                 $this->objectHelper->set($field, $existingFields);
               }
+              $existingFields->clear();
               foreach ($value as $id) {
                 $rel = $this->getEntityManager()->getReference(
                   $this->objectHelpers[$field]->getType(),
