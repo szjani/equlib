@@ -105,7 +105,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
    */
   public function create($object, $sort = null, $order = 'ASC') {
     $objectHelper = new ObjectHelper($object);
-    $order = ($order == 'ASC' ? 'ASC' : 'DESC');
+    $order = (strtoupper($order) == 'ASC' ? 'ASC' : 'DESC');
     
     $metadata = $this->entityManager->getClassMetadata($objectHelper->getType());
 
