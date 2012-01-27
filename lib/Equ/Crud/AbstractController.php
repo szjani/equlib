@@ -54,7 +54,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
   }
   
   public function postDispatch() {
-    if (!$this->_request->isXmlHttpRequest()) {
+    if (!$this->_helper->viewRenderer->getNoRender()) {
       $this->renderScript($this->_request->getParam('action') . '.phtml');
     }
   }
@@ -338,6 +338,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
     }
     
     // create paginator
+    $jsonRequest = ($this->_getParam('format') == 'json');
     /* @var $paginatorCreator IPaginatorCreator */
     $paginatorCreator = $this->_helper->serviceContainer('paginatorCreator');
     $this->view->paginator = $paginatorCreator->createPaginator(
@@ -347,9 +348,9 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $this->_getParam('sort'),
       $this->_getParam('order', 'ASC'),
       $this->getListQueryBuilder(),
-      $this->_request->isXmlHttpRequest()
+      $jsonRequest
     );
-    if ($this->_request->isXmlHttpRequest()) {
+    if ($jsonRequest) {
       $this->view->paginator = $this->view->paginator->getCurrentItems()->getArrayCopy();
     }
   }
