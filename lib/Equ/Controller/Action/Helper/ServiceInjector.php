@@ -20,9 +20,9 @@ class ServiceInjector extends \Zend_Controller_Action_Helper_Abstract {
     $filter = new \Zend_Filter_Word_CamelCaseToSeparator('.');
     foreach (get_object_vars($this->_actionController) as $property => $variable) {
       if (!isset($variable)) {
-        $filteredValue = $filter->filter($property);
-        if ($this->container->has($filteredValue)) {
-          $this->_actionController->$property = $this->container->get($filteredValue);
+        $serviceId = $filter->filter($property);
+        if ($this->container->has($serviceId)) {
+          $this->_actionController->$property = $this->container->get($serviceId);
         }
       }
     }
