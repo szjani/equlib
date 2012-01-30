@@ -24,6 +24,21 @@ use
 abstract class AbstractController extends \Zend_Controller_Action {
 
   /**
+   * @var EntityManager
+   */
+  public $em;
+  
+  /**
+   * @var \Zend_Navigation
+   */
+  public $navigation;
+  
+  /**
+   * @var \Zend_Log
+   */
+  public $log;
+  
+  /**
    * @var array
    */
   protected $ignoredFields = array();
@@ -160,7 +175,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
    * @return EntityManager
    */
   protected final function getEntityManager() {
-    return $this->_helper->serviceContainer('doctrine.entitymanager');
+    return $this->em;
   }
 
   /**
@@ -170,8 +185,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
    * @param int $id
    */
   protected function initHiddenNavigationItemWithId($id) {
-    $navigation = $this->_helper->serviceContainer('navigation');
-    $page = $navigation->findById(
+    $page = $this->navigation->findById(
       "{$this->_getParam('module')}_{$this->_getParam('controller')}_{$this->_getParam('action')}"
     );
     if ($page) {
@@ -230,7 +244,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
         }
       }
     } catch (\Exception $e) {
-      $this->_helper->serviceContainer('log')->err($e);
+      $this->log->err($e);
       $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
     }
     $this->view->createForm = $form;
@@ -262,7 +276,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
         }
       }
     } catch (\Exception $e) {
-      $this->_helper->serviceContainer('log')->err($e);
+      $this->log->err($e);
       $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
     }
     $this->view->updateForm = $form;
@@ -290,7 +304,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
         $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
       }
     } catch (\Exception $e) {
-      $this->_helper->serviceContainer('log')->err($e);
+      $this->log->err($e);
       $this->_helper->flashMessenger('Crud/Delete/UnSuccess', Message::ERROR);
     }
   }
@@ -329,7 +343,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       }
       
     } catch (\Exception $e) {
-      $this->_helper->serviceContainer('log')->err($e);
+      $this->log->err($e);
       $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
     }
     
