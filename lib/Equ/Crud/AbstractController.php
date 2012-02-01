@@ -10,7 +10,8 @@ use
   Equ\Crud\Exception\RuntimeException,
   Equ\Doctrine\IPaginatorCreator,
   Equ\Form\IBuilder,
-  Equ\Form\IMappedType;
+  Equ\Form\IMappedType,
+  Equ\Object\Helper as ObjectHelper;
 
 /**
  * Controller of CRUD operations
@@ -318,7 +319,8 @@ abstract class AbstractController extends \Zend_Controller_Action {
    * lists items with Zend_Paginator
    */
   public function listAction() {
-    $filters = $this->getEntityClass();
+    $filters = array();
+    $objectHelper = new ObjectHelper($this->getEntityClass());
     try {
       $this->view->keys        = \array_diff($this->getTableFieldNames(), $this->getIgnoredFields());
       $this->view->currentSort = $this->_getParam('sort');
@@ -339,7 +341,9 @@ abstract class AbstractController extends \Zend_Controller_Action {
           }
           $builder->getMapper()->map();
         }
-        $filters = $builder->getMapper()->getObject();
+        $filters = $this->_request->getParam($namespace, array());
+        $objectHelper = $builder->getObjectHelper();
+        $this->view->filterForm  = $filterForm;
       }
       
     } catch (\Exception $e) {
@@ -347,15 +351,12 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
     }
     
-    if ($this->useFilterForm) {
-      $this->view->filterForm  = $filterForm;
-    }
-    
     // create paginator
     $jsonRequest = ($this->_getParam('format') == 'json');
     /* @var $paginatorCreator IPaginatorCreator */
     $paginatorCreator = $this->_helper->serviceContainer('paginatorCreator');
     $this->view->paginator = $paginatorCreator->createPaginator(
+      $objectHelper,
       $filters,
       $this->_getParam('page', 1),
       $this->_getParam('items', 10),

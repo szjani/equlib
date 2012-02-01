@@ -4,7 +4,8 @@ namespace Equ\Doctrine;
 use
   Equ\Paginator\Adapter\Doctrine as DoctrinePaginatorAdapter,
   Doctrine\ORM\QueryBuilder,
-  Zend_Paginator;
+  Zend_Paginator,
+  Equ\Object\Helper as ObjectHelper;
 
 class PaginatorCreator implements IPaginatorCreator {
 
@@ -21,6 +22,7 @@ class PaginatorCreator implements IPaginatorCreator {
   }
   
   /**
+   * @param ObjectHelper $objectHelper
    * @param mixed $filters
    * @param int $page
    * @param int $itemPerPage
@@ -30,9 +32,9 @@ class PaginatorCreator implements IPaginatorCreator {
    * @param boolean $useArrayResult
    * @return Zend_Paginator
    */
-  public function createPaginator($filters, $page = 1, $itemPerPage = 10, $sort = null, $order = 'ASC', QueryBuilder $queryBuilder = null, $useArrayResult = false) {
+  public function createPaginator(ObjectHelper $objectHelper, $filters, $page = 1, $itemPerPage = 10, $sort = null, $order = 'ASC', QueryBuilder $queryBuilder = null, $useArrayResult = false) {
     if ($queryBuilder === null) {
-      $queryBuilder = $this->queryBuilderCreator->create($filters, $sort, $order);
+      $queryBuilder = $this->queryBuilderCreator->create($objectHelper, $filters, $sort, $order);
     }
 //    var_dump($queryBuilder->getQuery()->getDQL(), $queryBuilder->getQuery()->getParameters());
     $adapter = new DoctrinePaginatorAdapter($queryBuilder->getQuery());

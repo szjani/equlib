@@ -98,35 +98,31 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
   }
 
   /**
-   * @param  object $object
+   * @param  ObjectHelper $objectHelper
+   * @param  mixed  $filters
    * @param  string $sort
    * @param  string $order
    * @return QueryBuilder
    */
-  public function create($object, $sort = null, $order = 'ASC') {
-    $objectHelper = new ObjectHelper($object);
+  public function create(ObjectHelper $objectHelper, $filters, $sort = null, $order = 'ASC') {
+    $entityName = $objectHelper->getType();
     $order = (strtoupper($order) == 'ASC' ? 'ASC' : 'DESC');
-    
-    $metadata = $this->entityManager->getClassMetadata($objectHelper->getType());
+    $metadata = $this->entityManager->getClassMetadata($entityName);
 
     $queryBuilder = new QueryBuilder($this->entityManager);
     $queryBuilder
       ->select('m')
-      ->from($objectHelper->getType(), 'm');
+      ->from($entityName, 'm');
 
-    foreach ($metadata->fieldMappings as $field => $map) {
+    foreach ($filters as $property => $value) {
       try {
-        $value = $objectHelper->get($field);
-        if (!in_array($value, array('', null), true)) {
-          $this->addAndWhere($queryBuilder, $map['fieldName'], $value);
+        if (!in_array($value, array('', null), true) && array_key_exists($property, $metadata->fieldMappings)) {
+          $this->addAndWhere($queryBuilder, $property, $value);
         }
-      } catch (\InvalidArgumentException $e) {}
-    }
-    
-    foreach ($metadata->associationMappings as $field => $map) {
-      try {
-        $value = $objectHelper->get($field);
-        $this->addAndWhere($queryBuilder, $map['fieldName'], $value);
+        if (array_key_exists($property, $metadata->associationMappings)) {
+          $value = $objectHelper->get($property);
+          $this->addAndWhere($queryBuilder, $metadata->associationMappings[$property]['fieldName'], $value);
+        }
       } catch (\InvalidArgumentException $e) {}
     }
 
