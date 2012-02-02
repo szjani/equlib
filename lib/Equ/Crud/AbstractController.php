@@ -66,6 +66,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       ->addActionContext('delete', 'json')
       ->addActionContext('update', 'json')
       ->addActionContext('list', 'json')
+      ->addActionContext('create', 'json')
       ->initContext();
   }
   
