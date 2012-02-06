@@ -65,11 +65,11 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
     if ($request->getParam('format') == 'ajax') {
       return;
     }
-    
     $navigation = $this->container->get(self::KEY);
+    /* @var $navigation \Zend_Navigation_Container */
     $navigationCache = $this->cache->load(self::KEY);
     if (false !== $navigationCache) {
-      $navigation = $navigationCache;
+      $navigation->setPages($navigationCache);
     } else {
       /* @var $item NavigationItem */
       foreach ($this->itemRepo->getNavigationItems() as $item) {
@@ -79,9 +79,8 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
         $parentNav = $item->getParent() ? $item->getParent()->getNavigationPage() : $navigation;
         $parentNav->addPage($item->getNavigationPage());
       }
-      $this->cache->save($navigation, self::KEY);
+      $this->cache->save($navigation->getPages(), self::KEY);
     }
-    $this->container->set(self::KEY, $navigation);
     
     $navigationHelper = $this->view->getHelper('navigation');
     $navigationHelper
