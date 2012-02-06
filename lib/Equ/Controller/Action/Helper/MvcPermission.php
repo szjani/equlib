@@ -1,5 +1,5 @@
 <?php
-namespace Equ\Controller\Plugin;
+namespace Equ\Controller\Action\Helper;
 use
   Equ\Controller\Exception\PermissionException,
   Equ\Auth\AuthenticatedUserStorage,
@@ -14,7 +14,7 @@ use
  * @version     $Revision$
  * @author      Szurovecz János <szjani@szjani.hu>
  */
-class MvcPermission extends \Zend_Controller_Plugin_Abstract {
+class MvcPermission extends \Zend_Controller_Action_Helper_Abstract {
 
   /**
    * @var AuthenticatedUserStorage
@@ -36,10 +36,8 @@ class MvcPermission extends \Zend_Controller_Plugin_Abstract {
     $this->acl     = $acl;
   }
   
-  /**
-   * @param \Zend_Controller_Request_Abstract $request
-   */
-  public function preDispatch(\Zend_Controller_Request_Abstract $request) {
+  public function preDispatch() {
+    $request = $this->getRequest();
     try {
       $auth = \Zend_Auth::getInstance();
       $user = $auth->hasIdentity() ? $auth->getIdentity() : null;
