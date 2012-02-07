@@ -196,6 +196,18 @@ abstract class AbstractController extends \Zend_Controller_Action {
         ->setVisible(true);
     }
   }
+  
+  /**
+   * @param \Zend_Form $form 
+   */
+  protected function formHasErrors(\Zend_Form $form) {
+    $this->view->formErrors = $form->getMessages();
+  }
+  
+  protected function exceptionIsThrowed(\Exception $e) {
+    $this->log->err($e);
+    $this->view->exceptionMessage = $e->getMessage();
+  }
 
   /**
    * If .phtml is in application folder it renders that,
@@ -246,7 +258,8 @@ abstract class AbstractController extends \Zend_Controller_Action {
         }
       }
     } catch (\Exception $e) {
-      $this->log->err($e);
+      $this->formHasErrors($form);
+      $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
     }
     $this->view->createForm = $form;
@@ -278,7 +291,8 @@ abstract class AbstractController extends \Zend_Controller_Action {
         }
       }
     } catch (\Exception $e) {
-      $this->log->err($e);
+      $this->formHasErrors($form);
+      $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
     }
     $this->view->updateForm = $form;
@@ -306,7 +320,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
         $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
       }
     } catch (\Exception $e) {
-      $this->log->err($e);
+      $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Delete/UnSuccess', Message::ERROR);
     }
   }
@@ -348,7 +362,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       }
       
     } catch (\Exception $e) {
-      $this->log->err($e);
+      $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
     }
     
