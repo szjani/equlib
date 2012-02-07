@@ -258,7 +258,9 @@ abstract class AbstractController extends \Zend_Controller_Action {
         }
       }
     } catch (\Exception $e) {
-      $this->formHasErrors($form);
+      if ($form instanceof \Zend_Form) {
+        $this->formHasErrors($form);
+      }
       $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
     }
@@ -291,7 +293,9 @@ abstract class AbstractController extends \Zend_Controller_Action {
         }
       }
     } catch (\Exception $e) {
-      $this->formHasErrors($form);
+      if ($form instanceof \Zend_Form) {
+        $this->formHasErrors($form);
+      }
       $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
     }
