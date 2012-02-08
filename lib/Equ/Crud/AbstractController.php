@@ -48,6 +48,11 @@ abstract class AbstractController extends \Zend_Controller_Action {
    * @var boolean
    */
   protected $useFilterForm = true;
+  
+  /**
+   * @var string
+   */
+  protected $entityClass = null;
 
   /**
    * Adds general CRUD script path
@@ -163,7 +168,10 @@ abstract class AbstractController extends \Zend_Controller_Action {
    * @return string
    */
   protected function getEntityClass() {
-    return $this->getMainForm()->getObjectClass();
+    if (null === $this->entityClass) {
+      $this->entityClass = $this->getMainForm()->getObjectClass();
+    }
+    return $this->entityClass;
   }
 
   /**
