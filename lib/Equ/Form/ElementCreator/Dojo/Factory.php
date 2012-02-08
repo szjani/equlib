@@ -64,14 +64,14 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
    * @return \Zend_Form_Element
    */
   public function createDateCreator() {
-    return new StringCreator($this->getNamespace());
+    return new DateCreator($this->getNamespace());
   }
 
   /**
    * @return \Zend_Form_Element
    */
   public function createTimeCreator() {
-    return new StringCreator($this->getNamespace());
+    return new TimeCreator($this->getNamespace());
   }
 
   /**
