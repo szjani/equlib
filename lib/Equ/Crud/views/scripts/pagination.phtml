@@ -7,25 +7,25 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <!-- Previous page link -->
 <?php if (isset($this->previous)): ?>
   <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
-    &lt; <?php echo $this->translate('Paginator/Previous') ?></a> |
+    <span>&lt; <?php echo $this->translate('Paginator/Previous') ?></span></a>
 <?php else: ?>
-  <span class="disabled">&lt; <?php echo $this->translate('Paginator/Previous') ?></span> |
+  <span class="disabled">&lt; <?php echo $this->translate('Paginator/Previous') ?></span>
 <?php endif; ?>
  
 <!-- Numbered page links -->
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php if ($page != $this->current): ?>
     <a href="<?php echo $this->url(array('page' => $page)); ?>">
-        <?php echo $page; ?></a> |
+        <span><?php echo $page; ?></span></a>
   <?php else: ?>
-    <?php echo $page; ?> |
+    <span class="current"><?php echo $page; ?></span>
   <?php endif; ?>
 <?php endforeach; ?>
  
 <!-- Next page link -->
 <?php if (isset($this->next)): ?>
   <a href="<?php echo $this->url(array('page' => $this->next)); ?>">
-    <?php echo $this->translate('Paginator/Next') ?> &gt;
+    <span><?php echo $this->translate('Paginator/Next') ?> &gt;</span>
   </a>
 <?php else: ?>
   <span class="disabled"><?php echo $this->translate('Paginator/Next') ?> &gt;</span>
