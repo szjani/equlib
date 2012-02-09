@@ -6,17 +6,16 @@ use
   Zend_Acl,
   Zend_View,
   Equ\Navigation\Item as NavigationItem,
-  Equ\Navigation\ItemRepository as NavigationItemRepository,
-  Symfony\Component\DependencyInjection\Container;
+  Equ\Navigation\ItemRepository as NavigationItemRepository;
 
 class Navigation extends \Zend_Controller_Plugin_Abstract {
 
   const KEY = 'navigation';
   
   /**
-   * @var Container
+   * @var Zend_Navigation
    */
-  private $container;
+  private $navigation;
   
   /**
    *
@@ -41,20 +40,20 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
   private $view;
   
   /**
-   * @param Container $container
+   * @param Zend_Navigation $navigation
    * @param NavigationItemRepository $itemRepo
    * @param Zend_Cache_Core $cache
    * @param Zend_Acl $acl
    * @param Zend_View $view 
    */
   public function __construct(
-    Container $container,
+    Zend_Navigation $navigation,
     NavigationItemRepository $itemRepo,
     Zend_Cache_Core $cache,
     Zend_Acl $acl,
     Zend_View $view
   ) {
-    $this->container  = $container;
+    $this->navigation  = $navigation;
     $this->itemRepo   = $itemRepo;
     $this->cache      = $cache;
     $this->acl        = $acl;
@@ -65,7 +64,7 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
     if ($request->getParam('format') == 'ajax') {
       return;
     }
-    $navigation = $this->container->get(self::KEY);
+    $navigation = $this->navigation;
     /* @var $navigation \Zend_Navigation_Container */
     $navigationCache = $this->cache->load(self::KEY);
     if (false !== $navigationCache) {

@@ -7,6 +7,23 @@ use
 
 class CreateFormBuilder extends \Zend_Controller_Action_Helper_Abstract {
   
+  protected $defaultElementCreatorFactory;
+  
+  protected $defaultFormClass;
+  
+  protected $defaultSubFormClass;
+  
+  /**
+   * @param ElementCreatorFactory $factory
+   * @param string $formClass
+   * @param string $subFormClass 
+   */
+  public function __construct(ElementCreatorFactory $factory, $formClass, $subFormClass) {
+    $this->defaultElementCreatorFactory = $factory;
+    $this->defaultFormClass             = $formClass;
+    $this->defaultSubFormClass          = $subFormClass;
+  }
+  
   /**
    * @param IMappedType $mappedType
    * @param object $object
@@ -28,10 +45,9 @@ class CreateFormBuilder extends \Zend_Controller_Action_Helper_Abstract {
    * @return FormBuilder 
    */
   public function create(IMappedType $mappedType, $object, ElementCreatorFactory $factory = null, $formClass = null, $subFormClass = null) {
-    $container    = $this->getActionController()->getHelper('serviceContainer')->getContainer();
-    $factory      = $factory      ?: $container->get('form.elementcreator.factory');
-    $formClass    = $formClass    ?: $container->getParameter('form.formClass');
-    $subFormClass = $subFormClass ?: $container->getParameter('form.subFormClass');
+    $factory      = $factory      ?: $this->defaultElementCreatorFactory;
+    $formClass    = $formClass    ?: $this->defaultFormClass;
+    $subFormClass = $subFormClass ?: $this->defaultSubFormClass;
     $formBuilder  = new FormBuilder($object, $factory);
     $formBuilder
       ->setSubFormClass($subFormClass)

@@ -2,6 +2,10 @@
 <div id="filter-form">
   <?php echo $this->filterForm ?>
 </div>
+<div class="clear"></div>
+<div class="paginator">
+  <?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
+</div>
 <table>
   <tr>
     <?php foreach ($this->keys as $key): ?>
