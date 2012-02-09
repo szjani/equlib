@@ -392,6 +392,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $this->getListQueryBuilder(),
       $jsonRequest
     );
+    $this->view->paginatorParameters = $this->view->paginator->getPages();
     if ($jsonRequest) {
       $this->view->paginator = $this->view->paginator->getCurrentItems()->getArrayCopy();
     }
