@@ -1,0 +1,8 @@
+<ul class="breadcrumb">
+<?php foreach ($this->pages as $page): ?>
+  <li <?php if ($page->isActive()) echo 'class="active"' ?>>
+    <a href="<?php echo $page->getHref() ?>"><?php echo $this->translate($page->getTitle()) ?></a>
+    <?php if (end($this->pages) !== $page): ?><span class="divider">/</span><?php endif ?>
+  </li>
+<?php endforeach; ?>
+</ul>
