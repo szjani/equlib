@@ -1,2 +1,7 @@
+<?php $this->headScript()->captureStart() ?>
+$(document).ready(function() {
+  $('.form-actions').append('&nbsp;&nbsp;<a class="btn btn-small" style="vertical-align: middle" href="<?php echo $this->url(array('action' => 'list')) ?>"><?php echo $this->translate('Crud/Cancel') ?></a>');
+});
+<?php $this->headScript()->captureEnd() ?>
 <h2><?php echo $this->pageTitle ?></h2>
 <?php echo $this->createForm;
