@@ -7,8 +7,9 @@ class OptionFlags {
   const LABEL                = 0x2;
   const IMPLICIT_VALIDATORS  = 0x4;
   const EXPLICIT_VALIDATORS  = 0x8;
-  const ARRAY_ELEMENTS       = 0X10;
-  const ALL                  = 0x1F;
+  const ARRAY_ELEMENTS       = 0x10;
+  const HORIZONTAL           = 0x20;
+  const ALL                  = 0x3F;
 
   private $flags;
   

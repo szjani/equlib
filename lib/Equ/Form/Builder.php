@@ -431,8 +431,9 @@ class Builder implements IBuilder {
       if ($this->getOptionFlags()->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
         $this->form->setElementsBelongTo($this->getFormKey());
       }
-      $submit = $this->getElementCreatorFactory()->createSubmitCreator()->createElement('OK');
+      $submit = $this->getElementCreatorFactory()->createSubmitCreator()->setOptionFlags($this->getOptionFlags())->createElement('OK');
       $submit->setOrder('999');
+      $this->form->setAttrib('class', $this->getOptionFlags()->hasFlag(OptionFlags::HORIZONTAL) ? 'form-horizontal' : 'form-vertical');
       $this->form->addElement($submit);
     }
     return $this->form;
