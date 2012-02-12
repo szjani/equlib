@@ -2,7 +2,8 @@
 <?php
   if (isset($this->messageTypes) && count($this->messageTypes) > 0) {
     foreach ($this->messageTypes as $type => $messages) { ?>
-      <div class="<?php echo $type ?>">
+      <div class="alert alert-<?php echo $type ?> fade in">
+        <a class="close" data-dismiss="alert">×</a>
         <?php foreach ($messages as $message): ?>
           <?php echo $this->translate($message) ?>
         <?php endforeach ?>
