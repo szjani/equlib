@@ -214,6 +214,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
   
   protected function exceptionIsThrowed(\Exception $e) {
     $this->log->err($e);
+    $this->_helper->redirectHereAfterPost->setAutoRedirect(false);
     $this->view->exceptionMessage = $e->getMessage();
   }
 

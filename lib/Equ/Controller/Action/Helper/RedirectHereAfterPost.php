@@ -17,6 +17,8 @@ class RedirectHereAfterPost extends \Zend_Controller_Action_Helper_Abstract {
   
   protected $hasUrl = false;
   
+  protected $autoRedirect = true;
+  
   private $key = self::DEFAULT_KEY;
   
   public function setKey($key) {
@@ -35,6 +37,10 @@ class RedirectHereAfterPost extends \Zend_Controller_Action_Helper_Abstract {
     return $this->hasUrl;
   }
   
+  public function setAutoRedirect($autoRedirect = true) {
+    $this->autoRedirect = $autoRedirect;
+  }
+  
   public function saveCurrentUrl() {
     $router = $this->getActionController()->getFrontController()->getRouter();
     if ($router instanceof \Zend_Controller_Router_Rewrite) {
@@ -49,7 +55,7 @@ class RedirectHereAfterPost extends \Zend_Controller_Action_Helper_Abstract {
   }
   
   public function postDispatch() {
-    if ($this->getRequest()->isPost()) {
+    if ($this->autoRedirect && $this->getRequest()->isPost()) {
       $encodedRedirectUrl = $this->getRequest()->getParam($this->getKey());
       if (isset($encodedRedirectUrl)) {
         $this->getActionController()->getHelper('redirector')->gotoUrlAndExit(base64_decode($encodedRedirectUrl));
