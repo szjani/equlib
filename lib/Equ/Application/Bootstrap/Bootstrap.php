@@ -7,15 +7,19 @@ use
 
 class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap {
 
+  protected function getMasterConfigFiles() {
+    return array(
+      APPLICATION_PATH . '/configs/production.xml',
+      APPLICATION_PATH . '/configs/development.xml'
+    );
+  }
+  
   private function getCache() {
     $cache = \Zend_Cache::factory(
       'File',
       'File',
       array(// Frontend Default Options
-        'master_files' => array(
-          APPLICATION_PATH . '/configs/production.xml',
-          APPLICATION_PATH . '/configs/development.xml',
-        ),
+        'master_files' => $this->getMasterConfigFiles(),
         'automatic_serialization' => true
       ),
       array(// Backend Default Options
