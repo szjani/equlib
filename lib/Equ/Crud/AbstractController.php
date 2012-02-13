@@ -382,7 +382,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
     // create paginator
     $jsonRequest = ($this->_getParam('format') == 'json');
     /* @var $paginatorCreator IPaginatorCreator */
-    $paginatorCreator = $this->_helper->serviceContainer('paginatorCreator');
+    $paginatorCreator = $this->_helper->serviceContainer('paginator.creator');
     $this->view->paginator = $paginatorCreator->createPaginator(
       $objectHelper,
       $filters,
