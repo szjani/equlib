@@ -25,41 +25,12 @@ class Message {
   private $type;
 
   /**
-   * @var \Zend_Translate
-   */
-  private $translator;
-
-  /**
-   * @var boolean
-   */
-  private $translate = true;
-
-  /**
    * @param string $message
    * @param string $type
    */
   public function __construct($message, $type = self::SUCCESS) {
     $this->setMessage($message);
     $this->setType($type);
-  }
-
-  /**
-   * @return Zend_Translate
-   */
-  public function getTranslator() {
-    if ($this->translator === null) {
-      $this->translator = \Zend_Registry::get('Zend_Translate');
-    }
-    return $this->translator;
-  }
-
-  /**
-   * @param boolean $translate
-   * @return Message
-   */
-  public function setTranslate($translate) {
-    $this->translate = (boolean)$translate;
-    return $this;
   }
 
   /**
@@ -91,9 +62,6 @@ class Message {
    * @return string
    */
   public function getMessage() {
-    if ($this->translate) {
-      return $this->getTranslator()->translate($this->message);
-    }
     return $this->message;
   }
 

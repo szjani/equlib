@@ -41,10 +41,9 @@ class FlashMessenger extends \Zend_Controller_Action_Helper_FlashMessenger {
    * @param string|Exception $message
    * @param string $type
    * @param string $namespace
-   * @param boolean $translate
    * @return FlashMessenger
    */
-  public function addMessage($message, $type = Message::SUCCESS, $namespace = 'default', $translate = true) {
+  public function addMessage($message, $type = Message::SUCCESS, $namespace = 'default') {
     parent::setNamespace($namespace);
     $messageObj = null;
     if ($message instanceof \Exception) {
@@ -52,7 +51,6 @@ class FlashMessenger extends \Zend_Controller_Action_Helper_FlashMessenger {
     } else {
       $messageObj = new Message($message, $type);
     }
-    $messageObj->setTranslate($translate);
     return parent::addMessage($messageObj);
   }
   
