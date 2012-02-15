@@ -11,6 +11,7 @@ use
   Equ\Doctrine\IPaginatorCreator,
   Equ\Form\IBuilder,
   Equ\Form\IMappedType,
+  Equ\Form\Exception\ValidationException,
   Equ\Object\Helper as ObjectHelper;
 
 /**
@@ -252,7 +253,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $em   = $this->getEntityManager();
       if ($this->_request->isPost()) {
         if (!$builder->getMapper()->isValid($this->_request)) {
-          throw new RuntimeException('Invalid values in form');
+          throw new ValidationException('Invalid values in form');
         }
         $entity = $builder->getMapper()->getObject();
         $this->prePersist($entity);
@@ -266,10 +267,12 @@ abstract class AbstractController extends \Zend_Controller_Action {
           $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
         }
       }
-    } catch (\Exception $e) {
+    } catch (ValidationException $e) {
       if ($form instanceof \Zend_Form) {
         $this->formHasErrors($form);
       }
+      $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
+    } catch (\Exception $e) {
       $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
     }
@@ -291,7 +294,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       $form    = $builder->getForm();
       if ($this->_request->isPost()) {
         if (!$builder->getMapper()->isValid($this->_request)) {
-          throw new RuntimeException('Invalid values in form');
+          throw new ValidationException('Invalid values in form');
         }
         $this->preFlush($entity);
         $em->flush();
@@ -301,10 +304,12 @@ abstract class AbstractController extends \Zend_Controller_Action {
           $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
         }
       }
-    } catch (\Exception $e) {
+    } catch (ValidationException $e) {
       if ($form instanceof \Zend_Form) {
         $this->formHasErrors($form);
       }
+      $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
+    } catch (\Exception $e) {
       $this->exceptionIsThrowed($e);
       $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
     }
@@ -349,34 +354,38 @@ abstract class AbstractController extends \Zend_Controller_Action {
   public function listAction() {
     $filters = array();
     $objectHelper = new ObjectHelper($this->getEntityClass());
-    try {
-      $this->view->keys        = \array_diff($this->getTableFieldNames(), $this->getIgnoredFields());
-      $this->view->currentSort = $this->_getParam('sort');
-      $this->view->nextOrder   = $this->_getParam('order', 'ASC') == 'ASC' ? 'DESC' : 'ASC';
+    $this->view->keys        = \array_diff($this->getTableFieldNames(), $this->getIgnoredFields());
+    $this->view->currentSort = $this->_getParam('sort');
+    $this->view->nextOrder   = $this->_getParam('order', 'ASC') == 'ASC' ? 'DESC' : 'ASC';
+    
+    // create filter form
+    if ($this->useFilterForm) {
       $filterForm = null;
-      
-      // create filter form
-      if ($this->useFilterForm) {
+      try {
         $builder = $this->createFormBuilder($this->getFilterForm(), $this->getEntityClass());
         /* @var $filterForm \Zend_Form */
         $filterForm = $builder->getForm();
+        $this->view->filterForm = $filterForm;
         $filterForm->setMethod(\Zend_Form::METHOD_GET);
         $this->formBuilderCreated($builder);
         $namespace = $filterForm->getElementsBelongTo();
         if (is_array($this->_request->getParam($namespace))) {
           if (!$builder->getMapper()->isValid($this->_request, false)) {
-            throw new RuntimeException('Invalid values in form');
+            throw new ValidationException('Invalid values in form');
           }
           $builder->getMapper()->map();
         }
         $filters = $this->_request->getParam($namespace, array());
         $objectHelper = $builder->getObjectHelper();
-        $this->view->filterForm  = $filterForm;
+      } catch (ValidationException $e) {
+        if ($filterForm instanceof \Zend_Form) {
+          $this->formHasErrors($filterForm);
+        }
+        $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
+      } catch (\Exception $e) {
+        $this->exceptionIsThrowed($e);
+        $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
       }
-      
-    } catch (\Exception $e) {
-      $this->exceptionIsThrowed($e);
-      $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
     }
     
     // create paginator
