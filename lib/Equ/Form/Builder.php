@@ -222,7 +222,7 @@ class Builder implements IBuilder {
       $select = $elementCreator->createElement($elementName, array());
     }
     if ($type === 'array') {
-      $select->addMultiOption('0', '');
+      $select->addMultiOption('', '');
     }
     $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
     foreach ($this->getForeignEntities($elementName, $def['targetEntity']) as $entity) {
