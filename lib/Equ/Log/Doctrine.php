@@ -22,7 +22,7 @@ class Doctrine implements SQLLogger {
   }
 
   public function stopQuery() {
-//    $this->log->info('Last query time in miliseconds: ' . \microtime(true) - $this->time);
+    $this->log->info('Last query time in miliseconds: ' . (\microtime(true) - $this->time));
   }
 
 
