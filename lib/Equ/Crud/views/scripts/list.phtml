@@ -36,7 +36,7 @@ $(document).ready(function() {
             <?php if ($key === $this->currentSort): ?>
               <i class="<?php echo (strtolower($this->nextOrder) == 'asc' ? 'icon-chevron-down' : 'icon-chevron-up') ?>"></i>
             <?php endif; ?>
-            <?php echo $key ?>
+            <?php echo $this->translate($key) ?>
           </a>
         </th>
       <?php endforeach ?>
