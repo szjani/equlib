@@ -3,7 +3,9 @@ namespace Equ;
 use
   Equ\Exception\RuntimeException,
   Equ\Object\Validatable,
-  Equ\Object\Validator;
+  Equ\Object\Validator,
+  Equ\Crud\SortableEntity,
+  Equ\Crud\DisplayableEntity;
 
 /**
  * Abstract entity class
@@ -16,7 +18,7 @@ use
  * @MappedSuperclass
  * @HasLifecycleCallbacks
  */
-abstract class Entity implements \ArrayAccess {
+abstract class Entity implements \ArrayAccess, SortableEntity, DisplayableEntity {
 
   /**
    * @var Validator 
@@ -85,6 +87,10 @@ abstract class Entity implements \ArrayAccess {
 
   public function offsetUnset($offset) {
     throw new BadMethodCallException("ArrayAccess readonly!");
+  }
+  
+  public static function getSortField() {
+    return static::getDisplayField();
   }
 
 }

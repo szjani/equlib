@@ -200,8 +200,20 @@ class Builder implements IBuilder {
    * @param string $targetEntity
    * @return array
    */
-  protected function getForeignEntities($elementName, $targetEntity) {
-    return $this->getEntityManager()->getRepository($targetEntity)->findAll();
+  protected function getForeignEntities($targetEntity, $pKeyField) {
+    if (!method_exists($targetEntity, 'getDisplayField')) {
+      throw new Exception\RuntimeException($targetEntity . ' has to implement \Equ\Crud\DisplayableEntity interface!');
+    }
+    if (!method_exists($targetEntity, 'getSortField')) {
+      throw new Exception\RuntimeException($targetEntity . ' has to implement \Equ\Crud\SortableEntity interface!');
+    }
+    $res = $this->getEntityManager()
+      ->createQuery(
+        "SELECT m.{$pKeyField}, m.{$targetEntity::getDisplayField()} AS displayField
+         FROM $targetEntity m
+         ORDER BY m.{$targetEntity::getSortField()}")
+      ->getArrayResult();
+    return $res;
   }
   
   /**
@@ -225,12 +237,11 @@ class Builder implements IBuilder {
       $select->addMultiOption('', '');
     }
     $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
-    foreach ($this->getForeignEntities($elementName, $def['targetEntity']) as $entity) {
+    $pKeyField = $targetMetaData->getSingleIdentifierFieldName();
+    foreach ($this->getForeignEntities($def['targetEntity'], $pKeyField) as $entity) {
       $select->addMultiOption(
-        $targetMetaData->getFieldValue(
-          $entity,
-          $targetMetaData->getSingleIdentifierFieldName()),
-        (string)$entity
+        $entity[$pKeyField],
+        $entity['displayField']
       );
     }
 
