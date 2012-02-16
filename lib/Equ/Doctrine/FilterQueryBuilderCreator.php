@@ -117,7 +117,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
     foreach ($filters as $property => $value) {
       try {
         if (!in_array($value, array('', null), true) && array_key_exists($property, $metadata->fieldMappings)) {
-          $this->addAndWhere($queryBuilder, $property, $value);
+          $this->addAndWhere($queryBuilder, $property, $objectHelper->get($property));
         }
         if (array_key_exists($property, $metadata->associationMappings)) {
           $value = $objectHelper->get($property);
