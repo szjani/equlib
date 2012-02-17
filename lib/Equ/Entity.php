@@ -92,5 +92,9 @@ abstract class Entity implements \ArrayAccess, SortableEntity, DisplayableEntity
   public static function getSortField() {
     return static::getDisplayField();
   }
+  
+  public static function getDisplayField() {
+    return 'id';
+  }
 
 }
