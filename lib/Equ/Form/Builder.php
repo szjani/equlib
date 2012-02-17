@@ -265,6 +265,9 @@ class Builder implements IBuilder {
       ->getFieldValue($this->objectHelper->getObject(), $elementName);
     
     if ($value instanceof $def['targetEntity']) {
+      if ($value instanceof \Doctrine\ORM\Proxy\Proxy) {
+        $this->entityManager->refresh($value);
+      }
       $id = $targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName());
       if ($element instanceof \Zend_Dojo_Form_Element_ComboBox && $element->getAutocomplete()) {
         $element->addMultiOption(array($id, (string)$value));
