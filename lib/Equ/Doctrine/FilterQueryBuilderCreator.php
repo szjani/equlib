@@ -49,6 +49,9 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
   protected function addAndWhereForCollection(QueryBuilder $queryBuilder, $field, ArrayCollection $value) {
     $valueIds = array();
     foreach ($value as $relatedObject) {
+      if ($relatedObject instanceof \Doctrine\ORM\Proxy\Proxy) {
+        $this->entityManager->refresh($relatedObject);
+      }
       $subMetadata = $this->entityManager->getClassMetadata(get_class($relatedObject));
       $valueIds[]  = $subMetadata->getFieldValue($relatedObject, $subMetadata->getSingleIdentifierFieldName());
     }
