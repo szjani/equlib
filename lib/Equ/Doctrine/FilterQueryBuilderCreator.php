@@ -56,11 +56,9 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
   }
   
   protected function addAndWhereForObject(QueryBuilder $queryBuilder, $field, $value) {
-    $subMetadata = $this->entityManager->getClassMetadata(get_class($value));
-    $valueId = $subMetadata->getFieldValue($value, $subMetadata->getSingleIdentifierFieldName());
     $queryBuilder
       ->andWhere("m.{$field} = :$field")
-      ->setParameter($field, $valueId);
+      ->setParameter($field, $value);
   }
   
   
