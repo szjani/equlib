@@ -233,16 +233,16 @@ class Builder implements IBuilder {
     } else {
       $select = $elementCreator->createElement($elementName, array());
     }
-    if ($type === 'array') {
+    if ($select instanceof \Zend_Form_Element_Multi) {
       $select->addMultiOption('', '');
-    }
-    $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
-    $pKeyField = $targetMetaData->getSingleIdentifierFieldName();
-    foreach ($this->getForeignEntities($def['targetEntity'], $pKeyField) as $entity) {
-      $select->addMultiOption(
-        $entity[$pKeyField],
-        $entity['displayField']
-      );
+      $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
+      $pKeyField = $targetMetaData->getSingleIdentifierFieldName();
+      foreach ($this->getForeignEntities($def['targetEntity'], $pKeyField) as $entity) {
+        $select->addMultiOption(
+          $entity[$pKeyField],
+          $entity['displayField']
+        );
+      }
     }
 
 //    $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
