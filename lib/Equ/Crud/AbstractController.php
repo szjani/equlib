@@ -73,6 +73,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
       ->addActionContext('update', 'json')
       ->addActionContext('list', 'json')
       ->addActionContext('create', 'json')
+      ->addActionContext('lookup', 'json')
       ->initContext();
   }
   
@@ -345,6 +346,21 @@ abstract class AbstractController extends \Zend_Controller_Action {
   
   protected function getListQueryBuilder() {
     return null;
+  }
+  
+  /**
+   * Usefull for autocomplete fields
+   * Use $id or $q but not at the same time
+   * 
+   * @param string $key Key field in response
+   * @param string $value Value field in response
+   * @param string $id Search one field by id (init form element)
+   * @param string $q  Search value
+   */
+  public function lookupAction() {
+    $this->_helper->contextSwitch->setAutoJsonSerialization(false);
+    $repo = $this->em->getRepository($this->getEntityClass());
+    echo \Zend_Json::encode($this->_helper->lookUp($repo));
   }
 
   /**
