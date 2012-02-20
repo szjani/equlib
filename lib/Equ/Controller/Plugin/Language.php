@@ -4,12 +4,21 @@ use Equ\Controller\Exception\UnexpectedValueException;
 
 class Language extends \Zend_Controller_Plugin_Abstract {
 
+  private $translate;
+  
+  private $locale;
+  
+  public function __construct(\Zend_Translate $translate, \Zend_Locale $locale) {
+    $this->translate = $translate;
+    $this->locale    = $locale;
+  }
+  
   /**
    * (non-PHPdoc)
    * @see \Zend_Controller_Plugin_Abstract::routeStartup()
    */
   public function routeStartup(\Zend_Controller_Request_Abstract $request) {
-    $locale = \Zend_Registry::get('Zend_Locale');
+    $locale = $this->locale;
     $front  = \Zend_Controller_Front::getInstance();
     $router = $front->getRouter();
 
@@ -44,12 +53,12 @@ class Language extends \Zend_Controller_Plugin_Abstract {
    */
   public function routeShutdown(\Zend_Controller_Request_Abstract $request) {
     $origLang  = $lang = $request->getParam('lang');
-    $translate = \Zend_Registry::get('Zend_Translate');
+    $translate = $this->translate;
 
     // Change language if available
     if ($translate->isAvailable($lang)) {
-      $translate->setLocale($lang);
-      \Zend_Registry::get('Zend_Locale')->setLocale($lang);
+      $this->locale->setLocale($lang);
+      $this->translate->setLocale($lang);
     } else {
       // Otherwise get default language
       $locale = $translate->getLocale();
