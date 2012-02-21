@@ -115,6 +115,14 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
       ->select('m')
       ->from($entityName, 'm');
 
+    // join associations if this is the owning side
+    foreach ($metadata->associationMappings as $key => $mapping) {
+      if (array_key_exists('isOwningSide', $mapping) && $mapping['isOwningSide']) {
+        $queryBuilder->addSelect($key);
+        $queryBuilder->leftJoin('m.' . $key, $key);
+      }
+    }
+
     foreach ($filters as $property => $value) {
       try {
         if (!in_array($value, array('', null), true) && array_key_exists($property, $metadata->fieldMappings)) {
@@ -122,7 +130,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
         }
         if (array_key_exists($property, $metadata->associationMappings)) {
           $value = $objectHelper->get($property);
-          $this->addAndWhere($queryBuilder, $metadata->associationMappings[$property]['fieldName'], $value);
+          $this->addAndWhere($queryBuilder, $property, $value);
         }
       } catch (\InvalidArgumentException $e) {}
     }
