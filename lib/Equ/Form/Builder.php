@@ -69,11 +69,13 @@ class Builder implements IBuilder {
 
   /**
    * @param mixed $object
+   * @param EntityManager $em
    * @param ElementCreator\IFactory $elementCreatorFactory
    * @param \ArrayObject $objectHelpers 
    */
-  public function __construct($object, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null) {
+  public function __construct($object, EntityManager $em, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null) {
     $this->objectHelper = new ObjectHelper($object);
+    $this->setEntityManager($em);
     $this->formKey = $key;
     if (null === $objectHelpers) {
       $this->objectHelpers = new \ArrayObject(array(
@@ -156,9 +158,6 @@ class Builder implements IBuilder {
    * @return EntityManager $em
    */
   public function getEntityManager() {
-    if (null === $this->entityManager) {
-      $this->entityManager = \Zend_Controller_Front::getInstance()->getParam('bootstrap')->getContainer()->get('doctrine.entitymanager');
-    }
     return $this->entityManager;
   }
   

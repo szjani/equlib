@@ -3,7 +3,8 @@ namespace Equ\Controller\Action\Helper;
 use
   Equ\Form\Builder as FormBuilder,
   Equ\Form\IMappedType,
-  Equ\Form\ElementCreator\IFactory as ElementCreatorFactory;
+  Equ\Form\ElementCreator\IFactory as ElementCreatorFactory,
+  Doctrine\ORM\EntityManager;
 
 class CreateFormBuilder extends \Zend_Controller_Action_Helper_Abstract {
   
@@ -13,15 +14,19 @@ class CreateFormBuilder extends \Zend_Controller_Action_Helper_Abstract {
   
   protected $defaultSubFormClass;
   
+  protected $entityManager;
+  
   /**
+   * @param EntityManager $em
    * @param ElementCreatorFactory $factory
    * @param string $formClass
    * @param string $subFormClass 
    */
-  public function __construct(ElementCreatorFactory $factory, $formClass, $subFormClass) {
+  public function __construct(EntityManager $em, ElementCreatorFactory $factory, $formClass, $subFormClass) {
     $this->defaultElementCreatorFactory = $factory;
     $this->defaultFormClass             = $formClass;
     $this->defaultSubFormClass          = $subFormClass;
+    $this->entityManager                = $em;
   }
   
   /**
@@ -48,7 +53,7 @@ class CreateFormBuilder extends \Zend_Controller_Action_Helper_Abstract {
     $factory      = $factory      ?: $this->defaultElementCreatorFactory;
     $formClass    = $formClass    ?: $this->defaultFormClass;
     $subFormClass = $subFormClass ?: $this->defaultSubFormClass;
-    $formBuilder  = new FormBuilder($object, $factory);
+    $formBuilder  = new FormBuilder($object, $this->entityManager, $factory);
     $formBuilder
       ->setSubFormClass($subFormClass)
       ->setFormClass($formClass);
