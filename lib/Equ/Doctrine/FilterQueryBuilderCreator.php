@@ -142,10 +142,7 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator {
       elseif (array_key_exists($sort, $metadata->associationMappings)) {
         $targetEntity = $metadata->associationMappings[$sort]['targetEntity'];
         if (method_exists($targetEntity, 'getSortField')) {
-          $queryBuilder
-            ->select("m, $sort")
-            ->leftJoin("m.$sort", $sort)
-            ->orderBy("$sort." . $targetEntity::getSortField(), $order);
+          $queryBuilder->orderBy("$sort." . $targetEntity::getSortField(), $order);
         }
       }
     }
