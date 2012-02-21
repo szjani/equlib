@@ -8,6 +8,10 @@ class ServiceContainer extends \Zend_Controller_Action_Helper_Abstract {
   public function direct($name) {
     return $this->getContainer()->get($name);
   }
+  
+  public function setContainer($container) {
+    $this->_container = $container;
+  }
 
   public function getContainer() {
     if ($this->_container === null) {
