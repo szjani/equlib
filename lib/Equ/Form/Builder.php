@@ -459,7 +459,7 @@ class Builder implements IBuilder {
    */
   public function getMapper() {
     if (null === $this->mapper) {
-      $this->mapper = new Mapper($this->getForm(), $this->getFormKey(), $this->objectHelpers);
+      $this->mapper = new Mapper($this->getForm(), $this->getFormKey(), $this->objectHelpers, $this->getEntityManager());
     }
     return $this->mapper;
   }

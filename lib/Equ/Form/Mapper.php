@@ -5,7 +5,8 @@ use
   Zend_Form_SubForm as SubForm,
   Zend_Controller_Request_Http as Request,
   Equ\Form\Exception\InvalidArgumentException,
-  Equ\Object\Helper as ObjectHelper;
+  Equ\Object\Helper as ObjectHelper,
+  Doctrine\ORM\EntityManager;
 
 /**
  * Map form data into object
@@ -47,11 +48,12 @@ class Mapper implements IMapper {
    * @param type $key
    * @param \ArrayObject $objectHelpers 
    */
-  public function __construct(Form $form, $key, \ArrayObject $objectHelpers) {
+  public function __construct(Form $form, $key, \ArrayObject $objectHelpers, EntityManager $em = null) {
     $this->form = $form;
     $this->objectHelper  = $objectHelpers[$key];
     $this->objectHelpers = $objectHelpers;
     $this->key = $key;
+    $this->entityManager = $em;
   }
   
   /**
