@@ -406,7 +406,7 @@ class Builder implements IBuilder {
   private function buildSubForm($subObject, $field, IMappedType $type, $index = '') {
     $subFormKey  = $this->getFormKey() . '-' . $field . ($index === '' ? $index : ('[' . $index . ']'));
     $subFormName = $field . ($index === '' ? $index : ('[' . $index . ']'));
-    $builder     = new self($subObject, $this->getElementCreatorFactory(), $this->objectHelpers, $subFormKey);
+    $builder     = new self($subObject, $this->entityManager, $this->getElementCreatorFactory(), $this->objectHelpers, $subFormKey);
     $builder->setEntityManager($this->getEntityManager());
     $class = $this->getSubFormClass();
     $subForm = new $class;
