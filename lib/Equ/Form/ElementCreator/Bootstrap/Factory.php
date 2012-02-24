@@ -66,4 +66,8 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
   public function createPasswordCreator() {
     return new PasswordCreator($this->getNamespace());
   }
+  
+  public function createCaptchaCreator() {
+    return new CaptchaCreator($this->getNamespace());
+  }
 }
