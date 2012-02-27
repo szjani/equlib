@@ -22,7 +22,7 @@ class AuthenticatedUser extends \Zend_Controller_Action_Helper_Abstract {
   
   public function preDispatch() {
     $user = $this->storage->getAuthenticatedUser();
-    if ($this->_actionController->getRequest()->getParam('format') == 'json' && method_exists($user, 'toArray')) {
+    if ($this->_actionController->getRequest()->getParam('format') == 'json') {
       $this->_actionController->view->authenticatedUser = $user->toArray();
     } else {
       $this->_actionController->view->authenticatedUser = $user;
