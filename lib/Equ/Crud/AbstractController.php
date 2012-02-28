@@ -2,6 +2,10 @@
 namespace Equ\Crud;
 use
   Doctrine\ORM\EntityManager,
+  Doctrine\Common\EventManager,
+  Doctrine\Common\EventSubscriber,
+  Doctrine\ORM\Event\LifecycleEventArgs,
+  Doctrine\ORM\Event\PreUpdateEventArgs,
   Equ\Entity\FormBuilder,
   Equ\Controller\Request\FilterDTOBuilder,
   Equ\Message,
@@ -23,7 +27,7 @@ use
  * @version     $Revision$
  * @author      Szurovecz János <szjani@szjani.hu>
  */
-abstract class AbstractController extends \Zend_Controller_Action {
+abstract class AbstractController extends \Zend_Controller_Action implements EventSubscriber {
 
   /**
    * @var EntityManager
@@ -41,6 +45,11 @@ abstract class AbstractController extends \Zend_Controller_Action {
   public $log;
   
   /**
+   * @var \Doctrine\Common\EventManager
+   */
+  public $doctrineEventmanager;
+  
+  /**
    * @var array
    */
   protected $ignoredFields = array();
@@ -55,6 +64,17 @@ abstract class AbstractController extends \Zend_Controller_Action {
    */
   protected $entityClass = null;
 
+  public function getSubscribedEvents() {
+    return array(
+      'prePersist',
+      'postPersist',
+      'preRemove',
+      'postRemove',
+      'preUpdate',
+      'postUpdate',
+    );
+  }
+  
   /**
    * Adds general CRUD script path
    */
@@ -75,6 +95,8 @@ abstract class AbstractController extends \Zend_Controller_Action {
       ->addActionContext('create', 'json')
       ->addActionContext('lookup', 'json')
       ->initContext();
+    
+    $this->doctrineEventmanager->addEventSubscriber($this);
   }
   
   public function postDispatch() {
@@ -99,37 +121,37 @@ abstract class AbstractController extends \Zend_Controller_Action {
   protected function formBuilderCreated(IBuilder $builder) {}
   
   /**
-   * @param object $entity 
+   * @param LifecycleEventArgs $args
    */
-  protected function prePersist($entity) {}
+  public function prePersist(LifecycleEventArgs $args) {}
   
   /**
-   * @param object $entity 
+   * @param LifecycleEventArgs $args
    */
-  protected function postPersist($entity) {}
+  public function postPersist(LifecycleEventArgs $args) {}
   
   /**
-   * @param object $entity
+   * @param PreUpdateEventArgs $args 
    */
-  protected function preFlush($entity) {}
+  public function preUpdate(PreUpdateEventArgs $args) {}
   
   /**
-   * @param object $entity
+   * @param LifecycleEventArgs $args
    */
-  protected function postFlush($entity) {}
+  public function postUpdate(LifecycleEventArgs $args) {}
   
   /**
-   * @param object $entity
+   * @param LifecycleEventArgs $args
    */
-  protected function preRemove($entity) {}
+  public function preRemove(LifecycleEventArgs $args) {}
   
   /**
-   * @param object $entity
+   * @param LifecycleEventArgs $args
    */
-  protected function postRemove($entity) {}
+  public function postRemove(LifecycleEventArgs $args) {}
   
   /**
-   * @return \Equ\Form\IMappedType 
+   * @return \Equ\Form\IMappedType
    */
   public function getUpdateForm() {
     return $this->getMainForm();
@@ -257,12 +279,8 @@ abstract class AbstractController extends \Zend_Controller_Action {
           throw new ValidationException('Invalid values in form');
         }
         $entity = $builder->getMapper()->getObject();
-        $this->prePersist($entity);
         $em->persist($entity);
-        $this->postPersist($entity);
-        $this->preFlush($entity);
         $em->flush();
-        $this->postFlush($entity);
         $this->_helper->flashMessenger('Crud/Create/Success');
         if (!$this->_request->isXmlHttpRequest()) {
           $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
@@ -297,9 +315,7 @@ abstract class AbstractController extends \Zend_Controller_Action {
         if (!$builder->getMapper()->isValid($this->_request)) {
           throw new ValidationException('Invalid values in form');
         }
-        $this->preFlush($entity);
         $em->flush();
-        $this->postFlush($entity);
         $this->_helper->flashMessenger('Crud/Update/Success');
         if (!$this->_request->isXmlHttpRequest()) {
           $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
@@ -328,12 +344,8 @@ abstract class AbstractController extends \Zend_Controller_Action {
       if (!$entity) {
         throw new Exception\InvalidArgumentException("Invalid id: '$id'");
       }
-      $this->preRemove($entity);
       $em->remove($entity);
-      $this->postRemove($entity);
-      $this->preFlush($entity);
       $em->flush();
-      $this->postFlush($entity);
       $this->_helper->flashMessenger('Crud/Delete/Success');
       if (!$this->_request->isXmlHttpRequest()) {
         $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
