@@ -28,7 +28,7 @@ class Language extends \Zend_Controller_Plugin_Abstract {
       array(
         'lang' => $locale->getLanguage(),
       ),
-      array('lang' => '[a-z]{2}')
+      array('lang' => '[a-z]{2}(_[a-z]{2})?')
     );
 
     // default routes
@@ -52,12 +52,17 @@ class Language extends \Zend_Controller_Plugin_Abstract {
    * @see \Zend_Controller_Plugin_Abstract::routeShutdown()
    */
   public function routeShutdown(\Zend_Controller_Request_Abstract $request) {
-    $origLang  = $lang = $request->getParam('lang');
+    $origLang  = $request->getParam('lang');
+    $pos       = strpos($origLang, '_');
+    $lang      = $pos ? substr($origLang, 0, $pos) : $origLang;
     $translate = $this->translate;
 
     // Change language if available
-    if ($translate->isAvailable($lang)) {
-      $this->locale->setLocale($lang);
+    if ($translate->isAvailable($origLang)) {
+      $this->locale->setLocale($origLang);
+      $this->translate->setLocale($origLang);
+    } elseif ($translate->isAvailable($lang)) {
+      $this->locale->setLocale($origLang);
       $this->translate->setLocale($lang);
     } else {
       // Otherwise get default language
@@ -73,9 +78,9 @@ class Language extends \Zend_Controller_Plugin_Abstract {
     $router = \Zend_Controller_Front::getInstance()->getRouter();
     /* @var $router Zend_Controller_Router_Rewrite */
     if (false !== \strpos($router->getCurrentRouteName(), 'lang')) {
-      $router->setGlobalParam('lang', $lang);
+      $router->setGlobalParam('lang', $origLang);
     }
-    $request->setParam('lang', $lang);
+    $request->setParam('lang', $origLang);
   }
 
 }
