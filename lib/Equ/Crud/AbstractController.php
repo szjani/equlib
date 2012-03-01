@@ -81,11 +81,8 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
   public function init() {
     parent::init();
     $this->view->addScriptPath(dirname(__FILE__) . '/views/scripts');
-    $title = $this->view->pageTitle =
-      $this->view->translate(
-        "Navigation/{$this->_getParam('module')}/{$this->_getParam('controller')}/{$this->_getParam('action')}/label"
-      );
-    $this->view->headTitle($title);
+    
+    $this->_helper->autoTitle();
     
     $contextSwitch = $this->_helper->getHelper('contextSwitch');
     $contextSwitch
