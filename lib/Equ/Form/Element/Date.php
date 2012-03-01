@@ -12,7 +12,7 @@ class Date extends \Zend_Form_Element_Xhtml {
         $value['month'] . '-' .
         $value['day'];
 
-      if ($value == '--') {
+      if (strlen($value) !== strlen('1985-03-05')) {
         $value = null;
       }
     }
