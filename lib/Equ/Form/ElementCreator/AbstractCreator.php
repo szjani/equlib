@@ -147,6 +147,8 @@ abstract class AbstractCreator implements IOptionFlaggable {
     return $this->validator;
   }
   
+  public function initDecorators(\Zend_Form_Element $element) {}
+  
   /**
    * You should pass $values from
    * $em->getClassMetadata($className)->fieldMappings
@@ -157,7 +159,12 @@ abstract class AbstractCreator implements IOptionFlaggable {
    */
   public function createElement($fieldName, array $values = array()) {
     $this->values = $values;
-    $element = $this->buildElement($fieldName);
+    $element = null;
+    if ($fieldName instanceof \Zend_Form_Element) {
+      $element = $fieldName;
+    } else {
+      $element = $this->buildElement($fieldName);
+    }
     if ($this->getOptionFlags()->hasFlag(OptionFlags::IMPLICIT_VALIDATORS)) {
       $this->createImplicitValidators($element);
     }
@@ -170,6 +177,7 @@ abstract class AbstractCreator implements IOptionFlaggable {
     if ($this->getOptionFlags()->hasFlag(OptionFlags::PLACEHOLDER)) {
       $this->createPlaceholder($element);
     }
+    $this->initDecorators($element);
     return $element;
   }
 
