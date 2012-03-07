@@ -5,7 +5,8 @@ use
   Equ\Object\Validatable,
   Equ\Object\Validator,
   Equ\Crud\SortableEntity,
-  Equ\Crud\DisplayableEntity;
+  Equ\Crud\DisplayableEntity,
+  Doctrine\ORM\Mapping as ORM;
 
 /**
  * Abstract entity class
@@ -15,8 +16,8 @@ use
  * @version     $Revision$
  * @author      Szurovecz János <szjani@szjani.hu>
  * 
- * @MappedSuperclass
- * @HasLifecycleCallbacks
+ * @ORM\MappedSuperclass
+ * @ORM\HasLifecycleCallbacks
  */
 abstract class Entity implements \ArrayAccess, SortableEntity, DisplayableEntity {
 
@@ -52,7 +53,7 @@ abstract class Entity implements \ArrayAccess, SortableEntity, DisplayableEntity
   }
   
   /**
-   * @PrePersist @PreUpdate
+   * @ORM\PrePersist @ORM\PreUpdate
    */
   public function validate() {
     if ($this instanceof Validatable && is_object($this->validator)) {
