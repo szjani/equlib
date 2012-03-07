@@ -15,9 +15,10 @@ abstract class BaseCreator extends \Equ\Form\ElementCreator\AbstractCreator {
         ->addDecorator(array('controls' => 'HtmlTag'), array('tag' => 'div', 'class' => 'controls'))
         ->addDecorator('Label')
         ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => array('callback' => function($decorator) {
+          $id = $decorator->getElement()->getId();
           return count($decorator->getElement()->getMessages()) !== 0
-            ? 'control-group error'
-            : 'control-group';
+            ? 'control-group error ' . $id
+            : 'control-group ' . $id;
         })));
     } else {
       $element->setAttrib('class', 'input-small');
