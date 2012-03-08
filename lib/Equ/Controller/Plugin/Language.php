@@ -61,9 +61,11 @@ class Language extends \Zend_Controller_Plugin_Abstract {
     if ($translate->isAvailable($origLang)) {
       $this->locale->setLocale($origLang);
       $this->translate->setLocale($origLang);
+      $this->getResponse()->setHeader('Content-Language', $origLang);
     } elseif ($translate->isAvailable($lang)) {
       $this->locale->setLocale($origLang);
       $this->translate->setLocale($lang);
+      $this->getResponse()->setHeader('Content-Language', $lang);
     } else {
       // Otherwise get default language
       $locale = $translate->getLocale();
