@@ -1,6 +1,7 @@
 <?php
 namespace Equ\Controller\Plugin;
 use
+  Equ\Auth\AuthenticatedUserStorage,
   Zend_Cache_Core,
   Zend_Navigation,
   Zend_Acl,
@@ -40,6 +41,11 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
   private $view;
   
   /**
+   * @var AuthenticatedUserStorage 
+   */
+  private $userStorage;
+  
+  /**
    * @param Zend_Navigation $navigation
    * @param NavigationItemRepository $itemRepo
    * @param Zend_Cache_Core $cache
@@ -47,12 +53,14 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
    * @param Zend_View $view 
    */
   public function __construct(
+    AuthenticatedUserStorage $storage,
     Zend_Navigation $navigation,
     NavigationItemRepository $itemRepo,
     Zend_Cache_Core $cache,
     Zend_Acl $acl,
     Zend_View $view
   ) {
+    $this->userStorage = $storage;
     $this->navigation  = $navigation;
     $this->itemRepo   = $itemRepo;
     $this->cache      = $cache;
@@ -85,7 +93,7 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
     $navigationHelper
       ->setContainer($navigation)
       ->setAcl($this->acl)
-      ->setRole(\Zend_Auth::getInstance()->getIdentity());
+      ->setRole($this->userStorage->getAuthenticatedUser());
   }
 
 }

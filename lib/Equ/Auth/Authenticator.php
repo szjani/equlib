@@ -8,12 +8,12 @@ namespace Equ\Auth;
  * @version     $Revision$
  * @author      Szurovecz János <szjani@szjani.hu>
  */
-interface RepositoryInterface {
+interface Authenticator {
 
   /**
    * @throws Exception
    * @return mixed
    */
-  public function authenticate($credential, $password);
+  public function authenticate($principal, $password);
   
 }

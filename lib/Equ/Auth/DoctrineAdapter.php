@@ -13,7 +13,7 @@ namespace Equ\Auth;
 class DoctrineAdapter implements \Zend_Auth_Adapter_Interface {
 
   /**
-   * @var RepositoryInterface
+   * @var Authenticator
    */
   private $repository;
 
@@ -21,7 +21,7 @@ class DoctrineAdapter implements \Zend_Auth_Adapter_Interface {
    *
    * @var string
    */
-  private $credential;
+  private $principal;
 
   /**
    * @var string
@@ -29,13 +29,13 @@ class DoctrineAdapter implements \Zend_Auth_Adapter_Interface {
   private $password;
 
   /**
-   * @param RepositoryInterface $repo
-   * @param string $credential
+   * @param Authenticator $repo
+   * @param string $principal
    * @param string $password
    */
-  public function __construct(RepositoryInterface $repo, $credential, $password) {
+  public function __construct(Authenticator $repo, $principal, $password) {
     $this->repository = $repo;
-    $this->credential = $credential;
+    $this->principal  = $principal;
     $this->password   = $password;
   }
 
@@ -45,7 +45,7 @@ class DoctrineAdapter implements \Zend_Auth_Adapter_Interface {
   public function authenticate() {
     $result = null;
     try {
-      $user = $this->repository->authenticate($this->credential, $this->password);
+      $user = $this->repository->authenticate($this->principal, $this->password);
       $result = new \Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $user);
     } catch (\Exception $e) {
       $result = new \Zend_Auth_Result(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, null);
