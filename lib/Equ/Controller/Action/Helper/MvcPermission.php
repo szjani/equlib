@@ -39,11 +39,7 @@ class MvcPermission extends \Zend_Controller_Action_Helper_Abstract {
   public function preDispatch() {
     $request = $this->getRequest();
     try {
-      $auth = \Zend_Auth::getInstance();
-      $user = $auth->hasIdentity() ? $auth->getIdentity() : null;
-      try {
-        $user = $this->storage->getAuthenticatedUser();
-      } catch (\RuntimeException $e) {}
+      $user = $this->storage->getAuthenticatedUser();
       $resource = 'mvc:'.$request->getModuleName().'.'.$request->getControllerName().'.'.$request->getActionName();
       if (!$this->acl->isAllowed($user, $resource, 'list')) {
         throw new PermissionException("You don't have permission to view this page!");
