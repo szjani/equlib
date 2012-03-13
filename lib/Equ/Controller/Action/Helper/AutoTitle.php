@@ -12,8 +12,10 @@ class AutoTitle extends \Zend_Controller_Action_Helper_Abstract {
   
   public function direct() {
     $currentPage = $this->navigation->findOneBy('active', true);
-    $view = $this->_actionController->view;
-    $view->headTitle($view->translate($currentPage->getTitle()));
+    if (null !== $currentPage) {
+      $view = $this->_actionController->view;
+      $view->headTitle($view->translate($currentPage->getTitle()));
+    }
   }
   
 }
