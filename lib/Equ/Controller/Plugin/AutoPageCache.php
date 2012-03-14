@@ -25,6 +25,9 @@ class AutoPageCache extends Zend_Controller_Plugin_Abstract {
     if (null !== $this->getResponse() && $this->getResponse()->isRedirect()) {
       $this->cache->cancel();
     }
+    if (null !== $this->getResponse() && $this->getResponse()->isException()) {
+      $this->cache->cancel();
+    }
   }
   
   public function dispatchLoopShutdown() {
