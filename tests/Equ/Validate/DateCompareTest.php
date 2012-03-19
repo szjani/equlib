@@ -28,8 +28,16 @@ class DateCompareTest extends PHPUnit_Framework_TestCase {
   
   public function testZendDateGreater() {
     $validator = new DateCompare(new Zend_Date(), 'gt');
-    $past = new Zend_Date(time() + 10);
-    self::assertTrue($validator->isValid($past));
+    $future = new Zend_Date(time() + 10);
+    self::assertTrue($validator->isValid($future));
+  }
+  
+  public function testDateWithoutTime() {
+    $now = new Zend_Date();
+    $validator = new DateCompare($now, 'gt');
+    $future = clone $now;
+    $future = $future->addMonth(1)->toString('yyyy-MM-dd');
+    self::assertTrue($validator->isValid($future));
   }
   
 }
