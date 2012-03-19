@@ -82,8 +82,6 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
     parent::init();
     $this->view->addScriptPath(dirname(__FILE__) . '/views/scripts');
     
-    $this->_helper->autoTitle();
-    
     $contextSwitch = $this->_helper->getHelper('contextSwitch');
     $contextSwitch
       ->addActionContext('delete', 'json')
