@@ -1,15 +1,14 @@
 <?php
 namespace Equ\Controller\Plugin;
 use
-  Equ\Auth\AuthenticatedUserStorage,
   Zend_Cache_Core,
   Zend_Navigation,
-  Zend_Acl,
-  Zend_View,
   Equ\Navigation\Item as NavigationItem,
-  Equ\Navigation\ItemRepository as NavigationItemRepository;
+  Equ\Navigation\ItemRepository as NavigationItemRepository,
+  Zend_Controller_Request_Abstract,
+  Zend_Controller_Plugin_Abstract;
 
-class Navigation extends \Zend_Controller_Plugin_Abstract {
+class Navigation extends Zend_Controller_Plugin_Abstract {
 
   const KEY = 'navigation';
   
@@ -31,44 +30,21 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
   private $cache;
   
   /**
-   * @var Zend_Acl 
-   */
-  private $acl;
-  
-  /**
-   * @var Zend_View 
-   */
-  private $view;
-  
-  /**
-   * @var AuthenticatedUserStorage 
-   */
-  private $userStorage;
-  
-  /**
    * @param Zend_Navigation $navigation
    * @param NavigationItemRepository $itemRepo
    * @param Zend_Cache_Core $cache
-   * @param Zend_Acl $acl
-   * @param Zend_View $view 
    */
-  public function __construct(
-    AuthenticatedUserStorage $storage,
-    Zend_Navigation $navigation,
-    NavigationItemRepository $itemRepo,
-    Zend_Cache_Core $cache,
-    Zend_Acl $acl,
-    Zend_View $view
-  ) {
-    $this->userStorage = $storage;
+  public function __construct(Zend_Navigation $navigation, NavigationItemRepository $itemRepo, Zend_Cache_Core $cache) {
     $this->navigation  = $navigation;
-    $this->itemRepo   = $itemRepo;
-    $this->cache      = $cache;
-    $this->acl        = $acl;
-    $this->view       = $view;
+    $this->itemRepo    = $itemRepo;
+    $this->cache       = $cache;
   }
   
-  public function routeShutdown(\Zend_Controller_Request_Abstract $request) {
+  /**
+   * @param Zend_Controller_Request_Abstract $request
+   * @return void 
+   */
+  public function routeShutdown(Zend_Controller_Request_Abstract $request) {
     if ($request->getParam('format') == 'ajax') {
       return;
     }
@@ -88,12 +64,6 @@ class Navigation extends \Zend_Controller_Plugin_Abstract {
       }
       $this->cache->save($navigation->getPages(), self::KEY);
     }
-    
-    $navigationHelper = $this->view->getHelper('navigation');
-    $navigationHelper
-      ->setContainer($navigation)
-      ->setAcl($this->acl)
-      ->setRole($this->userStorage->getAuthenticatedUser());
   }
 
 }
