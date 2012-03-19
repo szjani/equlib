@@ -307,6 +307,8 @@ class Builder implements IBuilder {
         
         if ($type instanceof \Zend_Form_Element) {
           $element = $type;
+          $validator = $this->getObjectValidator();
+          $element->addValidator($validator->getFieldValidate($field));
         } else {
           $element = $this->createForeignElement($field, $metadata->associationMappings[$field], $type);
         }
@@ -319,6 +321,8 @@ class Builder implements IBuilder {
         }
         if ($type instanceof \Zend_Form_Element) {
           $element = $type;
+          $validator = $this->getObjectValidator();
+          $element->addValidator($validator->getFieldValidate($field));
         } else {
           $elementCreator = $this->createElementCreator($type);
           $elementCreator->setOptionFlags($this->getOptionFlags());
@@ -337,6 +341,8 @@ class Builder implements IBuilder {
       }
       if ($type instanceof \Zend_Form_Element) {
         $element = $type;
+        $validator = $this->getObjectValidator();
+        $element->addValidator($validator->getFieldValidate($field));
       } else {
         $elementCreator = $this->createElementCreator($type);
         $elementCreator->setOptionFlags($this->getOptionFlags());
