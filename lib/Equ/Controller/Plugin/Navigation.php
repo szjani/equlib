@@ -30,6 +30,11 @@ class Navigation extends Zend_Controller_Plugin_Abstract {
   private $cache;
   
   /**
+   * @var boolean
+   */
+  private $autoDisableForAjaxRequest = true;
+  
+  /**
    * @param Zend_Navigation $navigation
    * @param NavigationItemRepository $itemRepo
    * @param Zend_Cache_Core $cache
@@ -41,11 +46,28 @@ class Navigation extends Zend_Controller_Plugin_Abstract {
   }
   
   /**
+   *
+   * @param boolean $disable
+   * @return Navigation 
+   */
+  public function setAutoDisableForAjaxRequest($disable = true) {
+    $this->autoDisableForAjaxRequest = $disable;
+    return $this;
+  }
+  
+  /**
+   * @return boolean
+   */
+  public function isAutoDisableForAjaxRequest() {
+    return $this->autoDisableForAjaxRequest;
+  }
+  
+  /**
    * @param Zend_Controller_Request_Abstract $request
    * @return void 
    */
   public function routeShutdown(Zend_Controller_Request_Abstract $request) {
-    if ($request->getParam('format') == 'ajax') {
+    if ($this->autoDisableForAjaxRequest && $request->isXmlHttpRequest()) {
       return;
     }
     $navigation = $this->navigation;
