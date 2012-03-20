@@ -56,7 +56,7 @@ $(document).ready(function() {
           $date = new Zend_Date($field->getTimestamp());
           echo $date->toString();
         } else {
-          echo (string)$field;
+          echo $this->escape((string)$field);
         }
         ?>
         </td>
