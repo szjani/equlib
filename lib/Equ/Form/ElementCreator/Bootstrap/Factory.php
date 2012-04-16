@@ -31,6 +31,10 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
     return new ArrayCreator($this->getNamespace());
   }
   
+  public function createRadioCreator() {
+    return new RadioCreator($this->getNamespace());
+  }
+  
   public function createDateCreator() {
     return new StringCreator($this->getNamespace());
   }
