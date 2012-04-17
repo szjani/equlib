@@ -1,6 +1,8 @@
 <?php
 namespace Equ\Controller\Action\Helper;
 use
+  Zend_Controller_Action_Helper_Abstract,
+  Zend_Controller_Plugin_ErrorHandler,
   Equ\Controller\Exception\PermissionException,
   Equ\Auth\AuthenticatedUserStorage,
   Zend_Acl;
@@ -8,24 +10,24 @@ use
 /**
  * Check that user have or don't have permission to view current page
  *
+ * @category    Equ
+ * @package     Controller
+ * @subpackage  Action\Helper
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        $Link$
- * @since       0.1
- * @version     $Revision$
  * @author      Szurovecz János <szjani@szjani.hu>
  */
-class MvcPermission extends \Zend_Controller_Action_Helper_Abstract {
+class MvcPermission extends Zend_Controller_Action_Helper_Abstract {
 
   /**
    * @var AuthenticatedUserStorage
    */
-  private $storage;
+  protected $storage;
   
   /**
    *
    * @var Zend_Acl
    */
-  private $acl;
+  protected $acl;
   
   /**
    * @param AuthenticatedUserStorage $storage
@@ -50,8 +52,8 @@ class MvcPermission extends \Zend_Controller_Action_Helper_Abstract {
         ->setControllerName('error')
         ->setActionName('error');
 
-      $error = new \Zend_Controller_Plugin_ErrorHandler();
-      $error->type = \Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER;
+      $error = new Zend_Controller_Plugin_ErrorHandler();
+      $error->type = Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER;
       $error->request = clone $request;
       $error->exception = $e;
       $request->setParam('error_handler', $error);

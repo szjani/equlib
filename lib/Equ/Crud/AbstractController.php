@@ -21,10 +21,9 @@ use
 /**
  * Controller of CRUD operations
  *
+ * @category    Equ
+ * @package     Crud
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        $Link$
- * @since       2.0
- * @version     $Revision$
  * @author      Szurovecz János <szjani@szjani.hu>
  */
 abstract class AbstractController extends \Zend_Controller_Action implements EventSubscriber {

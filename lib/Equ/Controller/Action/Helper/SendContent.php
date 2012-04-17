@@ -3,9 +3,15 @@ namespace Equ\Controller\Action\Helper;
 use
   Zend_Controller_Action_Helper_Abstract,
   Zend_Controller_Action_HelperBroker,
-  Zend_Controller_Request_Http;
+  Zend_Controller_Request_Http,
+  Equ\Controller\Exception\InvalidArgumentException;
 
 /**
+ * Send content to browser
+ *
+ * @category    Equ
+ * @package     Controller
+ * @subpackage  Action\Helper
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Szurovecz János <szjani@szjani.hu>
  */

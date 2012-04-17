@@ -1,9 +1,30 @@
 <?php
 namespace Equ\Controller\Action\Helper;
-use Equ\Message;
+use
+  Equ\Message,
+  Zend_Controller_Action_Helper_FlashMessenger;
 
-class FlashMessenger extends \Zend_Controller_Action_Helper_FlashMessenger {
+/**
+ * This helper extends the builtin FlashMessenger helper.
+ * You can use Equ\Message object to distinguish message types
+ * and you can pass an Exception object for addMessage() method.
+ * The messages will be automatically forwarded to the view.
+ *
+ * @category    Equ
+ * @package     Controller
+ * @subpackage  Action\Helper
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @author      Szurovecz János <szjani@szjani.hu>
+ */
+class FlashMessenger extends Zend_Controller_Action_Helper_FlashMessenger {
   
+  /**
+   * @param string|\Exception $message
+   * @param string $type
+   * @param string $namespace
+   * @param boolean $translate
+   * @return FlashMessenger 
+   */
   public function direct($message, $type = Message::SUCCESS, $namespace = 'default', $translate = true) {
     return $this->addMessage($message, $type, $namespace, $translate);
   }

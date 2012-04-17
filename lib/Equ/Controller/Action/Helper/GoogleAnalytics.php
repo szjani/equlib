@@ -2,10 +2,25 @@
 namespace Equ\Controller\Action\Helper;
 use Zend_Controller_Action_Helper_Abstract;
 
+/**
+ * It just add the analytics javascript code to headScript helper. You can define your code in the constructor.
+ *
+ * @category    Equ
+ * @package     Controller
+ * @subpackage  Action\Helper
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @author      Szurovecz János <szjani@szjani.hu>
+ */
 class GoogleAnalytics extends Zend_Controller_Action_Helper_Abstract {
   
+  /**
+   * @var string
+   */
   protected $code;
   
+  /**
+   * @var boolean
+   */
   protected $enabled;
   
   /**

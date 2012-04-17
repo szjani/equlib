@@ -1,11 +1,16 @@
 <?php
 namespace Equ\Controller\Action\Helper;
-use SplFileInfo;
 use
-  InvalidArgumentException,
-  RuntimeException;
+  SplFileInfo,
+  Equ\Controller\Exception\InvalidArgumentException,
+  Equ\Controller\Exception\RuntimeException;
 
 /**
+ * Send file to the browser for downloading
+ *
+ * @category    Equ
+ * @package     Controller
+ * @subpackage  Action\Helper
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Szurovecz János <szjani@szjani.hu>
  */

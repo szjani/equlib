@@ -4,6 +4,19 @@ use
   Zend_Controller_Action_Helper_Abstract,
   Equ\Crud\LookUpable;
 
+/**
+ * If you want to create an autocomplete field
+ * then you should implement Equ\Crud\LookUpable interface
+ * typically in your repository class.
+ * This helper use request parameters and the given repository
+ * to get the required data. Here is an example.
+ *
+ * @category    Equ
+ * @package     Controller
+ * @subpackage  Action\Helper
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @author      Szurovecz János <szjani@szjani.hu>
+ */
 class LookUp extends Zend_Controller_Action_Helper_Abstract {
   
   /**
