@@ -5,7 +5,7 @@
       <div class="alert alert-<?php echo $type ?> fade in">
         <a class="close" data-dismiss="alert">×</a>
         <?php foreach ($messages as $message): ?>
-          <?php echo $this->translate($message) ?>
+          <?php echo $this->translate($message) ?><br />
         <?php endforeach ?>
       </div>
     <?php }
