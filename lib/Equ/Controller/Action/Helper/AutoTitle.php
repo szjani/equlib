@@ -60,7 +60,7 @@ class AutoTitle extends Zend_Controller_Action_Helper_Abstract {
       $currentPage = $this->navigation->findOneBy('active', true);
       $title = $currentPage
         ? $currentPage->getTitle()
-        : "Navigation/{$request->getParam('module')}/{$request->getParam('controller')}/{$request->getParam('action')}/label";
+        : "Navigation/{$request->getParam('module')}/{$request->getParam('controller')}/{$request->getParam('action')}/title";
     }
     $view->headTitle($title)->enableTranslation();
   }
