@@ -38,7 +38,7 @@ class DateCompare extends Zend_Validate_Abstract {
     } elseif (is_string($value) || is_numeric($value)) {
       $date = new Zend_Date($value);
     }
-    $this->_setValue((string)$value);
+    $this->_setValue((string)$date);
     
     $res = version_compare($date->getTimestamp(), $this->refDate->getTimestamp(), $this->operator);
     
