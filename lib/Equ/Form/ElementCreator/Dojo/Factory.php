@@ -3,7 +3,7 @@ namespace Equ\Form\ElementCreator\Dojo;
 
 class Factory extends \Equ\Form\ElementCreator\AbstractFactory {
   
-	public function createArrayCreator() {
+  public function createArrayCreator() {
     return new ArrayCreator($this->getNamespace());
   }
 
