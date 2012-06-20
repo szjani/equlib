@@ -16,7 +16,7 @@
  <rule ref="Generic.Files.LineEndings"/>
 
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
- <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
+<!-- <rule ref="Generic.Formatting.MultipleStatementAlignment"/>-->
  <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
 
  <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
@@ -36,5 +36,5 @@
      <property name="indent" value="2" />
    </properties>
  </rule>
- <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+<!-- <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>-->
 </ruleset>
