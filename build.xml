@@ -70,6 +70,7 @@
    <arg value="--jdepend-xml=${builddir}/logs/jdepend.xml" />
    <arg value="--jdepend-chart=${builddir}/pdepend/dependencies.svg" />
    <arg value="--overview-pyramid=${builddir}/pdepend/overview-pyramid.svg" />
+   <arg value="--suffix=php" />
    <arg path="${srcdir}" />
   </exec>
  </target>
@@ -77,6 +78,8 @@
  <target name="phpmd"
          description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpmd">
+   <arg value="--suffixes" />
+   <arg value="php" />
    <arg path="${srcdir}" />
    <arg value="text" />
    <arg value="${builddir}/phpmd.xml" />
@@ -85,6 +88,8 @@
 
  <target name="phpmd-ci" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
   <exec executable="phpmd">
+   <arg value="--suffixes" />
+   <arg value="php" />
    <arg path="${srcdir}" />
    <arg value="xml" />
    <arg value="${builddir}/phpmd.xml" />
@@ -96,6 +101,7 @@
  <target name="phpcs"
          description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpcs">
+   <arg value="--extensions=php" />
    <arg value="--standard=${builddir}/phpcs.xml" />
    <arg path="${srcdir}" />
   </exec>
@@ -103,6 +109,7 @@
 
  <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
   <exec executable="phpcs" output="/dev/null">
+   <arg value="--extensions=php" />
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${builddir}/logs/checkstyle.xml" />
    <arg value="--standard=${builddir}/phpcs.xml" />
@@ -112,6 +119,8 @@
 
  <target name="phpcpd" description="Find duplicate code using PHPCPD">
   <exec executable="phpcpd">
+   <arg value="--suffixes" />
+   <arg value="php" />
    <arg value="--log-pmd" />
    <arg value="${builddir}/logs/pmd-cpd.xml" />
    <arg path="${srcdir}" />
@@ -128,6 +137,7 @@
 
  <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
   <exec executable="phpcb">
+   <arg value="--extensions=php" />
    <arg value="--log" />
    <arg path="${builddir}/logs" />
    <arg value="--source" />
