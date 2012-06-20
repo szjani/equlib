@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Controller/Exception" file="PermissionException.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Controller/Exception/PermissionException.php" size="96" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="32b8537fb3630c9e2df6b1e3332de1362ce8d86c"/>
+  <namespace name="Equ\Controller\Exception">
+    <class full="Equ\Controller\Exception\PermissionException" name="PermissionException" final="false" abstract="false" start="4" end="4">
+      <extends class="RuntimeException" namespace="Equ\Controller\Exception" full="Equ\Controller\Exception\RuntimeException"/>
+    </class>
+  </namespace>
+</file>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Doctrine/Mapping/Annotation" file="MimeType.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/MimeType.php" size="159" time="2012-06-20T09:56:27+02:00" unixtime="1340178987" sha1="d3d7d521b3357b070af0534f3239fea8c6c64318"/>
+  <namespace name="Equ\Doctrine\Mapping\Annotation">
+    <class full="Equ\Doctrine\Mapping\Annotation\MimeType" name="MimeType" final="true" abstract="false" start="8" end="8">
+      <docblock>
+        <description compact=""/>
+        <Annotation value=""/>
+      </docblock>
+      <extends class="Annotation" namespace="Doctrine\Common\Annotations" full="Doctrine\Common\Annotations\Annotation"/>
+    </class>
+  </namespace>
+</file>

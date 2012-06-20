@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Validate" file="DateCompare.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Validate/DateCompare.php" size="1122" time="2012-06-20T10:04:06+02:00" unixtime="1340179446" sha1="b136cfadf7b06d84bc18bb542e4f829446841c3b"/>
+  <namespace name="Equ\Validate">
+    <class full="Equ\Validate\DateCompare" name="DateCompare" final="false" abstract="false" start="8" end="50">
+      <extends class="Zend_Validate_Abstract" full="Zend_Validate_Abstract"/>
+      <constant name="INVALID" value="invalid"/>
+      <member name="refDate" static="false" visibility="private">
+        <default>null</default>
+      </member>
+      <member name="operator" static="false" visibility="private">
+        <default>null</default>
+      </member>
+      <member name="_messageTemplates" static="false" visibility="protected">
+        <default>array (
+  self::INVALID =&gt; '\'%value%\' is invalid, set a proper date',
+)</default>
+        <docblock>
+          <description compact=""/>
+          <var type="array"/>
+        </docblock>
+      </member>
+      <constructor name="__construct" start="27" end="30" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="Zend_Date" variable="$refDate"/>
+          <param type="string" variable="$operator"/>
+        </docblock>
+        <parameter name="refDate" type="object" class="Zend_Date" optional="false" byreference="false"/>
+        <parameter name="operator" type="{unknown}" optional="true" byreference="false">
+          <default>'&lt;'</default>
+        </parameter>
+      </constructor>
+      <method name="isValid" start="32" end="49" abstract="false" final="false" static="false" visibility="public">
+        <parameter name="value" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+    </class>
+  </namespace>
+</file>

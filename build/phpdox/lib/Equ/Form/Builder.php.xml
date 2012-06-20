@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form" file="Builder.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/Builder.php" size="14113" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="b0999040d1a5b56b1958a882602df7ae1e6e06f2"/>
+  <namespace name="Equ\Form">
+    <class full="Equ\Form\Builder" name="Builder" final="false" abstract="false" start="16" end="472">
+      <docblock>
+        <description compact="Build form from object"/>
+        <category value="Equ"/>
+        <package value="Form"/>
+        <license name="http://www.opensource.org/licenses/lgpl-license.php LGPL"/>
+        <author value="Szurovecz János &lt;szjani@szjani.hu&gt;"/>
+      </docblock>
+      <implements interface="IBuilder" namespace="Equ\Form" full="Equ\Form\IBuilder"/>
+      <member name="objectHelper" static="false" visibility="private">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="Equ\Object\Helper"/>
+        </docblock>
+      </member>
+      <member name="elementCreatorFactory" static="false" visibility="private">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="ElementCreator\IFactory"/>
+        </docblock>
+      </member>
+      <member name="entityManager" static="false" visibility="protected">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="Doctrine\ORM\EntityManager"/>
+        </docblock>
+      </member>
+      <member name="mapper" static="false" visibility="protected">
+        <default>null</default>
+        <docblock>
+          <description compact="You can map form values to object with this mapper"/>
+          <var type="Mapper"/>
+        </docblock>
+      </member>
+      <member name="form" static="false" visibility="private">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="\Zend_Form"/>
+        </docblock>
+      </member>
+      <member name="formKey" static="false" visibility="private">
+        <default>null</default>
+      </member>
+      <member name="objectHelpers" static="false" visibility="private">
+        <default>null</default>
+        <docblock>
+          <description compact="array(propertyName =&gt; className, ...)"/>
+          <var type="\ArrayObject"/>
+        </docblock>
+      </member>
+      <member name="objectValidator" static="false" visibility="private">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="\Equ\Object\Validator"/>
+        </docblock>
+      </member>
+      <member name="optionFlags" static="false" visibility="private">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="OptionFlags"/>
+        </docblock>
+      </member>
+      <member name="formClass" static="false" visibility="private">
+        <default>'\\Zend_Form'</default>
+      </member>
+      <member name="subFormClass" static="false" visibility="private">
+        <default>'\\Zend_Form_SubForm'</default>
+      </member>
+      <constructor name="__construct" start="76" end="88" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="mixed" variable="$object"/>
+          <param type="Doctrine\ORM\EntityManager" variable="$em"/>
+          <param type="ElementCreator\IFactory" variable="$elementCreatorFactory"/>
+          <param type="\ArrayObject" variable="$objectHelpers"/>
+        </docblock>
+        <parameter name="object" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="em" type="object" class="EntityManager" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="elementCreatorFactory" type="object" class="IFactory" namespace="Equ\Form\ElementCreator" optional="false" byreference="false"/>
+        <parameter name="objectHelpers" type="object" class="ArrayObject" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+        <parameter name="key" type="{unknown}" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+      </constructor>
+      <method name="getFormClass" start="93" end="95" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="string"/>
+        </docblock>
+      </method>
+      <method name="getSubFormClass" start="100" end="102" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="string"/>
+        </docblock>
+      </method>
+      <method name="setFormClass" start="108" end="111" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="string" variable="$class"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="class" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="setSubFormClass" start="117" end="120" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="string" variable="$class"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="class" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="getObjectHelpers" start="126" end="128" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\ArrayObject"/>
+        </docblock>
+      </method>
+      <method name="getObjectHelper" start="133" end="135" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="Equ\Object\Helper"/>
+        </docblock>
+      </method>
+      <method name="getOptionFlags" start="140" end="145" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="OptionFlags"/>
+        </docblock>
+      </method>
+      <method name="setOptionFlags" start="151" end="154" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="OptionFlags" variable="$flags"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="flags" type="object" class="OptionFlags" namespace="Equ\Form" optional="false" byreference="false"/>
+      </method>
+      <method name="getEntityManager" start="160" end="162" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return description="$em" type="Doctrine\ORM\EntityManager"/>
+        </docblock>
+      </method>
+      <method name="setEntityManager" start="168" end="171" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="Doctrine\ORM\EntityManager" variable="$em"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="em" type="object" class="EntityManager" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+      </method>
+      <method name="getElementCreatorFactory" start="176" end="178" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="ElementCreator\IFactory"/>
+        </docblock>
+      </method>
+      <method name="setElementCreatorFactory" start="184" end="187" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="ElementCreator\IFactory" variable="$factory"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="factory" type="object" class="IFactory" namespace="Equ\Form\ElementCreator" optional="false" byreference="false"/>
+      </method>
+      <method name="createElementCreator" start="193" end="195" abstract="false" final="false" static="false" visibility="protected">
+        <docblock>
+          <description compact=""/>
+          <param type="string" variable="$type"/>
+          <return type="AbstractCreator"/>
+        </docblock>
+        <parameter name="type" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="getForeignEntities" start="202" end="216" abstract="false" final="false" static="false" visibility="protected">
+        <docblock>
+          <description compact=""/>
+          <param type="string" variable="$elementName"/>
+          <param type="string" variable="$targetEntity"/>
+          <return type="array"/>
+        </docblock>
+        <parameter name="targetEntity" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="pKeyField" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="createForeignElement" start="223" end="254" abstract="false" final="false" static="false" visibility="protected">
+        <docblock>
+          <description compact=""/>
+          <param type="string" variable="$elementName"/>
+          <param type="array" variable="$def"/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+        <parameter name="elementName" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="def" type="array" optional="false" byreference="false"/>
+        <parameter name="type" type="{unknown}" optional="true" byreference="false">
+          <default>'array'</default>
+        </parameter>
+      </method>
+      <method name="fillForeignElement" start="261" end="285" abstract="false" final="false" static="false" visibility="protected">
+        <docblock>
+          <description compact=""/>
+          <param type="\Zend_Form_Element" variable="$element"/>
+          <param type="type" variable="$elementName"/>
+          <param type="array" variable="$def"/>
+        </docblock>
+        <parameter name="element" type="object" class="Zend_Form_Element" optional="false" byreference="false"/>
+        <parameter name="elementName" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="def" type="array" optional="false" byreference="false"/>
+      </method>
+      <method name="add" start="294" end="356" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact="Add a field"/>
+          <param type="string" variable="$field"/>
+          <param type="strig" variable="$type"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="type" type="{unknown}" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+      </method>
+      <method name="addValidatorsFromObjectClass" start="358" end="362" abstract="false" final="false" static="false" visibility="private">
+        <parameter name="elementCreator" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="getObjectValidator" start="367" end="372" abstract="false" final="false" static="false" visibility="private">
+        <docblock>
+          <description compact=""/>
+          <return type="\Equ\Object\Validator"/>
+        </docblock>
+      </method>
+      <method name="addSub" start="382" end="403" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact="Add a subform"/>
+          <param type="string" variable="$field"/>
+          <param type="IMappedType" variable="$type"/>
+          <param type="boolean" variable="$collection"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="type" type="object" class="IMappedType" namespace="Equ\Form" optional="false" byreference="false"/>
+        <parameter name="collection" type="{unknown}" optional="true" byreference="false">
+          <default>false</default>
+        </parameter>
+      </method>
+      <method name="buildSubForm" start="412" end="424" abstract="false" final="false" static="false" visibility="private">
+        <docblock>
+          <description compact=""/>
+          <param type="mixed" variable="$subObject"/>
+          <param type="string" variable="$field"/>
+          <param type="IMappedType" variable="$type"/>
+          <param type="int" variable="$index"/>
+        </docblock>
+        <parameter name="subObject" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="type" type="object" class="IMappedType" namespace="Equ\Form" optional="false" byreference="false"/>
+        <parameter name="index" type="{unknown}" optional="true" byreference="false">
+          <default>''</default>
+        </parameter>
+      </method>
+      <method name="setForm" start="430" end="433" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="\Zend_Form" variable="$form"/>
+          <return type="Builder"/>
+        </docblock>
+        <parameter name="form" type="object" class="Zend_Form" optional="false" byreference="false"/>
+      </method>
+      <method name="getFormKey" start="435" end="441" abstract="false" final="false" static="false" visibility="private"/>
+      <method name="getForm" start="446" end="459" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form"/>
+        </docblock>
+      </method>
+      <method name="getMapper" start="466" end="471" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact="Retrieves a mapper to sync datas from form to object"/>
+          <return type="Mapper"/>
+        </docblock>
+      </method>
+    </class>
+  </namespace>
+</file>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form/ElementCreator/Factory" file="CheckboxCreator.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/CheckboxCreator.php" size="474" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="479b8341aede55cebf197e757737cd5830e1b298"/>
+  <namespace name="Equ\Form\ElementCreator\Factory">
+    <class full="Equ\Form\ElementCreator\Factory\CheckboxCreator" name="CheckboxCreator" final="false" abstract="false" start="4" end="18">
+      <extends class="AbstractCreator" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractCreator"/>
+      <method name="buildElement" start="6" end="16" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="fieldName" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+    </class>
+  </namespace>
+</file>

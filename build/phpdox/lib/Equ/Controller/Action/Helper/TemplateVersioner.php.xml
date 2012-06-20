@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Controller/Action/Helper" file="TemplateVersioner.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/TemplateVersioner.php" size="1725" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="dcb3ccdca80daba9547b1d33be831a410e6adb82"/>
+  <namespace name="Equ\Controller\Action\Helper">
+    <class full="Equ\Controller\Action\Helper\TemplateVersioner" name="TemplateVersioner" final="false" abstract="false" start="20" end="65">
+      <docblock>
+        <description compact="You can relate template versions and DateTimes.">It is usefull when you want to automatically change
+to the required template file.</description>
+        <category value="Equ"/>
+        <package value="Controller"/>
+        <subpackage value="Action\Helper"/>
+        <license name="http://www.opensource.org/licenses/lgpl-license.php LGPL"/>
+        <author value="Szurovecz János &lt;szjani@szjani.hu&gt;"/>
+        <see value="Equ\Controller\Action\Helper\PageVersionViewRenderer"/>
+      </docblock>
+      <extends class="Zend_Controller_Action_Helper_Abstract" full="Zend_Controller_Action_Helper_Abstract"/>
+      <member name="versionChanges" static="false" visibility="protected">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="ArrayObject"/>
+        </docblock>
+      </member>
+      <constructor name="__construct" start="27" end="29" abstract="false" final="false" static="false" visibility="public"/>
+      <method name="addVersionChangeDate" start="36" end="39" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="DateTime" variable="$dateTime"/>
+          <param type="string" variable="$newVersion"/>
+          <return type="\Equ\Controller\Action\Helper\TemplateVersioner"/>
+        </docblock>
+        <parameter name="dateTime" type="object" class="DateTime" optional="false" byreference="false"/>
+        <parameter name="newVersion" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="change" start="45" end="48" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="string" variable="$version"/>
+          <return type="\Equ\Controller\Action\Helper\TemplateVersioner"/>
+        </docblock>
+        <parameter name="version" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="init" start="50" end="63" abstract="false" final="false" static="false" visibility="public"/>
+    </class>
+  </namespace>
+</file>

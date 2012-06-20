@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form/ElementCreator/Bootstrap/Form" file="Form.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/Form/Form.php" size="457" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="930c875b7358d755ecbcba7d403dd779eb32b942"/>
+  <namespace name="Equ\Form\ElementCreator\Bootstrap\Form">
+    <class full="Equ\Form\ElementCreator\Bootstrap\Form\Form" name="Form" final="false" abstract="false" start="4" end="24">
+      <extends class="Zend_Form" full="Zend_Form"/>
+      <method name="loadDefaultDecorators" start="11" end="22" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact="Load the default decorators"/>
+          <return type="void"/>
+        </docblock>
+      </method>
+    </class>
+  </namespace>
+</file>

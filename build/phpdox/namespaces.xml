@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<namespaces xmlns="http://xml.phpdox.de/src#">
+  <namespace name="Equ">
+    <file xml="build/phpdox/lib/Equ/Application.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Application.php"/>
+    <file xml="build/phpdox/lib/Equ/AbstractService.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/AbstractService.php"/>
+    <file xml="build/phpdox/lib/Equ/Entity.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Entity.php"/>
+    <file xml="build/phpdox/lib/Equ/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Exception.php"/>
+    <file xml="build/phpdox/lib/Equ/Validate.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Validate.php"/>
+    <file xml="build/phpdox/lib/Equ/Message.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Message.php"/>
+  </namespace>
+  <namespace name="Equ\Navigation">
+    <file xml="build/phpdox/lib/Equ/Navigation/Item.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Navigation/Item.php"/>
+    <file xml="build/phpdox/lib/Equ/Navigation/ItemRepository.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Navigation/ItemRepository.php"/>
+  </namespace>
+  <namespace name="Equ\Exception">
+    <file xml="build/phpdox/lib/Equ/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Exception/InvalidArgumentException.php"/>
+    <file xml="build/phpdox/lib/Equ/Exception/RuntimeException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Exception/RuntimeException.php"/>
+    <file xml="build/phpdox/lib/Equ/Exception/UnexpectedValueException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Exception/UnexpectedValueException.php"/>
+    <file xml="build/phpdox/lib/Equ/Exception/BadMethodCallException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Exception/BadMethodCallException.php"/>
+  </namespace>
+  <namespace name="Equ\Mapper">
+    <file xml="build/phpdox/lib/Equ/Mapper/Array2Object.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Mapper/Array2Object.php"/>
+    <file xml="build/phpdox/lib/Equ/Mapper/Object2Array.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Mapper/Object2Array.php"/>
+    <file xml="build/phpdox/lib/Equ/Mapper/IMapper.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Mapper/IMapper.php"/>
+    <file xml="build/phpdox/lib/Equ/Mapper/Array2Entity.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Mapper/Array2Entity.php"/>
+  </namespace>
+  <namespace name="Equ\Log">
+    <file xml="build/phpdox/lib/Equ/Log/Doctrine.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Log/Doctrine.php"/>
+  </namespace>
+  <namespace name="Equ\Paginator\Adapter">
+    <file xml="build/phpdox/lib/Equ/Paginator/Adapter/Doctrine.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Paginator/Adapter/Doctrine.php"/>
+  </namespace>
+  <namespace name="Equ\Symfony\Component">
+    <file xml="build/phpdox/lib/Equ/Symfony/Component/ServiceContainerFactory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Symfony/Component/ServiceContainerFactory.php"/>
+  </namespace>
+  <namespace name="Equ\Validate">
+    <file xml="build/phpdox/lib/Equ/Validate/DateCompare.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Validate/DateCompare.php"/>
+    <file xml="build/phpdox/lib/Equ/Validate/DbUnique.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Validate/DbUnique.php"/>
+  </namespace>
+  <namespace name="Equ\View">
+    <file xml="build/phpdox/lib/Equ/View/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/View/InvalidArgumentException.php"/>
+  </namespace>
+  <namespace name="Equ\View\Helper">
+    <file xml="build/phpdox/lib/Equ/View/Helper/FormDate.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/View/Helper/FormDate.php"/>
+    <file xml="build/phpdox/lib/Equ/View/Helper/FlashMessenger.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/View/Helper/FlashMessenger.php"/>
+    <file xml="build/phpdox/lib/Equ/View/Helper/HideMail.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/View/Helper/HideMail.php"/>
+  </namespace>
+  <namespace name="Equ\Application\Bootstrap">
+    <file xml="build/phpdox/lib/Equ/Application/Bootstrap/Bootstrap.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Application/Bootstrap/Bootstrap.php"/>
+  </namespace>
+  <namespace name="Equ\Crud\Exception">
+    <file xml="build/phpdox/lib/Equ/Crud/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/Exception/InvalidArgumentException.php"/>
+    <file xml="build/phpdox/lib/Equ/Crud/Exception/RuntimeException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/Exception/RuntimeException.php"/>
+    <file xml="build/phpdox/lib/Equ/Crud/Exception/UnexpectedValueException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/Exception/UnexpectedValueException.php"/>
+  </namespace>
+  <namespace name="Equ\Crud">
+    <file xml="build/phpdox/lib/Equ/Crud/SortableEntity.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/SortableEntity.php"/>
+    <file xml="build/phpdox/lib/Equ/Crud/LookUpable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/LookUpable.php"/>
+    <file xml="build/phpdox/lib/Equ/Crud/DisplayableEntity.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/DisplayableEntity.php"/>
+    <file xml="build/phpdox/lib/Equ/Crud/AbstractController.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/AbstractController.php"/>
+    <file xml="build/phpdox/lib/Equ/Crud/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Controller\Exception">
+    <file xml="build/phpdox/lib/Equ/Controller/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Exception/InvalidArgumentException.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Exception/RuntimeException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Exception/RuntimeException.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Exception/PermissionException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Exception/PermissionException.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Exception/UnexpectedValueException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Exception/UnexpectedValueException.php"/>
+  </namespace>
+  <namespace name="Equ\Controller\Action\Helper">
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/SendFile.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/SendFile.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/AvailableLanguages.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/AvailableLanguages.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/ServiceContainer.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/ServiceContainer.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/ServiceInjector.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/ServiceInjector.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/SendData.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/SendData.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/AuthenticatedUser.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/AuthenticatedUser.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/FlashMessenger.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/FlashMessenger.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/SendContent.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/SendContent.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/TemplateVersioner.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/TemplateVersioner.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/FacebookAuth.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/FacebookAuth.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/RedirectHereAfterPost.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/RedirectHereAfterPost.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/AutoTitle.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/AutoTitle.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/MvcPermission.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/MvcPermission.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/GoogleAnalytics.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/GoogleAnalytics.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/CreateFormBuilder.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/CreateFormBuilder.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/LookUp.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/LookUp.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/PageVersionViewRenderer.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/PageVersionViewRenderer.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Action/Helper/LayoutTimer.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/LayoutTimer.php"/>
+  </namespace>
+  <namespace name="Equ\Controller">
+    <file xml="build/phpdox/lib/Equ/Controller/ArrayParamHandler.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/ArrayParamHandler.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Controller\Plugin">
+    <file xml="build/phpdox/lib/Equ/Controller/Plugin/CleanQuery.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Plugin/CleanQuery.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Plugin/AutoPageCache.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Plugin/AutoPageCache.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Plugin/Language.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Plugin/Language.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Plugin/AdminRoute.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Plugin/AdminRoute.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Plugin/IEIframe.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Plugin/IEIframe.php"/>
+    <file xml="build/phpdox/lib/Equ/Controller/Plugin/Navigation.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Plugin/Navigation.php"/>
+  </namespace>
+  <namespace name="Equ\Form\Exception">
+    <file xml="build/phpdox/lib/Equ/Form/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Exception/InvalidArgumentException.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/Exception/RuntimeException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Exception/RuntimeException.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/Exception/ValidationException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Exception/ValidationException.php"/>
+  </namespace>
+  <namespace name="Equ\Form">
+    <file xml="build/phpdox/lib/Equ/Form/OptionFlags.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/OptionFlags.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/IOptionFlaggable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IOptionFlaggable.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/IMappedType.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IMappedType.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/Mapper.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Mapper.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/Builder.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Builder.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/IBuilder.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IBuilder.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/RecursiveFormIterator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/RecursiveFormIterator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/IMapper.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IMapper.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Exception.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/MappedType.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/MappedType.php"/>
+  </namespace>
+  <namespace name="Equ\Form\Element">
+    <file xml="build/phpdox/lib/Equ/Form/Element/Date.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Element/Date.php"/>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator\Exception">
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Exception/InvalidArgumentException.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Exception/RuntimeException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Exception/RuntimeException.php"/>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator">
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/AbstractFactory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/AbstractFactory.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/IFactory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/IFactory.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/AbstractCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/AbstractCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator\Builtin">
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Builtin/CheckboxCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Builtin/CheckboxCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Builtin/ArrayCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Builtin/ArrayCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Builtin/Factory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Builtin/Factory.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Builtin/PasswordCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Builtin/PasswordCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Builtin/SubmitCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Builtin/SubmitCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Builtin/TextCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Builtin/TextCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Builtin/StringCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Builtin/StringCreator.php"/>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator\Bootstrap">
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/ResetCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/ResetCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/CheckboxCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/CheckboxCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/ArrayCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/ArrayCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/Factory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/Factory.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/PasswordCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/PasswordCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/CaptchaCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/CaptchaCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/SubmitCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/SubmitCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/TextCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/TextCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/BaseCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/BaseCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/RadioCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/RadioCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/StringCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/StringCreator.php"/>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator\Bootstrap\Form">
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/Form/Form.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/Form/Form.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Bootstrap/Form/SubForm.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Bootstrap/Form/SubForm.php"/>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator\Factory">
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/FileCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/FileCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/CheckboxCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/CheckboxCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/ArrayCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/ArrayCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/Factory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/Factory.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/PasswordCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/PasswordCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/SubmitCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/SubmitCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/TextCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/TextCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/RadioCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/RadioCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Factory/StringCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/StringCreator.php"/>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator\Dojo">
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/CheckboxCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/CheckboxCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/ArrayCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/ArrayCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/NumberCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/NumberCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/MultiCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/MultiCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/Factory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/Factory.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/PasswordCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/PasswordCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/DateCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/DateCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/SubmitCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/SubmitCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/TextCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/TextCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/TimeCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/TimeCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Form/ElementCreator/Dojo/StringCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/StringCreator.php"/>
+  </namespace>
+  <namespace name="Equ\Object\Exception">
+    <file xml="build/phpdox/lib/Equ/Object/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Exception/InvalidArgumentException.php"/>
+    <file xml="build/phpdox/lib/Equ/Object/Exception/RuntimeException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Exception/RuntimeException.php"/>
+  </namespace>
+  <namespace name="Equ\Object">
+    <file xml="build/phpdox/lib/Equ/Object/Helper.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Helper.php"/>
+    <file xml="build/phpdox/lib/Equ/Object/Validator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Validator.php"/>
+    <file xml="build/phpdox/lib/Equ/Object/Arrayable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Arrayable.php"/>
+    <file xml="build/phpdox/lib/Equ/Object/Validatable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Validatable.php"/>
+    <file xml="build/phpdox/lib/Equ/Object/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Auth">
+    <file xml="build/phpdox/lib/Equ/Auth/DoctrineAdapter.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/DoctrineAdapter.php"/>
+    <file xml="build/phpdox/lib/Equ/Auth/AuthenticatedUserStorage.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/AuthenticatedUserStorage.php"/>
+    <file xml="build/phpdox/lib/Equ/Auth/Authenticator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/Authenticator.php"/>
+    <file xml="build/phpdox/lib/Equ/Auth/UserInterface.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/UserInterface.php"/>
+    <file xml="build/phpdox/lib/Equ/Auth/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Doctrine\Exception">
+    <file xml="build/phpdox/lib/Equ/Doctrine/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Exception/InvalidArgumentException.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/Exception/RuntimeException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Exception/RuntimeException.php"/>
+  </namespace>
+  <namespace name="Equ\Doctrine\FileStore">
+    <file xml="build/phpdox/lib/Equ/Doctrine/FileStore/FileStoreListener.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/FileStore/FileStoreListener.php"/>
+  </namespace>
+  <namespace name="Equ\Doctrine\FileStore\Mapping\Driver">
+    <file xml="build/phpdox/lib/Equ/Doctrine/FileStore/Mapping/Driver/Annotation.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/FileStore/Mapping/Driver/Annotation.php"/>
+  </namespace>
+  <namespace name="Equ\Doctrine">
+    <file xml="build/phpdox/lib/Equ/Doctrine/IPaginatorCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/IPaginatorCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/IQueryBuilderCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/IQueryBuilderCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/PaginatorCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/PaginatorCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/FilterQueryBuilderCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/FilterQueryBuilderCreator.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Doctrine\Mapping\Annotation">
+    <file xml="build/phpdox/lib/Equ/Doctrine/Mapping/Annotation/Size.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/Size.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/Mapping/Annotation/OriginalFilename.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/OriginalFilename.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/Mapping/Annotation/Filename.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/Filename.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/Mapping/Annotation/MimeType.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/MimeType.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/Mapping/Annotation/Md5Hash.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/Md5Hash.php"/>
+    <file xml="build/phpdox/lib/Equ/Doctrine/Mapping/Annotation/FileStore.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/FileStore.php"/>
+  </namespace>
+  <namespace name="Equ\Doctrine\Mapping">
+    <file xml="build/phpdox/lib/Equ/Doctrine/Mapping/MappedEventSubscriber.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/MappedEventSubscriber.php"/>
+  </namespace>
+</namespaces>

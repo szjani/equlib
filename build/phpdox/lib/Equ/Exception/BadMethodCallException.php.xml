@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Exception" file="BadMethodCallException.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Exception/BadMethodCallException.php" size="121" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="40caa514a60373d8497e8785bf7f724be41e59d0"/>
+  <namespace name="Equ\Exception">
+    <class full="Equ\Exception\BadMethodCallException" name="BadMethodCallException" final="false" abstract="false" start="4" end="4">
+      <extends class="BadMethodCallException" full="BadMethodCallException"/>
+      <implements interface="Exception" namespace="Equ" full="Equ\Exception"/>
+    </class>
+  </namespace>
+</file>

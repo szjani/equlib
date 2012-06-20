@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ" file="Exception.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Exception.php" size="44" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="35244a5800ea9e6dfc6c2c008ec4c04fd0127fa9"/>
+  <namespace name="Equ">
+    <interface full="Equ\Exception" name="Exception" final="false" start="4" end="4"/>
+  </namespace>
+</file>

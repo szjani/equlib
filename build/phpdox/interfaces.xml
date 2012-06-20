@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interfaces xmlns="http://xml.phpdox.de/src#">
+  <namespace name="Equ\Navigation">
+    <interface full="Equ\Navigation\Item" name="Item" final="false" start="4" end="16" xml="lib/Equ/Navigation/Item.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Navigation/Item.php"/>
+    <interface full="Equ\Navigation\ItemRepository" name="ItemRepository" final="false" start="4" end="11" xml="lib/Equ/Navigation/ItemRepository.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Navigation/ItemRepository.php"/>
+  </namespace>
+  <namespace name="Equ\Mapper">
+    <interface full="Equ\Mapper\IMapper" name="IMapper" final="false" start="4" end="8" xml="lib/Equ/Mapper/IMapper.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Mapper/IMapper.php"/>
+  </namespace>
+  <namespace name="Equ\Crud">
+    <interface full="Equ\Crud\SortableEntity" name="SortableEntity" final="false" start="10" end="17" xml="lib/Equ/Crud/SortableEntity.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/SortableEntity.php"/>
+    <interface full="Equ\Crud\LookUpable" name="LookUpable" final="false" start="10" end="44" xml="lib/Equ/Crud/LookUpable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/LookUpable.php"/>
+    <interface full="Equ\Crud\DisplayableEntity" name="DisplayableEntity" final="false" start="10" end="14" xml="lib/Equ/Crud/DisplayableEntity.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/DisplayableEntity.php"/>
+    <interface full="Equ\Crud\Exception" name="Exception" final="false" start="10" end="10" xml="lib/Equ/Crud/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Crud/Exception.php">
+      <implements interface="Exception" namespace="Equ" full="Equ\Exception"/>
+    </interface>
+  </namespace>
+  <namespace name="Equ\Controller">
+    <interface full="Equ\Controller\Exception" name="Exception" final="false" start="4" end="4" xml="lib/Equ/Controller/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Controller/Exception.php">
+      <implements interface="Exception" namespace="Equ" full="Equ\Exception"/>
+    </interface>
+  </namespace>
+  <namespace name="Equ\Form">
+    <interface full="Equ\Form\IOptionFlaggable" name="IOptionFlaggable" final="false" start="4" end="16" xml="lib/Equ/Form/IOptionFlaggable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IOptionFlaggable.php"/>
+    <interface full="Equ\Form\IMappedType" name="IMappedType" final="false" start="4" end="16" xml="lib/Equ/Form/IMappedType.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IMappedType.php"/>
+    <interface full="Equ\Form\IBuilder" name="IBuilder" final="false" start="12" end="59" xml="lib/Equ/Form/IBuilder.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IBuilder.php">
+      <implements interface="IOptionFlaggable" namespace="Equ\Form" full="Equ\Form\IOptionFlaggable"/>
+    </interface>
+    <interface full="Equ\Form\IMapper" name="IMapper" final="false" start="8" end="16" xml="lib/Equ/Form/IMapper.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/IMapper.php"/>
+    <interface full="Equ\Form\Exception" name="Exception" final="false" start="4" end="4" xml="lib/Equ/Form/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/Exception.php">
+      <implements interface="Exception" namespace="Equ" full="Equ\Exception"/>
+    </interface>
+  </namespace>
+  <namespace name="Equ\Form\ElementCreator">
+    <interface full="Equ\Form\ElementCreator\IFactory" name="IFactory" final="false" start="14" end="122" xml="lib/Equ/Form/ElementCreator/IFactory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/IFactory.php"/>
+    <interface full="Equ\Form\ElementCreator\Exception" name="Exception" final="false" start="4" end="4" xml="lib/Equ/Form/ElementCreator/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Object">
+    <interface full="Equ\Object\Arrayable" name="Arrayable" final="false" start="4" end="8" xml="lib/Equ/Object/Arrayable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Arrayable.php"/>
+    <interface full="Equ\Object\Validatable" name="Validatable" final="false" start="4" end="11" xml="lib/Equ/Object/Validatable.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Validatable.php"/>
+    <interface full="Equ\Object\Exception" name="Exception" final="false" start="4" end="4" xml="lib/Equ/Object/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Exception.php">
+      <implements interface="Exception" namespace="Equ" full="Equ\Exception"/>
+    </interface>
+  </namespace>
+  <namespace name="Equ\Auth">
+    <interface full="Equ\Auth\AuthenticatedUserStorage" name="AuthenticatedUserStorage" final="false" start="4" end="11" xml="lib/Equ/Auth/AuthenticatedUserStorage.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/AuthenticatedUserStorage.php"/>
+    <interface full="Equ\Auth\Authenticator" name="Authenticator" final="false" start="11" end="19" xml="lib/Equ/Auth/Authenticator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/Authenticator.php"/>
+    <interface full="Equ\Auth\UserInterface" name="UserInterface" final="false" start="7" end="13" xml="lib/Equ/Auth/UserInterface.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Auth/UserInterface.php">
+      <implements interface="Zend_Acl_Role_Interface" full="Zend_Acl_Role_Interface"/>
+      <implements interface="Arrayable" namespace="Equ\Object" full="Equ\Object\Arrayable"/>
+    </interface>
+  </namespace>
+  <namespace name="Equ">
+    <interface full="Equ\Exception" name="Exception" final="false" start="4" end="4" xml="lib/Equ/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Exception.php"/>
+  </namespace>
+  <namespace name="Equ\Doctrine">
+    <interface full="Equ\Doctrine\IPaginatorCreator" name="IPaginatorCreator" final="false" start="7" end="21" xml="lib/Equ/Doctrine/IPaginatorCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/IPaginatorCreator.php"/>
+    <interface full="Equ\Doctrine\IQueryBuilderCreator" name="IQueryBuilderCreator" final="false" start="7" end="17" xml="lib/Equ/Doctrine/IQueryBuilderCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/IQueryBuilderCreator.php"/>
+    <interface full="Equ\Doctrine\Exception" name="Exception" final="false" start="4" end="4" xml="lib/Equ/Doctrine/Exception.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Exception.php">
+      <implements interface="Exception" namespace="Equ" full="Equ\Exception"/>
+    </interface>
+  </namespace>
+</interfaces>

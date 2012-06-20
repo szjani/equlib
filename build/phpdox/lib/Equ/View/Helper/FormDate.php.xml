@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/View/Helper" file="FormDate.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/View/Helper/FormDate.php" size="3191" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="ea26d6f8ba1709dd820619cce8702685330d46e6"/>
+  <namespace name="Equ\View\Helper">
+    <class full="Equ\View\Helper\FormDate" name="FormDate" final="false" abstract="false" start="4" end="98">
+      <extends class="Zend_View_Helper_FormElement" full="Zend_View_Helper_FormElement"/>
+      <constructor name="formDate" start="6" end="96" abstract="false" final="false" static="false" visibility="public">
+        <parameter name="name" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="{unknown}" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+        <parameter name="attribs" type="{unknown}" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+      </constructor>
+    </class>
+  </namespace>
+</file>

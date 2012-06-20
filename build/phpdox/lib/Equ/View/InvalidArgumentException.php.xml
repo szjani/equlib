@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/View" file="InvalidArgumentException.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/View/InvalidArgumentException.php" size="135" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="b0515d1cd57a607bb694a638067ace250ddc751d"/>
+  <namespace name="Equ\View">
+    <class full="Equ\View\InvalidArgumentException" name="InvalidArgumentException" final="false" abstract="false" start="5" end="6">
+      <extends class="InvalidArgumentException" full="InvalidArgumentException"/>
+      <implements interface="Exception" namespace="Equ" full="Equ\Exception"/>
+    </class>
+  </namespace>
+</file>

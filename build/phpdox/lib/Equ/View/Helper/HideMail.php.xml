@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/View/Helper" file="HideMail.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/View/Helper/HideMail.php" size="355" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="c638444e8354dcb6b86f95d2353092c5229e0304"/>
+  <namespace name="Equ\View\Helper">
+    <class full="Equ\View\Helper\HideMail" name="HideMail" final="false" abstract="false" start="6" end="14">
+      <extends class="Zend_View_Helper_Abstract" full="Zend_View_Helper_Abstract"/>
+      <constructor name="hideMail" start="8" end="12" abstract="false" final="false" static="false" visibility="public">
+        <parameter name="email" type="{unknown}" optional="false" byreference="false"/>
+      </constructor>
+    </class>
+  </namespace>
+</file>

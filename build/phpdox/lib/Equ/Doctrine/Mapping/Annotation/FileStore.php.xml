@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Doctrine/Mapping/Annotation" file="FileStore.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/FileStore.php" size="302" time="2012-06-20T09:35:08+02:00" unixtime="1340177708" sha1="9464a5a85c6ed24460c081323387e76edde10071"/>
+  <namespace name="Equ\Doctrine\Mapping\Annotation">
+    <class full="Equ\Doctrine\Mapping\Annotation\FileStore" name="FileStore" final="true" abstract="false" start="8" end="24">
+      <docblock>
+        <description compact=""/>
+        <Annotation value=""/>
+      </docblock>
+      <extends class="Annotation" namespace="Doctrine\Common\Annotations" full="Doctrine\Common\Annotations\Annotation"/>
+      <member name="path" static="false" visibility="public">
+        <default>null</default>
+        <docblock>
+          <description compact="Directory path"/>
+          <var type="string"/>
+        </docblock>
+      </member>
+      <member name="method" static="false" visibility="public">
+        <default>null</default>
+        <docblock>
+          <description compact="move|copy"/>
+          <var type="string"/>
+        </docblock>
+      </member>
+    </class>
+  </namespace>
+</file>

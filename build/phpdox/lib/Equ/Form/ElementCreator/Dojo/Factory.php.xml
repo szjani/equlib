@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form/ElementCreator/Dojo" file="Factory.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/Factory.php" size="2295" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="ab2f9316d87a331b8fb44b2fd99ca809e0e146ff"/>
+  <namespace name="Equ\Form\ElementCreator\Dojo">
+    <class full="Equ\Form\ElementCreator\Dojo\Factory" name="Factory" final="false" abstract="false" start="4" end="109">
+      <extends class="AbstractFactory" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractFactory"/>
+      <method name="createArrayCreator" start="6" end="8" abstract="false" final="false" static="false" visibility="public"/>
+      <method name="createSubmitCreator" start="10" end="12" abstract="false" final="false" static="false" visibility="public"/>
+      <method name="createStringCreator" start="17" end="19" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createIntegerCreator" start="24" end="26" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createSmallintCreator" start="31" end="33" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createBigintCreator" start="38" end="40" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createDecimalCreator" start="45" end="47" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createFloatCreator" start="52" end="54" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createBooleanCreator" start="59" end="61" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createDateCreator" start="66" end="68" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createTimeCreator" start="73" end="75" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createDateTimeCreator" start="80" end="82" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createTextCreator" start="87" end="89" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createObjectCreator" start="94" end="96" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createPasswordCreator" start="101" end="103" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Form_Element"/>
+        </docblock>
+      </method>
+      <method name="createMultiCreator" start="105" end="107" abstract="false" final="false" static="false" visibility="public"/>
+    </class>
+  </namespace>
+</file>

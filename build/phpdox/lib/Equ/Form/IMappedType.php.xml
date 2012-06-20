@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form" file="IMappedType.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/IMappedType.php" size="219" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="46f36136ed5ca37dae1b0970f1bf30a3efb94bf9"/>
+  <namespace name="Equ\Form">
+    <interface full="Equ\Form\IMappedType" name="IMappedType" final="false" start="4" end="16">
+      <method name="buildForm" start="9" end="9" abstract="true" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="IBuilder" variable="$builder"/>
+        </docblock>
+        <parameter name="builder" type="object" class="IBuilder" namespace="Equ\Form" optional="false" byreference="false"/>
+      </method>
+      <method name="getObjectClass" start="14" end="14" abstract="true" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="string"/>
+        </docblock>
+      </method>
+    </interface>
+  </namespace>
+</file>

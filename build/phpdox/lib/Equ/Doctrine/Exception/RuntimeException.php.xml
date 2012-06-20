@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Doctrine/Exception" file="RuntimeException.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Exception/RuntimeException.php" size="127" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="3238e3b3904363bbd9d91e49b5a7d31c0677bcaf"/>
+  <namespace name="Equ\Doctrine\Exception">
+    <class full="Equ\Doctrine\Exception\RuntimeException" name="RuntimeException" final="false" abstract="false" start="4" end="4">
+      <extends class="RuntimeException" full="RuntimeException"/>
+      <implements interface="Exception" namespace="Equ\Doctrine" full="Equ\Doctrine\Exception"/>
+    </class>
+  </namespace>
+</file>

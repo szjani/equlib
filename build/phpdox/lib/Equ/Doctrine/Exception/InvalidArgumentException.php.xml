@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Doctrine/Exception" file="InvalidArgumentException.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Exception/InvalidArgumentException.php" size="143" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="e2433cb9073a1e091723e82e12c5e597af74ff5c"/>
+  <namespace name="Equ\Doctrine\Exception">
+    <class full="Equ\Doctrine\Exception\InvalidArgumentException" name="InvalidArgumentException" final="false" abstract="false" start="4" end="4">
+      <extends class="InvalidArgumentException" full="InvalidArgumentException"/>
+      <implements interface="Exception" namespace="Equ\Doctrine" full="Equ\Doctrine\Exception"/>
+    </class>
+  </namespace>
+</file>

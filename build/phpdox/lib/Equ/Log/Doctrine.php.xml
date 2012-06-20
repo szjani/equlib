@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Log" file="Doctrine.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Log/Doctrine.php" size="583" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="ddeeb19241af0a46a22335691e51218643ba90e1"/>
+  <namespace name="Equ\Log">
+    <class full="Equ\Log\Doctrine" name="Doctrine" final="false" abstract="false" start="5" end="29">
+      <implements interface="SQLLogger" namespace="Doctrine\DBAL\Logging" full="Doctrine\DBAL\Logging\SQLLogger"/>
+      <member name="time" static="false" visibility="private">
+        <default>null</default>
+      </member>
+      <member name="log" static="false" visibility="private">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="\Zend_Log"/>
+        </docblock>
+      </member>
+      <constructor name="__construct" start="15" end="17" abstract="false" final="false" static="false" visibility="public">
+        <parameter name="log" type="object" class="Zend_Log" optional="false" byreference="false"/>
+      </constructor>
+      <method name="startQuery" start="19" end="22" abstract="false" final="false" static="false" visibility="public">
+        <parameter name="sql" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="params" type="array" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+        <parameter name="types" type="array" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+      </method>
+      <method name="stopQuery" start="24" end="26" abstract="false" final="false" static="false" visibility="public"/>
+    </class>
+  </namespace>
+</file>

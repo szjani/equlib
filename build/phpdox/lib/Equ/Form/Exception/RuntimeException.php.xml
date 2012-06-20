@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form/Exception" file="RuntimeException.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/Exception/RuntimeException.php" size="119" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="1b959f45a17dfdccfb501d6c4057a5f7fb6a1c7f"/>
+  <namespace name="Equ\Form\Exception">
+    <class full="Equ\Form\Exception\RuntimeException" name="RuntimeException" final="false" abstract="false" start="4" end="4">
+      <extends class="RuntimeException" full="RuntimeException"/>
+      <implements interface="Exception" namespace="Equ\Form" full="Equ\Form\Exception"/>
+    </class>
+  </namespace>
+</file>

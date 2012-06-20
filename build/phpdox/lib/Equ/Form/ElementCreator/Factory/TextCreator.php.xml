@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form/ElementCreator/Factory" file="TextCreator.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Factory/TextCreator.php" size="230" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="48ab8035f1c8d8b61a0159f1cb9afc8d84fd962e"/>
+  <namespace name="Equ\Form\ElementCreator\Factory">
+    <class full="Equ\Form\ElementCreator\Factory\TextCreator" name="TextCreator" final="false" abstract="false" start="4" end="10">
+      <extends class="AbstractCreator" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractCreator"/>
+      <method name="buildElement" start="6" end="8" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="fieldName" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+    </class>
+  </namespace>
+</file>

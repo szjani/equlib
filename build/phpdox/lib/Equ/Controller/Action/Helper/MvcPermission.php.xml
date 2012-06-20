@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Controller/Action/Helper" file="MvcPermission.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Controller/Action/Helper/MvcPermission.php" size="1771" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="cef16c1c6dd21325b7582a9780a32862e8450d70"/>
+  <namespace name="Equ\Controller\Action\Helper">
+    <class full="Equ\Controller\Action\Helper\MvcPermission" name="MvcPermission" final="false" abstract="false" start="19" end="63">
+      <docblock>
+        <description compact="Check that user have or don't have permission to view current page"/>
+        <category value="Equ"/>
+        <package value="Controller"/>
+        <subpackage value="Action\Helper"/>
+        <license name="http://www.opensource.org/licenses/lgpl-license.php LGPL"/>
+        <author value="Szurovecz János &lt;szjani@szjani.hu&gt;"/>
+      </docblock>
+      <extends class="Zend_Controller_Action_Helper_Abstract" full="Zend_Controller_Action_Helper_Abstract"/>
+      <member name="storage" static="false" visibility="protected">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="Equ\Auth\AuthenticatedUserStorage"/>
+        </docblock>
+      </member>
+      <member name="acl" static="false" visibility="protected">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="Zend_Acl"/>
+        </docblock>
+      </member>
+      <constructor name="__construct" start="36" end="39" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="Equ\Auth\AuthenticatedUserStorage" variable="$storage"/>
+          <param type="Zend_Acl" variable="$acl"/>
+        </docblock>
+        <parameter name="storage" type="object" class="AuthenticatedUserStorage" namespace="Equ\Auth" optional="false" byreference="false"/>
+        <parameter name="acl" type="object" class="Zend_Acl" optional="false" byreference="false"/>
+      </constructor>
+      <method name="preDispatch" start="41" end="62" abstract="false" final="false" static="false" visibility="public"/>
+    </class>
+  </namespace>
+</file>

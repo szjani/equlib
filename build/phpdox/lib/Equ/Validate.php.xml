@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ" file="Validate.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Validate.php" size="542" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="90e9a6e3d34e983cc533cec1c7e02456e4ba4bd0"/>
+  <namespace name="Equ">
+    <class full="Equ\Validate" name="Validate" final="false" abstract="false" start="4" end="31">
+      <extends class="Zend_Validate" full="Zend_Validate"/>
+      <implements interface="Iterator" full="Iterator"/>
+      <member name="current" static="false" visibility="private">
+        <default>false</default>
+      </member>
+      <method name="current" start="11" end="13" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <return type="\Zend_Validate_Interface"/>
+        </docblock>
+      </method>
+      <method name="key" start="15" end="17" abstract="false" final="false" static="false" visibility="public"/>
+      <method name="next" start="19" end="21" abstract="false" final="false" static="false" visibility="public"/>
+      <method name="rewind" start="23" end="25" abstract="false" final="false" static="false" visibility="public"/>
+      <method name="valid" start="27" end="29" abstract="false" final="false" static="false" visibility="public"/>
+    </class>
+  </namespace>
+</file>

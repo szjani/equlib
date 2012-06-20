@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Controller/Plugin" file="AutoPageCache.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Controller/Plugin/AutoPageCache.php" size="905" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="37a37c1474f335303eed0f145872b1f7f6407479"/>
+  <namespace name="Equ\Controller\Plugin">
+    <class full="Equ\Controller\Plugin\AutoPageCache" name="AutoPageCache" final="false" abstract="false" start="9" end="39">
+      <extends class="Zend_Controller_Plugin_Abstract" full="Zend_Controller_Plugin_Abstract"/>
+      <member name="cache" static="false" visibility="private">
+        <default>null</default>
+      </member>
+      <constructor name="__construct" start="13" end="15" abstract="false" final="false" static="false" visibility="public">
+        <parameter name="cache" type="object" class="Zend_Cache_Frontend_Page" optional="false" byreference="false"/>
+      </constructor>
+      <method name="start" start="17" end="22" abstract="false" final="false" static="false" visibility="public"/>
+      <destructor name="__destruct" start="24" end="31" abstract="false" final="false" static="false" visibility="public"/>
+      <method name="dispatchLoopShutdown" start="33" end="37" abstract="false" final="false" static="false" visibility="public"/>
+    </class>
+  </namespace>
+</file>

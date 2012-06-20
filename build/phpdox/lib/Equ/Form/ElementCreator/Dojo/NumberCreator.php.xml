@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Form/ElementCreator/Dojo" file="NumberCreator.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/NumberCreator.php" size="708" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="8a85c4dbc0786cee5d6ff04f00f230da43c9c89c"/>
+  <namespace name="Equ\Form\ElementCreator\Dojo">
+    <class full="Equ\Form\ElementCreator\Dojo\NumberCreator" name="NumberCreator" final="false" abstract="false" start="4" end="24">
+      <extends class="AbstractCreator" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractCreator"/>
+      <method name="buildElement" start="6" end="8" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="fieldName" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="createPlaceholder" start="14" end="22" abstract="false" final="false" static="false" visibility="protected">
+        <docblock>
+          <description compact=""/>
+          <param type="\Zend_Form_Element" variable="$element"/>
+          <return type="AbstractCreator"/>
+        </docblock>
+        <parameter name="element" type="object" class="Zend_Form_Element" optional="false" byreference="false"/>
+      </method>
+    </class>
+  </namespace>
+</file>

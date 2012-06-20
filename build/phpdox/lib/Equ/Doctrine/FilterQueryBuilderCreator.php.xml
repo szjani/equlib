@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Doctrine" file="FilterQueryBuilderCreator.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/FilterQueryBuilderCreator.php" size="5063" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="45bdff27aa4a78cd76b7ea40663cf35c3325ab77"/>
+  <namespace name="Equ\Doctrine">
+    <class full="Equ\Doctrine\FilterQueryBuilderCreator" name="FilterQueryBuilderCreator" final="false" abstract="false" start="11" end="153">
+      <implements interface="IQueryBuilderCreator" namespace="Equ\Doctrine" full="Equ\Doctrine\IQueryBuilderCreator"/>
+      <member name="entityManager" static="false" visibility="protected">
+        <default>null</default>
+        <docblock>
+          <description compact=""/>
+          <var type="Doctrine\ORM\EntityManager"/>
+        </docblock>
+      </member>
+      <constructor name="__construct" start="21" end="23" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="Doctrine\ORM\EntityManager" variable="$em"/>
+        </docblock>
+        <parameter name="em" type="object" class="EntityManager" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+      </constructor>
+      <method name="addAndWhereForArray" start="25" end="29" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="queryBuilder" type="object" class="QueryBuilder" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="addAndWhereForNumeric" start="31" end="35" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="queryBuilder" type="object" class="QueryBuilder" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="addAndWhereForBoolean" start="37" end="41" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="queryBuilder" type="object" class="QueryBuilder" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="addAndWhereForString" start="43" end="47" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="queryBuilder" type="object" class="QueryBuilder" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="addAndWhereForCollection" start="49" end="59" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="queryBuilder" type="object" class="QueryBuilder" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="object" class="ArrayCollection" namespace="Doctrine\Common\Collections" optional="false" byreference="false"/>
+      </method>
+      <method name="addAndWhereForObject" start="61" end="65" abstract="false" final="false" static="false" visibility="protected">
+        <parameter name="queryBuilder" type="object" class="QueryBuilder" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="addAndWhere" start="73" end="99" abstract="false" final="false" static="false" visibility="protected">
+        <docblock>
+          <description compact=""/>
+          <param type="Doctrine\ORM\QueryBuilder" variable="$queryBuilder"/>
+          <param type="string" variable="$field"/>
+          <param type="mixed" variable="$value"/>
+        </docblock>
+        <parameter name="queryBuilder" type="object" class="QueryBuilder" namespace="Doctrine\ORM" optional="false" byreference="false"/>
+        <parameter name="field" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="value" type="{unknown}" optional="false" byreference="false"/>
+      </method>
+      <method name="create" start="108" end="151" abstract="false" final="false" static="false" visibility="public">
+        <docblock>
+          <description compact=""/>
+          <param type="Equ\Object\Helper" variable="$objectHelper"/>
+          <param type="mixed" variable="$filters"/>
+          <param type="string" variable="$sort"/>
+          <param type="string" variable="$order"/>
+          <return type="Doctrine\ORM\QueryBuilder"/>
+        </docblock>
+        <parameter name="objectHelper" type="object" class="Helper" namespace="Equ\Object" optional="false" byreference="false"/>
+        <parameter name="filters" type="{unknown}" optional="false" byreference="false"/>
+        <parameter name="sort" type="{unknown}" optional="true" byreference="false">
+          <default>null</default>
+        </parameter>
+        <parameter name="order" type="{unknown}" optional="true" byreference="false">
+          <default>'ASC'</default>
+        </parameter>
+      </method>
+    </class>
+  </namespace>
+</file>

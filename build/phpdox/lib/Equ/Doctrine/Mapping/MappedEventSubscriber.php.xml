@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Doctrine/Mapping" file="MappedEventSubscriber.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/MappedEventSubscriber.php" size="2537" time="2012-06-20T09:11:59+02:00" unixtime="1340176319" sha1="65eb804a5023fa02f0f6c1ec74d986cdfc7df312"/>
+  <namespace name="Equ\Doctrine\Mapping">
+    <class full="Equ\Doctrine\Mapping\MappedEventSubscriber" name="MappedEventSubscriber" final="false" abstract="true" start="15" end="53">
+      <extends class="MappedEventSubscriber" namespace="Gedmo\Mapping" full="Gedmo\Mapping\MappedEventSubscriber"/>
+      <constructor name="__construct" start="17" end="51" abstract="false" final="false" static="false" visibility="public"/>
+    </class>
+  </namespace>
+</file>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<file xmlns="http://xml.phpdox.de/src#">
+  <head path="lib/Equ/Doctrine/Mapping/Annotation" file="Filename.php" realpath="/home/szjani/dev/php/equlib/lib/Equ/Doctrine/Mapping/Annotation/Filename.php" size="159" time="2012-06-20T09:56:20+02:00" unixtime="1340178980" sha1="a4fcf3a345a4aa8c62d0a1d89322c6d5f38bee72"/>
+  <namespace name="Equ\Doctrine\Mapping\Annotation">
+    <class full="Equ\Doctrine\Mapping\Annotation\Filename" name="Filename" final="true" abstract="false" start="8" end="8">
+      <docblock>
+        <description compact=""/>
+        <Annotation value=""/>
+      </docblock>
+      <extends class="Annotation" namespace="Doctrine\Common\Annotations" full="Doctrine\Common\Annotations\Annotation"/>
+    </class>
+  </namespace>
+</file>
