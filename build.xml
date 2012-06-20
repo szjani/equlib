@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="name-of-project" default="build">
+<project name="Equlib" default="build">
+ <property name="builddir" value="${basedir}/build" />
+ <property name="srcdir" value="${basedir}/lib" />
+ <property name="testdir" value="${basedir}/tests" />
+  
  <target name="build"
    depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox,phpunit,phpcb"/>
 
@@ -21,32 +25,32 @@
  </target>
 
  <target name="clean" description="Cleanup build artifacts">
-  <delete dir="${basedir}/build/api"/>
-  <delete dir="${basedir}/build/code-browser"/>
-  <delete dir="${basedir}/build/coverage"/>
-  <delete dir="${basedir}/build/logs"/>
-  <delete dir="${basedir}/build/pdepend"/>
+  <delete dir="${builddir}/api"/>
+  <delete dir="${builddir}/code-browser"/>
+  <delete dir="${builddir}/coverage"/>
+  <delete dir="${builddir}/logs"/>
+  <delete dir="${builddir}/pdepend"/>
  </target>
 
  <target name="prepare" depends="clean" description="Prepare for build">
-  <mkdir dir="${basedir}/build/api"/>
-  <mkdir dir="${basedir}/build/code-browser"/>
-  <mkdir dir="${basedir}/build/coverage"/>
-  <mkdir dir="${basedir}/build/logs"/>
-  <mkdir dir="${basedir}/build/pdepend"/>
-  <mkdir dir="${basedir}/build/phpdox"/>
+  <mkdir dir="${builddir}/api"/>
+  <mkdir dir="${builddir}/code-browser"/>
+  <mkdir dir="${builddir}/coverage"/>
+  <mkdir dir="${builddir}/logs"/>
+  <mkdir dir="${builddir}/pdepend"/>
+  <mkdir dir="${builddir}/phpdox"/>
  </target>
 
  <target name="lint" description="Perform syntax check of sourcecode files">
   <apply executable="php" failonerror="true">
    <arg value="-l" />
 
-   <fileset dir="${basedir}/lib">
+   <fileset dir="${srcdir}">
     <include name="**/*.php" />
     <modified />
    </fileset>
 
-   <fileset dir="${basedir}/tests">
+   <fileset dir="${testdir}">
     <include name="**/*.php" />
     <modified />
    </fileset>
@@ -56,61 +60,61 @@
  <target name="phploc" description="Measure project size using PHPLOC">
   <exec executable="phploc">
    <arg value="--log-csv" />
-   <arg value="${basedir}/build/logs/phploc.csv" />
-   <arg path="${basedir}/lib" />
+   <arg value="${builddir}/logs/phploc.csv" />
+   <arg path="${srcdir}" />
   </exec>
  </target>
 
  <target name="pdepend" description="Calculate software metrics using PHP_Depend">
   <exec executable="pdepend">
-   <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
-   <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
-   <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
-   <arg path="${basedir}/lib" />
+   <arg value="--jdepend-xml=${builddir}/logs/jdepend.xml" />
+   <arg value="--jdepend-chart=${builddir}/pdepend/dependencies.svg" />
+   <arg value="--overview-pyramid=${builddir}/pdepend/overview-pyramid.svg" />
+   <arg path="${srcdir}" />
   </exec>
  </target>
 
  <target name="phpmd"
          description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpmd">
-   <arg path="${basedir}/lib" />
+   <arg path="${srcdir}" />
    <arg value="text" />
-   <arg value="${basedir}/build/phpmd.xml" />
+   <arg value="${builddir}/phpmd.xml" />
   </exec>
  </target>
 
  <target name="phpmd-ci" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
   <exec executable="phpmd">
-   <arg path="${basedir}/lib" />
+   <arg path="${srcdir}" />
    <arg value="xml" />
-   <arg value="${basedir}/build/phpmd.xml" />
+   <arg value="${builddir}/phpmd.xml" />
    <arg value="--reportfile" />
-   <arg value="${basedir}/build/logs/pmd.xml" />
+   <arg value="${builddir}/logs/pmd.xml" />
   </exec>
  </target>
 
  <target name="phpcs"
          description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpcs">
-   <arg value="--standard=${basedir}/build/phpcs.xml" />
-   <arg path="${basedir}/lib" />
+   <arg value="--standard=${builddir}/phpcs.xml" />
+   <arg path="${srcdir}" />
   </exec>
  </target>
 
  <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
   <exec executable="phpcs" output="/dev/null">
    <arg value="--report=checkstyle" />
-   <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
-   <arg value="--standard=${basedir}/build/phpcs.xml" />
-   <arg path="${basedir}/lib" />
+   <arg value="--report-file=${builddir}/logs/checkstyle.xml" />
+   <arg value="--standard=${builddir}/phpcs.xml" />
+   <arg path="${srcdir}" />
   </exec>
  </target>
 
  <target name="phpcpd" description="Find duplicate code using PHPCPD">
   <exec executable="phpcpd">
    <arg value="--log-pmd" />
-   <arg value="${basedir}/build/logs/pmd-cpd.xml" />
-   <arg path="${basedir}/lib" />
+   <arg value="${builddir}/logs/pmd-cpd.xml" />
+   <arg path="${srcdir}" />
   </exec>
  </target>
 
@@ -125,11 +129,11 @@
  <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
   <exec executable="phpcb">
    <arg value="--log" />
-   <arg path="${basedir}/build/logs" />
+   <arg path="${builddir}/logs" />
    <arg value="--source" />
-   <arg path="${basedir}/lib" />
+   <arg path="${srcdir}" />
    <arg value="--output" />
-   <arg path="${basedir}/build/code-browser" />
+   <arg path="${builddir}/code-browser" />
   </exec>
  </target>
 </project>

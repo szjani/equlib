@@ -10,12 +10,9 @@
       <implements interface="SortableEntity" namespace="Equ\Crud" full="Equ\Crud\SortableEntity"/>
       <implements interface="DisplayableEntity" namespace="Equ\Crud" full="Equ\Crud\DisplayableEntity"/>
     </class>
-    <class full="Equ\Validate" name="Validate" final="false" abstract="false" start="4" end="31" xml="lib/Equ/Validate.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Validate.php">
-      <extends class="Zend_Validate" full="Zend_Validate"/>
-      <implements interface="Iterator" full="Iterator"/>
-    </class>
+    
     <class full="Equ\Message" name="Message" final="false" abstract="false" start="11" end="78" xml="lib/Equ/Message.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Message.php"/>
-  </namespace>
+  <class full="Equ\Validate" name="Validate" final="false" abstract="false" start="4" end="31" xml="lib/Equ/Validate.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Validate.php"><extends class="Zend_Validate" full="Zend_Validate"/><implements interface="Iterator" full="Iterator"/></class></namespace>
   <namespace name="Equ\Exception">
     <class full="Equ\Exception\InvalidArgumentException" name="InvalidArgumentException" final="false" abstract="false" start="4" end="4" xml="lib/Equ/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Exception/InvalidArgumentException.php">
       <extends class="InvalidArgumentException" full="InvalidArgumentException"/>
@@ -364,9 +361,7 @@
     <class full="Equ\Form\ElementCreator\Dojo\MultiCreator" name="MultiCreator" final="false" abstract="false" start="4" end="10" xml="lib/Equ/Form/ElementCreator/Dojo/MultiCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/MultiCreator.php">
       <extends class="AbstractCreator" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractCreator"/>
     </class>
-    <class full="Equ\Form\ElementCreator\Dojo\Factory" name="Factory" final="false" abstract="false" start="4" end="109" xml="lib/Equ/Form/ElementCreator/Dojo/Factory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/Factory.php">
-      <extends class="AbstractFactory" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractFactory"/>
-    </class>
+    
     <class full="Equ\Form\ElementCreator\Dojo\PasswordCreator" name="PasswordCreator" final="false" abstract="false" start="4" end="30" xml="lib/Equ/Form/ElementCreator/Dojo/PasswordCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/PasswordCreator.php">
       <extends class="AbstractCreator" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractCreator"/>
     </class>
@@ -385,7 +380,7 @@
     <class full="Equ\Form\ElementCreator\Dojo\StringCreator" name="StringCreator" final="false" abstract="false" start="4" end="32" xml="lib/Equ/Form/ElementCreator/Dojo/StringCreator.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/StringCreator.php">
       <extends class="AbstractCreator" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractCreator"/>
     </class>
-  </namespace>
+  <class full="Equ\Form\ElementCreator\Dojo\Factory" name="Factory" final="false" abstract="false" start="4" end="109" xml="lib/Equ/Form/ElementCreator/Dojo/Factory.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Form/ElementCreator/Dojo/Factory.php"><extends class="AbstractFactory" namespace="Equ\Form\ElementCreator" full="Equ\Form\ElementCreator\AbstractFactory"/></class></namespace>
   <namespace name="Equ\Object\Exception">
     <class full="Equ\Object\Exception\InvalidArgumentException" name="InvalidArgumentException" final="false" abstract="false" start="4" end="4" xml="lib/Equ/Object/Exception/InvalidArgumentException.php.xml" src="/home/szjani/dev/php/equlib/lib/Equ/Object/Exception/InvalidArgumentException.php">
       <extends class="InvalidArgumentException" full="InvalidArgumentException"/>
