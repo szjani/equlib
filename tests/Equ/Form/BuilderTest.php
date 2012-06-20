@@ -42,8 +42,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testBuildByClassName() {
-    $builder = new Builder('Form\Fixture\Comment', new \Equ\Form\ElementCreator\Dojo\Factory());
-    $builder->setEntityManager($this->em);
+    $builder = new Builder('Form\Fixture\Comment', $this->em, new \Equ\Form\ElementCreator\Dojo\Factory());
     $formType = new CommentType();
     $formType->buildForm($builder);
     $commentForm = $builder->getForm();
@@ -65,8 +64,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
     $author->setEmail('author@host.com');
     $comment->setText('comment-text');
     
-    $builder = new Builder($comment, new \Equ\Form\ElementCreator\Dojo\Factory());
-    $builder->setEntityManager($this->em);
+    $builder = new Builder($comment, $this->em, new \Equ\Form\ElementCreator\Dojo\Factory());
     $formType = new CommentType();
     $formType->buildForm($builder);
     $commentForm = $builder->getForm();
@@ -98,8 +96,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase {
     $article = new Article('article-text', $articleAuthor);
     $article->setComments(new \ArrayObject(array($comment1, $comment2)));
     
-    $builder = new Builder($article, new \Equ\Form\ElementCreator\Dojo\Factory());
-    $builder->setEntityManager($this->em);
+    $builder = new Builder($article, $this->em, new \Equ\Form\ElementCreator\Dojo\Factory());
     $formType = new ArticleType();
     $formType->buildForm($builder);
     $articleForm = $builder->getForm();

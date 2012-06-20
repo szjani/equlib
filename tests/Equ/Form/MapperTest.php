@@ -55,8 +55,8 @@ class MapperTest extends PHPUnit_Framework_TestCase {
     $comment = $mapper->getObject();
     
     /* @var $comment Form\Fixture\Comment */
-    self::assertType('Form\Fixture\Comment', $comment);
-    self::assertType('Form\Fixture\Author', $comment->getAuthor());
+    self::assertInstanceOf('Form\Fixture\Comment', $comment);
+    self::assertInstanceOf('Form\Fixture\Author', $comment->getAuthor());
     self::assertEquals('commentText',   $comment->getText());
     self::assertEquals('test@host.com', $comment->getAuthor()->getEmail());
     self::assertEquals('authorName',    $comment->getAuthor()->getName());
@@ -115,7 +115,7 @@ class MapperTest extends PHPUnit_Framework_TestCase {
     $article = $mapper->getObject();
     
     self::assertEquals('articleText', $article->getText());
-    self::assertType('\ArrayObject',  $article->getComments());
+    self::assertInstanceOf('\ArrayObject',  $article->getComments());
     $comments = $article->getComments();
     self::assertEquals(2, $comments->count());
     self::assertEquals('comment2Text', $comments[1]->getText());
