@@ -19,7 +19,18 @@ class FileStoreTest extends \PHPUnit_Framework_TestCase {
     $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
     $config->setProxyDir(__DIR__ . '/Proxy');
     $config->setProxyNamespace('Equ\Doctrine\FileStore\Proxy');
-    $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver());
+    $driver = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+    $driver->addDriver(
+      new \Doctrine\ORM\Mapping\Driver\AnnotationDriver(
+        new \Doctrine\Common\Annotations\CachedReader(
+          new \Doctrine\Common\Annotations\AnnotationReader(),
+          new \Doctrine\Common\Cache\ArrayCache()
+        ),
+        __DIR__ . '/Fixture'
+      ),
+      'FileStore\Fixture'
+    );
+    $config->setMetadataDriverImpl($driver);
 
     $conn = array(
       'driver' => 'pdo_sqlite',

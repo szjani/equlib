@@ -1,50 +1,51 @@
 <?php
 namespace FileStore\Fixture;
 use Equ\Doctrine\Mapping\Annotation as Equ;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Entity
  * @Equ\FileStore(path="/tmp", method="copy")
- * @Entity
  */
 class Asset {
 
   /**
-   * @Id
-   * @GeneratedValue
-   * @Column(type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue
+   * @ORM\Column(type="integer")
    */
   private $id;
 
   /**
-   * @Column(name="file", type="string", length=255)
+   * @ORM\Column(name="file", type="string", length=255)
    * @Equ\Filename
    * @var string
    */
   private $file;
 
   /**
-   * @Column(name="original_filename", type="string", length=255)
+   * @ORM\Column(name="original_filename", type="string", length=255)
    * @Equ\OriginalFilename
    * @var string
    */
   private $originalFilename;
 
   /**
-   * @Column(name="file_hash", type="string", length=255)
+   * @ORM\Column(name="file_hash", type="string", length=255)
    * @Equ\Md5Hash
    * @var string
    */
   private $fileHash;
 
   /**
-   * @Column(name="file_size", type="integer")
+   * @ORM\Column(name="file_size", type="integer")
    * @Equ\Size
    * @var int
    */
   private $fileSize;
 
   /**
-   * @Column(name="mime_type", type="string", length=255)
+   * @ORM\Column(name="mime_type", type="string", length=255)
    * @Equ\MimeType
    * @var string
    */

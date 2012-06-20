@@ -55,7 +55,7 @@ class Annotation implements AnnotationDriverInterface {
    * @param ClassMetadata $meta
    * @param array $config
    */
-  public function readExtendedMetadata(ClassMetadata $meta, array &$config) {
+  public function readExtendedMetadata($meta, array &$config) {
     $reader = $this->reader;
     $class = $meta->getReflectionClass();
     
