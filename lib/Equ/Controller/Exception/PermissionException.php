@@ -1,4 +1,5 @@
 <?php
 namespace Equ\Controller\Exception;
 
-class PermissionException extends RuntimeException {}
+class PermissionException extends RuntimeException
+{}

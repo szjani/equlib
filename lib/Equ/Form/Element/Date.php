@@ -2,37 +2,40 @@
 
 namespace Equ\Form\Element;
 
-class Date extends \Zend_Form_Element_Xhtml {
+class Date extends \Zend_Form_Element_Xhtml
+{
 
-  public $helper = 'formDate';
+    public $helper = 'formDate';
 
-  public function isValid($value, $context = null) {
-    if (is_array($value)) {
-      $value = $value['year'] . '-' .
-        $value['month'] . '-' .
-        $value['day'];
+    public function isValid($value, $context = null)
+    {
+        if (is_array($value)) {
+            $value = $value['year'] . '-' .
+                $value['month'] . '-' .
+                $value['day'];
 
-      if (strlen($value) !== strlen('1985-03-05')) {
-        $value = null;
-      }
+            if (strlen($value) !== strlen('1985-03-05')) {
+                $value = null;
+            }
+        }
+
+        return parent::isValid($value, $context);
     }
 
-    return parent::isValid($value, $context);
-  }
+    public function getValue()
+    {
+        if (is_array($this->_value)) {
+            $value = $this->_value['year'] . '-' .
+                $this->_value['month'] . '-' .
+                $this->_value['day'];
 
-  public function getValue() {
-    if (is_array($this->_value)) {
-      $value = $this->_value['year'] . '-' .
-        $this->_value['month'] . '-' .
-        $this->_value['day'];
+            if ($value == '--') {
+                $value = null;
+            }
+            $this->setValue($value);
+        }
 
-      if ($value == '--') {
-        $value = null;
-      }
-      $this->setValue($value);
+        return parent::getValue();
     }
-
-    return parent::getValue();
-  }
 
 }

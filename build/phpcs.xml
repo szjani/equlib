@@ -34,7 +34,7 @@
 
  <rule ref="Generic.Functions.CallTimePassByReference"/>
  <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
- <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+ <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
 <!-- <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>-->
@@ -48,7 +48,7 @@
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="Generic.WhiteSpace.ScopeIndent">
    <properties>
-     <property name="indent" value="2" />
+     <property name="indent" value="4" />
    </properties>
  </rule>
  

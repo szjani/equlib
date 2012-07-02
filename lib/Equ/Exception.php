@@ -1,4 +1,5 @@
 <?php
 namespace Equ;
 
-interface Exception {}
+interface Exception
+{}

@@ -1,13 +1,14 @@
 <?php
 namespace Equ\Auth;
 use
-  Zend_Acl_Role_Interface,
-  Equ\Object\Arrayable;
+    Zend_Acl_Role_Interface,
+    Equ\Object\Arrayable;
 
-interface UserInterface extends Zend_Acl_Role_Interface, Arrayable {
-  
-  public function getPrincipal();
-  
-  public function isLoggedIn();
-  
+interface UserInterface extends Zend_Acl_Role_Interface, Arrayable
+{
+    
+    public function getPrincipal();
+    
+    public function isLoggedIn();
+    
 }

@@ -1,4 +1,5 @@
 <?php
 namespace Equ\Auth;
 
-class Exception extends \Equ\Exception {}
+class Exception extends \Equ\Exception
+{}

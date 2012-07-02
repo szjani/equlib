@@ -1,8 +1,9 @@
 <?php
 namespace Equ\Object;
 
-interface Arrayable {
-  
-  public function toArray();
-  
+interface Arrayable
+{
+    
+    public function toArray();
+    
 }

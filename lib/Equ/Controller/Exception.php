@@ -1,4 +1,5 @@
 <?php
 namespace Equ\Controller;
 
-interface Exception extends \Equ\Exception {}
+interface Exception extends \Equ\Exception
+{}

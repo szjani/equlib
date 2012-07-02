@@ -1,4 +1,5 @@
 <?php
 namespace Equ\Doctrine;
 
-interface Exception extends \Equ\Exception {}
+interface Exception extends \Equ\Exception
+{}

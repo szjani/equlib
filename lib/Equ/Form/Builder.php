@@ -2,247 +2,264 @@
 namespace Equ\Form;
 
 use
-  Doctrine\ORM\EntityManager,
-  Equ\Object\Helper as ObjectHelper;
+    Doctrine\ORM\EntityManager,
+    Equ\Object\Helper as ObjectHelper;
 
 /**
- * Build form from object
- *
- * @category    Equ
- * @package     Form
- * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @author      Szurovecz János <szjani@szjani.hu>
- */
-class Builder implements IBuilder {
-  
-  /**
-   * @var ObjectHelper
-   */
-  private $objectHelper;
-  
-  /**
-   * @var ElementCreator\IFactory
-   */
-  private $elementCreatorFactory = null;
-  
-  /**
-   * @var EntityManager
-   */
-  protected $entityManager = null;
-  
-  /**
-   * You can map form values to object with this mapper
-   * 
-   * @var Mapper
-   */
-  protected $mapper = null;
-  
-  /**
-   *
-   * @var \Zend_Form
-   */
-  private $form = null;
-  
-  private $formKey = null;
-  
-  /**
-   * array(propertyName => className, ...)
-   * 
-   * @var \ArrayObject
-   */
-  private $objectHelpers;
-  
-  /**
-   *
-   * @var \Equ\Object\Validator
-   */
-  private $objectValidator = null;
-  
-  /**
-   * @var OptionFlags
-   */
-  private $optionFlags = null;
-  
-  private $formClass = '\Zend_Form';
-  
-  private $subFormClass = '\Zend_Form_SubForm';
+  * Build form from object
+  *
+  * @category    Equ
+  * @package     Form
+  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+  * @author      Szurovecz János <szjani@szjani.hu>
+  */
+class Builder implements IBuilder
+{
+    
+    /**
+      * @var ObjectHelper
+      */
+    private $objectHelper;
+    
+    /**
+      * @var ElementCreator\IFactory
+      */
+    private $elementCreatorFactory = null;
+    
+    /**
+      * @var EntityManager
+      */
+    protected $entityManager = null;
+    
+    /**
+      * You can map form values to object with this mapper
+      * 
+      * @var Mapper
+      */
+    protected $mapper = null;
+    
+    /**
+      *
+      * @var \Zend_Form
+      */
+    private $form = null;
+    
+    private $formKey = null;
+    
+    /**
+      * array(propertyName => className, ...)
+      * 
+      * @var \ArrayObject
+      */
+    private $objectHelpers;
+    
+    /**
+      *
+      * @var \Equ\Object\Validator
+      */
+    private $objectValidator = null;
+    
+    /**
+      * @var OptionFlags
+      */
+    private $optionFlags = null;
+    
+    private $formClass = '\Zend_Form';
+    
+    private $subFormClass = '\Zend_Form_SubForm';
 
-  /**
-   * @param mixed $object
-   * @param EntityManager $em
-   * @param ElementCreator\IFactory $elementCreatorFactory
-   * @param \ArrayObject $objectHelpers 
-   */
-  public function __construct($object, EntityManager $em, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null) {
-    $this->objectHelper = new ObjectHelper($object);
-    $this->setEntityManager($em);
-    $this->formKey = $key;
-    if (null === $objectHelpers) {
-      $this->objectHelpers = new \ArrayObject(array(
-        $this->getFormKey() => $this->objectHelper
-      ));
-    } else {
-      $this->objectHelpers = $objectHelpers;
+    /**
+      * @param mixed $object
+      * @param EntityManager $em
+      * @param ElementCreator\IFactory $elementCreatorFactory
+      * @param \ArrayObject $objectHelpers 
+      */
+    public function __construct($object, EntityManager $em, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null)
+    {
+        $this->objectHelper = new ObjectHelper($object);
+        $this->setEntityManager($em);
+        $this->formKey = $key;
+        if (null === $objectHelpers) {
+            $this->objectHelpers = new \ArrayObject(array(
+                $this->getFormKey() => $this->objectHelper
+            ));
+        } else {
+            $this->objectHelpers = $objectHelpers;
+        }
+        $this->setElementCreatorFactory($elementCreatorFactory);
     }
-    $this->setElementCreatorFactory($elementCreatorFactory);
-  }
 
-  /**
-   * @return string
-   */
-  public function getFormClass() {
-    return $this->formClass;
-  }
+    /**
+      * @return string
+      */
+    public function getFormClass()
+    {
+        return $this->formClass;
+    }
 
-  /**
-   * @return string
-   */
-  public function getSubFormClass() {
-    return $this->subFormClass;
-  }
-  
-  /**
-   * @param string $class
-   * @return Builder 
-   */
-  public function setFormClass($class) {
-    $this->formClass = $class;
-    return $this;
-  }
-  
-  /**
-   * @param string $class
-   * @return Builder 
-   */
-  public function setSubFormClass($class) {
-    $this->subFormClass = $class;
-    return $this;
-  }
+    /**
+      * @return string
+      */
+    public function getSubFormClass()
+    {
+        return $this->subFormClass;
+    }
+    
+    /**
+      * @param string $class
+      * @return Builder 
+      */
+    public function setFormClass($class)
+    {
+        $this->formClass = $class;
+        return $this;
+    }
+    
+    /**
+      * @param string $class
+      * @return Builder 
+      */
+    public function setSubFormClass($class)
+    {
+        $this->subFormClass = $class;
+        return $this;
+    }
 
-  
-  /**
-   * @return \ArrayObject 
-   */
-  public function getObjectHelpers() {
-    return $this->objectHelpers;
-  }
-  
-  /**
-   * @return ObjectHelper 
-   */
-  public function getObjectHelper() {
-    return $this->objectHelper;
-  }
-  
-  /**
-   * @return OptionFlags
-   */
-  public function getOptionFlags() {
-    if (null === $this->optionFlags) {
-      $this->setOptionFlags(new OptionFlags(OptionFlags::ALL));
+    
+    /**
+      * @return \ArrayObject 
+      */
+    public function getObjectHelpers()
+    {
+        return $this->objectHelpers;
     }
-    return $this->optionFlags;
-  }
+    
+    /**
+      * @return ObjectHelper 
+      */
+    public function getObjectHelper()
+    {
+        return $this->objectHelper;
+    }
+    
+    /**
+      * @return OptionFlags
+      */
+    public function getOptionFlags()
+    {
+        if (null === $this->optionFlags) {
+            $this->setOptionFlags(new OptionFlags(OptionFlags::ALL));
+        }
+        return $this->optionFlags;
+    }
 
-  /**
-   * @param OptionFlags $flags
-   * @return Builder 
-   */
-  public function setOptionFlags(OptionFlags $flags) {
-    $this->optionFlags = $flags;
-    return $this;
-  }
+    /**
+      * @param OptionFlags $flags
+      * @return Builder 
+      */
+    public function setOptionFlags(OptionFlags $flags)
+    {
+        $this->optionFlags = $flags;
+        return $this;
+    }
 
-  
-  /**
-   * @return EntityManager $em
-   */
-  public function getEntityManager() {
-    return $this->entityManager;
-  }
-  
-  /**
-   * @param  EntityManager $em
-   * @return Builder 
-   */
-  public function setEntityManager(EntityManager $em) {
-    $this->entityManager = $em;
-    return $this;
-  }
-  
-  /**
-   * @return ElementCreator\IFactory
-   */
-  public function getElementCreatorFactory() {
-    return $this->elementCreatorFactory;
-  }
-  
-  /**
-   * @param  ElementCreator\IFactory $factory
-   * @return Builder
-   */
-  public function setElementCreatorFactory(ElementCreator\IFactory $factory) {
-    $this->elementCreatorFactory = $factory;
-    return $this;
-  }
-  
-  /**
-   * @param  string $type
-   * @return AbstractCreator
-   */
-  protected function createElementCreator($type) {
-    return $this->getElementCreatorFactory()->createCreator($type);
-  }
-  
-  /**
-   * @param string $elementName
-   * @param string $targetEntity
-   * @return array
-   */
-  protected function getForeignEntities($targetEntity, $pKeyField) {
-    if (!method_exists($targetEntity, 'getDisplayField')) {
-      throw new Exception\RuntimeException($targetEntity . ' has to implement \Equ\Crud\DisplayableEntity interface!');
+    
+    /**
+      * @return EntityManager $em
+      */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
     }
-    if (!method_exists($targetEntity, 'getSortField')) {
-      throw new Exception\RuntimeException($targetEntity . ' has to implement \Equ\Crud\SortableEntity interface!');
+    
+    /**
+      * @param  EntityManager $em
+      * @return Builder 
+      */
+    public function setEntityManager(EntityManager $em)
+    {
+        $this->entityManager = $em;
+        return $this;
     }
-    $res = $this->getEntityManager()
-      ->createQuery(
-        "SELECT m.{$pKeyField}, m.{$targetEntity::getDisplayField()} AS displayField
-         FROM $targetEntity m
-         ORDER BY m.{$targetEntity::getSortField()}")
-      ->getArrayResult();
-    return $res;
-  }
-  
-  /**
-   * @param string $elementName
-   * @param array  $def
-   * @return \Zend_Form_Element
-   */
-  protected function createForeignElement($elementName, array $def, $type = 'array') {
-    if ($type === null) {
-      $type = 'array';
+    
+    /**
+      * @return ElementCreator\IFactory
+      */
+    public function getElementCreatorFactory()
+    {
+        return $this->elementCreatorFactory;
     }
-    $elementCreator = $this->getElementCreatorFactory()->createCreator($type);
-    $elementCreator->setOptionFlags($this->getOptionFlags());
-    $select = null;
-    if (array_key_exists('joinColumns', $def)) {
-      $select = $elementCreator->createElement($elementName, $def['joinColumns'][0]);
-    } else {
-      $select = $elementCreator->createElement($elementName, array());
+    
+    /**
+      * @param  ElementCreator\IFactory $factory
+      * @return Builder
+      */
+    public function setElementCreatorFactory(ElementCreator\IFactory $factory)
+    {
+        $this->elementCreatorFactory = $factory;
+        return $this;
     }
-    if ($select instanceof \Zend_Form_Element_Multi) {
-      $select->addMultiOption('', '');
-      $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
-      $pKeyField = $targetMetaData->getSingleIdentifierFieldName();
-      foreach ($this->getForeignEntities($def['targetEntity'], $pKeyField) as $entity) {
-        $select->addMultiOption(
-          $entity[$pKeyField],
-          $entity['displayField']
-        );
-      }
+    
+    /**
+      * @param  string $type
+      * @return AbstractCreator
+      */
+    protected function createElementCreator($type)
+    {
+        return $this->getElementCreatorFactory()->createCreator($type);
     }
+    
+    /**
+      * @param string $elementName
+      * @param string $targetEntity
+      * @return array
+      */
+    protected function getForeignEntities($targetEntity, $pKeyField)
+    {
+        if (!method_exists($targetEntity, 'getDisplayField')) {
+            throw new Exception\RuntimeException($targetEntity . ' has to implement \Equ\Crud\DisplayableEntity interface!');
+        }
+        if (!method_exists($targetEntity, 'getSortField')) {
+            throw new Exception\RuntimeException($targetEntity . ' has to implement \Equ\Crud\SortableEntity interface!');
+        }
+        $res = $this->getEntityManager()
+            ->createQuery(
+                "SELECT m.{$pKeyField}, m.{$targetEntity::getDisplayField()} AS displayField
+                  FROM $targetEntity m
+                  ORDER BY m.{$targetEntity::getSortField()}")
+            ->getArrayResult();
+        return $res;
+    }
+    
+    /**
+      * @param string $elementName
+      * @param array  $def
+      * @return \Zend_Form_Element
+      */
+    protected function createForeignElement($elementName, array $def, $type = 'array')
+    {
+        if ($type === null) {
+            $type = 'array';
+        }
+        $elementCreator = $this->getElementCreatorFactory()->createCreator($type);
+        $elementCreator->setOptionFlags($this->getOptionFlags());
+        $select = null;
+        if (array_key_exists('joinColumns', $def)) {
+            $select = $elementCreator->createElement($elementName, $def['joinColumns'][0]);
+        } else {
+            $select = $elementCreator->createElement($elementName, array());
+        }
+        if ($select instanceof \Zend_Form_Element_Multi) {
+            $select->addMultiOption('', '');
+            $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
+            $pKeyField = $targetMetaData->getSingleIdentifierFieldName();
+            foreach ($this->getForeignEntities($def['targetEntity'], $pKeyField) as $entity) {
+                $select->addMultiOption(
+                    $entity[$pKeyField],
+                    $entity['displayField']
+                );
+            }
+        }
 
 //    $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
 //      ->getFieldValue($this->objectHelper->getObject(), $elementName);
@@ -250,223 +267,233 @@ class Builder implements IBuilder {
 //    if ($value instanceof $def['targetEntity']) {
 //      $select->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
 //    }
-    return $select;
-  }
-  
-  /**
-   * @param \Zend_Form_Element $element
-   * @param type $elementName
-   * @param array $def 
-   */
-  protected function fillForeignElement(\Zend_Form_Element $element, $elementName, array $def) {
-    $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
-    $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
-      ->getFieldValue($this->objectHelper->getObject(), $elementName);
-    
-    if ($value instanceof $def['targetEntity']) {
-      if ($value instanceof \Doctrine\ORM\Proxy\Proxy) {
-        $this->entityManager->refresh($value);
-      }
-      $id = $targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName());
-      if ($element instanceof \Zend_Dojo_Form_Element_ComboBox && $element->getAutocomplete()) {
-        $element->addMultiOption(array($id, (string)$value));
-        $element->setAttrib('value', (string)$value);
-        $element->setAttrib('displayedValue', (string)$value);
-      } else {
-        $element->setValue($id);
-      }
-    } elseif ($value instanceof \Traversable) {
-      $selected = array();
-      foreach ($value as $valueElement) {
-        $selected[] = $targetMetaData->getFieldValue($valueElement, $targetMetaData->getSingleIdentifierFieldName());
-      }
-      $element->setValue($selected);
+        return $select;
     }
-  }
-  
-  /**
-   * Add a field
-   * 
-   * @param  string $field
-   * @param  strig $type
-   * @return Builder 
-   */
-  public function add($field, $type = null) {
-    $fieldValue = null;
-    try {
-      $fieldValue = $this->objectHelper->get($field);
-    } catch (\InvalidArgumentException $e) {}
-    $element = null;
-    try {
-      $metadata = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType());
-      
-      // $field property is a foreign-key/ID
-      if ($metadata->hasAssociation($field)
-        /*&& array_key_exists('isOwningSide', $metadata->associationMappings[$field])
-        && $metadata->associationMappings[$field]['isOwningSide']*/) {
+    
+    /**
+      * @param \Zend_Form_Element $element
+      * @param type $elementName
+      * @param array $def 
+      */
+    protected function fillForeignElement(\Zend_Form_Element $element, $elementName, array $def)
+    {
+        $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
+        $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
+            ->getFieldValue($this->objectHelper->getObject(), $elementName);
         
-        if ($type instanceof \Zend_Form_Element) {
-          $element = $type;
-          $validator = $this->getObjectValidator();
-          $element->addValidator($validator->getFieldValidate($field));
-        } else {
-          $element = $this->createForeignElement($field, $metadata->associationMappings[$field], $type);
+        if ($value instanceof $def['targetEntity']) {
+            if ($value instanceof \Doctrine\ORM\Proxy\Proxy) {
+                $this->entityManager->refresh($value);
+            }
+            $id = $targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName());
+            if ($element instanceof \Zend_Dojo_Form_Element_ComboBox && $element->getAutocomplete()) {
+                $element->addMultiOption(array($id, (string)$value));
+                $element->setAttrib('value', (string)$value);
+                $element->setAttrib('displayedValue', (string)$value);
+            } else {
+                $element->setValue($id);
+            }
+        } elseif ($value instanceof \Traversable) {
+            $selected = array();
+            foreach ($value as $valueElement) {
+                $selected[] = $targetMetaData->getFieldValue($valueElement, $targetMetaData->getSingleIdentifierFieldName());
+            }
+            $element->setValue($selected);
         }
-        $this->fillForeignElement($element, $field, $metadata->associationMappings[$field]);
-        $this->objectHelpers[$field] = new ObjectHelper($metadata->associationMappings[$field]['targetEntity']);
-      }
-      else {
-        if (null === $type) {
-          $type = $metadata->fieldMappings[$field]['type'];
-        }
-        if ($type instanceof \Zend_Form_Element) {
-          $element = $type;
-          $validator = $this->getObjectValidator();
-          $element->addValidator($validator->getFieldValidate($field));
-        } else {
-          $elementCreator = $this->createElementCreator($type);
-          $elementCreator->setOptionFlags($this->getOptionFlags());
-          $this->addValidatorsFromObjectClass($elementCreator, $field);
-          if (array_key_exists($field, $metadata->fieldMappings)) {
-            $element = $elementCreator->createElement($field, $metadata->fieldMappings[$field]);
-          } else {
-            $element = $elementCreator->createElement($field);
-          }
-        }
-        $element->setValue((string)$fieldValue);
-      }
-    } catch (\Doctrine\ORM\Mapping\MappingException $e) {
-      if (null === $type) {
-        $type = 'text';
-      }
-      if ($type instanceof \Zend_Form_Element) {
-        $element = $type;
-        $validator = $this->getObjectValidator();
-        $element->addValidator($validator->getFieldValidate($field));
-      } else {
-        $elementCreator = $this->createElementCreator($type);
-        $elementCreator->setOptionFlags($this->getOptionFlags());
-        $this->addValidatorsFromObjectClass($elementCreator, $field);
-        $element = $elementCreator->createElement($field);
-      }
-      $element->setValue((string)$fieldValue);
-    }
-    $this->getForm()->addElement($element);
-    return $this;
-  }
-  
-  private function addValidatorsFromObjectClass($elementCreator, $field) {
-    try {
-      $elementCreator->setValidator($this->getObjectValidator()->getFieldValidate($field));
-    } catch (\Equ\Object\Exception\InvalidArgumentException $e) {}
-  }
-  
-  /**
-   * @return \Equ\Object\Validator 
-   */
-  private function getObjectValidator() {
-    if (null == $this->objectValidator) {
-      $this->objectValidator = new \Equ\Object\Validator($this->objectHelper->getType(), $this->entityManager);
-    }
-    return $this->objectValidator;
-  }
-
-  /**
-   * Add a subform
-   * 
-   * @param  string $field
-   * @param  IMappedType $type
-   * @param  boolean $collection
-   * @return Builder 
-   */
-  public function addSub($field, IMappedType $type, $collection = false) {
-    $fieldValue = $this->objectHelper->get($field);
-    if (null === $fieldValue) {
-      if ($collection) {
-        throw new Exception\InvalidArgumentException("'$field' has to be not-empty if use \$collection = true");
-      }
-      $fieldValue = $type->getObjectClass();
     }
     
-    if ($collection) {
-      if (!is_array($fieldValue) && !($fieldValue instanceof \Traversable)) {
-        throw new Exception\InvalidArgumentException("'$field' has to be a Traversable object or an array()");
-      }
-      $i = 0;
-      foreach ($fieldValue as $subObject) {
-        $this->buildSubForm($subObject, $field, $type, $i++);
-      }
-    } else {
-      $this->buildSubForm($fieldValue, $field, $type);
+    /**
+      * Add a field
+      * 
+      * @param  string $field
+      * @param  strig $type
+      * @return Builder 
+      */
+    public function add($field, $type = null)
+    {
+        $fieldValue = null;
+        try {
+            $fieldValue = $this->objectHelper->get($field);
+        } catch (\InvalidArgumentException $e) {}
+        $element = null;
+        try {
+            $metadata = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType());
+            
+            // $field property is a foreign-key/ID
+            if ($metadata->hasAssociation($field)
+                /*&& array_key_exists('isOwningSide', $metadata->associationMappings[$field])
+                && $metadata->associationMappings[$field]['isOwningSide']*/) {
+                
+                if ($type instanceof \Zend_Form_Element) {
+                    $element = $type;
+                    $validator = $this->getObjectValidator();
+                    $element->addValidator($validator->getFieldValidate($field));
+                } else {
+                    $element = $this->createForeignElement($field, $metadata->associationMappings[$field], $type);
+                }
+                $this->fillForeignElement($element, $field, $metadata->associationMappings[$field]);
+                $this->objectHelpers[$field] = new ObjectHelper($metadata->associationMappings[$field]['targetEntity']);
+            }
+            else {
+                if (null === $type) {
+                    $type = $metadata->fieldMappings[$field]['type'];
+                }
+                if ($type instanceof \Zend_Form_Element) {
+                    $element = $type;
+                    $validator = $this->getObjectValidator();
+                    $element->addValidator($validator->getFieldValidate($field));
+                } else {
+                    $elementCreator = $this->createElementCreator($type);
+                    $elementCreator->setOptionFlags($this->getOptionFlags());
+                    $this->addValidatorsFromObjectClass($elementCreator, $field);
+                    if (array_key_exists($field, $metadata->fieldMappings)) {
+                        $element = $elementCreator->createElement($field, $metadata->fieldMappings[$field]);
+                    } else {
+                        $element = $elementCreator->createElement($field);
+                    }
+                }
+                $element->setValue((string)$fieldValue);
+            }
+        } catch (\Doctrine\ORM\Mapping\MappingException $e) {
+            if (null === $type) {
+                $type = 'text';
+            }
+            if ($type instanceof \Zend_Form_Element) {
+                $element = $type;
+                $validator = $this->getObjectValidator();
+                $element->addValidator($validator->getFieldValidate($field));
+            } else {
+                $elementCreator = $this->createElementCreator($type);
+                $elementCreator->setOptionFlags($this->getOptionFlags());
+                $this->addValidatorsFromObjectClass($elementCreator, $field);
+                $element = $elementCreator->createElement($field);
+            }
+            $element->setValue((string)$fieldValue);
+        }
+        $this->getForm()->addElement($element);
+        return $this;
     }
-    return $this;
-  }
-  
-  /**
-   *
-   * @param mixed $subObject
-   * @param string $field
-   * @param IMappedType $type
-   * @param int $index 
-   */
-  private function buildSubForm($subObject, $field, IMappedType $type, $index = '') {
-    $subFormKey  = $this->getFormKey() . '-' . $field . ($index === '' ? $index : ('[' . $index . ']'));
-    $subFormName = $field . ($index === '' ? $index : ('[' . $index . ']'));
-    $builder     = new self($subObject, $this->entityManager, $this->getElementCreatorFactory(), $this->objectHelpers, $subFormKey);
-    $builder->setEntityManager($this->getEntityManager());
-    $class = $this->getSubFormClass();
-    $subForm = new $class;
-    $subForm->setElementsBelongTo($subFormName);
-    $this->getForm()->addSubForm($subForm, $subFormName);
-    $this->objectHelpers[$subFormKey] = $builder->getObjectHelper();
-    $builder->setForm($subForm);
-    $type->buildForm($builder);
-  }
-
-  /**
-   * @param  \Zend_Form $form
-   * @return Builder
-   */
-  public function setForm(\Zend_Form $form) {
-    $this->form = $form;
-    return $this;
-  }
-  
-  private function getFormKey() {
-    if (null === $this->formKey) {
-      $nameArray = explode('\\', $this->objectHelper->getType());
-      $this->formKey = lcfirst(array_pop($nameArray));
+    
+    private function addValidatorsFromObjectClass($elementCreator, $field)
+    {
+        try {
+            $elementCreator->setValidator($this->getObjectValidator()->getFieldValidate($field));
+        } catch (\Equ\Object\Exception\InvalidArgumentException $e) {}
     }
-    return $this->formKey;
-  }
+    
+    /**
+      * @return \Equ\Object\Validator 
+      */
+    private function getObjectValidator()
+    {
+        if (null == $this->objectValidator) {
+            $this->objectValidator = new \Equ\Object\Validator($this->objectHelper->getType(), $this->entityManager);
+        }
+        return $this->objectValidator;
+    }
 
     /**
-   * @return \Zend_Form
-   */
-  public function getForm() {
-    if ($this->form === null) {
-      $class = $this->getFormClass();
-      $this->form = new $class;
-      if ($this->getOptionFlags()->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
-        $this->form->setElementsBelongTo($this->getFormKey());
-      }
-      $submit = $this->getElementCreatorFactory()->createSubmitCreator()->setOptionFlags($this->getOptionFlags())->createElement('OK');
-      $submit->setOrder('999');
-      $this->form->setAttrib('class', $this->getOptionFlags()->hasFlag(OptionFlags::HORIZONTAL) ? 'form-horizontal' : 'form-vertical');
-      $this->form->addElement($submit);
+      * Add a subform
+      * 
+      * @param  string $field
+      * @param  IMappedType $type
+      * @param  boolean $collection
+      * @return Builder 
+      */
+    public function addSub($field, IMappedType $type, $collection = false)
+    {
+        $fieldValue = $this->objectHelper->get($field);
+        if (null === $fieldValue) {
+            if ($collection) {
+                throw new Exception\InvalidArgumentException("'$field' has to be not-empty if use \$collection = true");
+            }
+            $fieldValue = $type->getObjectClass();
+        }
+        
+        if ($collection) {
+            if (!is_array($fieldValue) && !($fieldValue instanceof \Traversable)) {
+                throw new Exception\InvalidArgumentException("'$field' has to be a Traversable object or an array()");
+            }
+            $i = 0;
+            foreach ($fieldValue as $subObject) {
+                $this->buildSubForm($subObject, $field, $type, $i++);
+            }
+        } else {
+            $this->buildSubForm($fieldValue, $field, $type);
+        }
+        return $this;
     }
-    return $this->form;
-  }
+    
+    /**
+      *
+      * @param mixed $subObject
+      * @param string $field
+      * @param IMappedType $type
+      * @param int $index 
+      */
+    private function buildSubForm($subObject, $field, IMappedType $type, $index = '')
+    {
+        $subFormKey  = $this->getFormKey() . '-' . $field . ($index === '' ? $index : ('[' . $index . ']'));
+        $subFormName = $field . ($index === '' ? $index : ('[' . $index . ']'));
+        $builder     = new self($subObject, $this->entityManager, $this->getElementCreatorFactory(), $this->objectHelpers, $subFormKey);
+        $builder->setEntityManager($this->getEntityManager());
+        $class = $this->getSubFormClass();
+        $subForm = new $class;
+        $subForm->setElementsBelongTo($subFormName);
+        $this->getForm()->addSubForm($subForm, $subFormName);
+        $this->objectHelpers[$subFormKey] = $builder->getObjectHelper();
+        $builder->setForm($subForm);
+        $type->buildForm($builder);
+    }
 
-  /**
-   * Retrieves a mapper to sync datas from form to object
-   * 
-   * @return Mapper
-   */
-  public function getMapper() {
-    if (null === $this->mapper) {
-      $this->mapper = new Mapper($this->getForm(), $this->getFormKey(), $this->objectHelpers, $this->getEntityManager());
+    /**
+      * @param  \Zend_Form $form
+      * @return Builder
+      */
+    public function setForm(\Zend_Form $form)
+    {
+        $this->form = $form;
+        return $this;
     }
-    return $this->mapper;
-  }
+    
+    private function getFormKey()
+    {
+        if (null === $this->formKey) {
+            $nameArray = explode('\\', $this->objectHelper->getType());
+            $this->formKey = lcfirst(array_pop($nameArray));
+        }
+        return $this->formKey;
+    }
+
+        /**
+      * @return \Zend_Form
+      */
+    public function getForm()
+    {
+        if ($this->form === null) {
+            $class = $this->getFormClass();
+            $this->form = new $class;
+            if ($this->getOptionFlags()->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
+                $this->form->setElementsBelongTo($this->getFormKey());
+            }
+            $submit = $this->getElementCreatorFactory()->createSubmitCreator()->setOptionFlags($this->getOptionFlags())->createElement('OK');
+            $submit->setOrder('999');
+            $this->form->setAttrib('class', $this->getOptionFlags()->hasFlag(OptionFlags::HORIZONTAL) ? 'form-horizontal' : 'form-vertical');
+            $this->form->addElement($submit);
+        }
+        return $this->form;
+    }
+
+    /**
+      * Retrieves a mapper to sync datas from form to object
+      * 
+      * @return Mapper
+      */
+    public function getMapper()
+    {
+        if (null === $this->mapper) {
+            $this->mapper = new Mapper($this->getForm(), $this->getFormKey(), $this->objectHelpers, $this->getEntityManager());
+        }
+        return $this->mapper;
+    }
 }
