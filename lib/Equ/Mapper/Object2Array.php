@@ -53,8 +53,7 @@ class Object2Array implements IMapper
       */
     public function convert()
     {
-        foreach (get_class_methods($this->inputObject) as $method)
-{
+        foreach (get_class_methods($this->inputObject) as $method) {
             if ($this->isGetter($method)) {
                 $this->values[$this->getKeyName($method)] = $this->inputObject->$method();
             }

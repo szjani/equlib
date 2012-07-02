@@ -23,16 +23,13 @@ class FormDate extends \Zend_View_Helper_FormElement
         $monthAttribs = isset($attribs['monthAttribs']) ? $attribs['monthAttribs'] : array();
         $yearAttribs = isset($attribs['yearAttribs']) ? $attribs['yearAttribs'] : array();
 
-        if (isset($attribs['class']))
-{
+        if (isset($attribs['class'])) {
             $dayAttribs['class'] = $attribs['class'];
         }
-        if (isset($attribs['class']))
-{
+        if (isset($attribs['class'])) {
             $monthAttribs['class'] = $attribs['class'];
         }
-        if (isset($attribs['class']))
-{
+        if (isset($attribs['class'])) {
             $yearAttribs['class'] = $attribs['class'];
         }
 
