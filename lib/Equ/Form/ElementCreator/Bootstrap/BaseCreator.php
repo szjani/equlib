@@ -11,7 +11,7 @@ abstract class BaseCreator extends \Equ\Form\ElementCreator\AbstractCreator
         $element
             ->removeDecorator('HtmlTag')
             ->removeDecorator('Label');
-        
+
         if ($this->getOptionFlags()->hasFlag(OptionFlags::HORIZONTAL)) {
             $element
                 ->addDecorator(array('controls' => 'HtmlTag'), array('tag' => 'div', 'class' => 'controls'))
@@ -28,7 +28,7 @@ abstract class BaseCreator extends \Equ\Form\ElementCreator\AbstractCreator
         }
         return $element;
     }
-    
+
     /**
       * @param \Zend_Form_Element $element
       * @return AbstractCreator
@@ -43,5 +43,5 @@ abstract class BaseCreator extends \Equ\Form\ElementCreator\AbstractCreator
         }
         return $this;
     }
-    
+
 }

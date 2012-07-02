@@ -8,14 +8,14 @@ use
 
 class AutoPageCache extends Zend_Controller_Plugin_Abstract
 {
-    
+
     private $cache;
-    
+
     public function __construct(Zend_Cache_Frontend_Page $cache)
     {
         $this->cache = $cache;
     }
-    
+
     public function start()
     {
         Zend_Session::start();
@@ -23,7 +23,7 @@ class AutoPageCache extends Zend_Controller_Plugin_Abstract
             $this->cache->start();
         }
     }
-    
+
     public function __destruct()
     {
         if (null !== $this->getResponse() && $this->getResponse()->isRedirect()) {
@@ -33,12 +33,12 @@ class AutoPageCache extends Zend_Controller_Plugin_Abstract
             $this->cache->cancel();
         }
     }
-    
+
     public function dispatchLoopShutdown()
     {
         if (0 < Zend_Session::getIterator()->count()) {
             $this->cache->cancel();
         }
     }
-    
+
 }

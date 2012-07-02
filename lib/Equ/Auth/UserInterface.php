@@ -6,9 +6,9 @@ use
 
 interface UserInterface extends Zend_Acl_Role_Interface, Arrayable
 {
-    
+
     public function getPrincipal();
-    
+
     public function isLoggedIn();
-    
+
 }

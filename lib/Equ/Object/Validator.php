@@ -12,12 +12,12 @@ use Doctrine\ORM\EntityManager;
   */
 class Validator implements \IteratorAggregate
 {
-    
+
     /**
       * @var array
       */
     private $fieldValidators = array();
-    
+
     /**
       * @var EntityManager
       */
@@ -27,44 +27,43 @@ class Validator implements \IteratorAggregate
       * @var string
       */
     private $class;
-    
+
     /**
       * @param string $class
-      * @param EntityManager $em 
+      * @param EntityManager $em
       */
     public function __construct($class, EntityManager $em)
     {
-        if (!method_exists($class, 'loadValidators'))
-{
+        if (!method_exists($class, 'loadValidators')) {
             throw new Exception\InvalidArgumentException("$class has to implement the Validatable interface");
         }
         $this->em    = $em;
         $this->class = $class;
         $class::loadValidators($this);
     }
-    
+
     /**
       * @param  string $field
       * @param  \Zend_Validate_Abstract $validator
-      * @return Validator 
+      * @return Validator
       */
     public function add($field, \Zend_Validate_Abstract $validator)
     {
         $this->getFieldValidate($field)->addValidator($validator);
         return $this;
     }
-    
+
     /**
-      * @return \ArrayIterator 
+      * @return \ArrayIterator
       */
     public function getIterator()
     {
         return new \ArrayIterator($this->fieldValidators);
     }
-    
+
     /**
       * @param  string $field
-      * @return \Equ\Validate 
+      * @return \Equ\Validate
       */
     public function getFieldValidate($field)
     {
@@ -73,7 +72,7 @@ class Validator implements \IteratorAggregate
         }
         return $this->fieldValidators[$field];
     }
-    
+
     /**
       * @param  Validatable $object
       * @return boolean
@@ -95,12 +94,13 @@ class Validator implements \IteratorAggregate
             foreach ($this->fieldValidators as $name => $validate) {
                 try {
                     $valid |= $validate->isValid($objectHelper->get($name));
-                } catch (\InvalidArgumentException $e) {}
+                } catch (\InvalidArgumentException $e) {
+                }
             }
         }
         return $valid;
     }
-    
+
     /**
       * @return array
       */
@@ -112,5 +112,5 @@ class Validator implements \IteratorAggregate
         }
         return $messages;
     }
-    
+
 }

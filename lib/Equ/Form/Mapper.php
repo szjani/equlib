@@ -18,36 +18,36 @@ use
   */
 class Mapper implements IMapper
 {
-    
+
     /**
       * @var Form
       */
     private $form;
-    
+
     /**
       * @var ObjectHelper
       */
     private $objectHelper;
-    
+
     /**
       * @var \ArrayObject
       */
     private $objectHelpers;
-    
+
     /**
       * @var EntityManager
       */
     protected $entityManager = null;
-    
+
     private $key;
-    
+
     /**
       * You should care about that if a field is existing as a key
       * in $objectHelpers than it handle it as a foreign-key/ID
-      * 
+      *
       * @param Form $form
       * @param type $key
-      * @param \ArrayObject $objectHelpers 
+      * @param \ArrayObject $objectHelpers
       */
     public function __construct(Form $form, $key, \ArrayObject $objectHelpers, EntityManager $em = null)
     {
@@ -57,7 +57,7 @@ class Mapper implements IMapper
         $this->key = $key;
         $this->entityManager = $em;
     }
-    
+
     /**
       * @return EntityManager $em
       */
@@ -69,17 +69,17 @@ class Mapper implements IMapper
         }
         return $this->entityManager;
     }
-    
+
     /**
       * @param  EntityManager $em
-      * @return Builder 
+      * @return Builder
       */
     public function setEntityManager(EntityManager $em)
     {
         $this->entityManager = $em;
         return $this;
     }
-    
+
     /**
       * @return object
       */
@@ -87,10 +87,10 @@ class Mapper implements IMapper
     {
         return $this->objectHelper->getObject();
     }
-    
+
     /**
       * Validates $request on form
-      * 
+      *
       * @param  Request $request
       * @return boolean
       */
@@ -111,8 +111,8 @@ class Mapper implements IMapper
 
     /**
       * Map form data to $object with relations
-      * 
-      * @return Mapper 
+      *
+      * @return Mapper
       */
     public function map()
     {
@@ -123,7 +123,8 @@ class Mapper implements IMapper
                 // property $field is a relation, $value is probably an ID
                 if ($this->objectHelpers->offsetExists($field)) {
                     if (!empty($value)) {
-                        if (is_array($value)) { // multiselect, etc
+                        // multiselect, etc
+                        if (is_array($value)) {
                             $existingFields = $this->objectHelper->get($field);
                             if (null === $existingFields) {
                                 $existingFields = new \Doctrine\Common\Collections\ArrayCollection();
@@ -148,12 +149,13 @@ class Mapper implements IMapper
                 } else {
                     $this->objectHelper->set($field, $value);
                 }
-            } catch (\InvalidArgumentException $e) {}
+            } catch (\InvalidArgumentException $e) {
+            }
         }
-        
+
         // map all subforms
         $relations = array();
-        
+
         /* @var $subForm \Zend_Form_Subform */
         foreach ($this->form->getSubForms() as $name => $subForm) {
             $subMapper = $this->createSubMapper($name, $subForm);
@@ -167,7 +169,7 @@ class Mapper implements IMapper
                 $relations[$name] = $subMapper;
             }
         }
-        
+
         foreach ($relations as $name => $subMapper) {
             if (!is_array($subMapper)) {
                 $this->objectHelper->set($name, $subMapper->getObject());
@@ -186,9 +188,9 @@ class Mapper implements IMapper
 
     /**
       * Map subform into a relation
-      * 
+      *
       * @param string  $relation
-      * @param SubForm $subForm 
+      * @param SubForm $subForm
       */
     private function createSubMapper($relation, SubForm $subForm)
     {

@@ -10,5 +10,5 @@ class CheckboxCreator extends BaseCreator
         $this->initDecorators($element);
         return $element;
     }
-    
+
 }

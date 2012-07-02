@@ -11,18 +11,18 @@ class PaginatorCreator implements IPaginatorCreator
 {
 
     /**
-      * @var IQueryBuilderCreator 
+      * @var IQueryBuilderCreator
       */
     private $queryBuilderCreator;
-    
+
     /**
-      * @param IQueryBuilderCreator $queryBuilderCreator 
+      * @param IQueryBuilderCreator $queryBuilderCreator
       */
     public function __construct(IQueryBuilderCreator $queryBuilderCreator)
     {
         $this->queryBuilderCreator = $queryBuilderCreator;
     }
-    
+
     /**
       * @param ObjectHelper $objectHelper
       * @param mixed $filters
@@ -48,5 +48,5 @@ class PaginatorCreator implements IPaginatorCreator
             ->setItemCountPerPage($itemPerPage);
         return $paginator;
     }
-    
+
 }

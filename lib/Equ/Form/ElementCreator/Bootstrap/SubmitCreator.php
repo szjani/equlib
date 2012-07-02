@@ -15,7 +15,7 @@ class SubmitCreator extends BaseCreator
         }
         return $element;
     }
-    
+
     protected function buildElement($fieldName)
     {
         $element = new \Zend_Form_Element_Submit($fieldName);

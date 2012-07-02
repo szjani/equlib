@@ -23,13 +23,13 @@ class MvcPermission extends Zend_Controller_Action_Helper_Abstract
       * @var AuthenticatedUserStorage
       */
     protected $storage;
-    
+
     /**
       *
       * @var Zend_Acl
       */
     protected $acl;
-    
+
     /**
       * @param AuthenticatedUserStorage $storage
       * @param Zend_Acl $acl
@@ -39,7 +39,7 @@ class MvcPermission extends Zend_Controller_Action_Helper_Abstract
         $this->storage = $storage;
         $this->acl     = $acl;
     }
-    
+
     public function preDispatch()
     {
         $request = $this->getRequest();

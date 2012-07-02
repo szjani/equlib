@@ -13,22 +13,21 @@ class Helper
       * @var string
       */
     private $type = null;
-    
+
     public function __construct($object)
     {
         if (is_object($object)) {
             $this->setObject($object);
-        } elseif (class_exists($object))
-{
+        } elseif (class_exists($object)) {
             $this->setType($object);
         } else {
             throw new Exception\InvalidArgumentException('$object has to be an object or a class name');
         }
     }
-    
+
     /**
       * Retrieves the class name of the object
-      * 
+      *
       * @return string
       */
     public function getType()
@@ -41,9 +40,9 @@ class Helper
 
     /**
       * Use $type to sync form data
-      * 
+      *
       * @param  string $type
-      * @return Mapper 
+      * @return Mapper
       */
     public function setType($type)
     {
@@ -54,7 +53,7 @@ class Helper
 
     /**
       * Get the object
-      * 
+      *
       * @return object
       */
     public function getObject()
@@ -64,12 +63,12 @@ class Helper
         }
         return $this->object;
     }
-    
+
     /**
       * Use $object to sync form data
-      * 
+      *
       * @param  object $object
-      * @return Mapper 
+      * @return Mapper
       */
     public function setObject($object)
     {
@@ -77,32 +76,31 @@ class Helper
         $this->type   = null;
         return $this;
     }
-    
+
     private function getMethod($method)
     {
         $object = $this->getObject();
-        if (!in_array($method, get_class_methods($object)))
-{
+        if (!in_array($method, get_class_methods($object))) {
             throw new Exception\InvalidArgumentException("Class '{$this->getType()}' doesn't have method '{$method}'");
         }
         return $method;
     }
-    
+
     private function getGetter($field)
     {
         return $this->getMethod('get' . ucfirst($field));
     }
-    
+
     private function getIsser($field)
     {
         return $this->getMethod('is' . ucfirst($field));
     }
-    
+
     private function getSetter($field)
     {
         return $this->getMethod('set' . ucfirst($field));
     }
-    
+
     /**
       *
       * @param string $property
@@ -119,7 +117,7 @@ class Helper
         $object = $this->getObject();
         return $object->$method();
     }
-    
+
     /**
       *
       * @param string $property
@@ -133,5 +131,5 @@ class Helper
         $object->$method($value);
         return $this;
     }
-    
+
 }

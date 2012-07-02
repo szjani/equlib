@@ -24,32 +24,32 @@ use
   */
 class CreateFormBuilder extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
-      * @var ElementCreatorFactory 
+      * @var ElementCreatorFactory
       */
     protected $defaultElementCreatorFactory;
-    
+
     /**
       * @var string
       */
     protected $defaultFormClass;
-    
+
     /**
       * @var string
       */
     protected $defaultSubFormClass;
-    
+
     /**
-      * @var EntityManager 
+      * @var EntityManager
       */
     protected $entityManager;
-    
+
     /**
       * @param EntityManager $em
       * @param ElementCreatorFactory $factory
       * @param string $formClass
-      * @param string $subFormClass 
+      * @param string $subFormClass
       */
     public function __construct(EntityManager $em, ElementCreatorFactory $factory, $formClass, $subFormClass)
     {
@@ -58,27 +58,27 @@ class CreateFormBuilder extends Zend_Controller_Action_Helper_Abstract
         $this->defaultSubFormClass          = $subFormClass;
         $this->entityManager                = $em;
     }
-    
+
     /**
       * @param IMappedType $mappedType
       * @param object $object
       * @param ElementCreatorFactory $factory
       * @param string $formClass
       * @param string $subFormClass
-      * @return FormBuilder 
+      * @return FormBuilder
       */
     public function direct(IMappedType $mappedType, $object, ElementCreatorFactory $factory = null, $formClass = null, $subFormClass = null)
     {
         return $this->create($mappedType, $object, $factory, $formClass, $subFormClass);
     }
-    
+
     /**
       * @param IMappedType $mappedType
       * @param object $object
       * @param ElementCreatorFactory $factory
       * @param string $formClass
       * @param string $subFormClass
-      * @return FormBuilder 
+      * @return FormBuilder
       */
     public function create(IMappedType $mappedType, $object, ElementCreatorFactory $factory = null, $formClass = null, $subFormClass = null)
     {
@@ -92,5 +92,5 @@ class CreateFormBuilder extends Zend_Controller_Action_Helper_Abstract
         $mappedType->buildForm($formBuilder);
         return $formBuilder;
     }
-    
+
 }

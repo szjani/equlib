@@ -6,7 +6,7 @@ use
 
 interface IQueryBuilderCreator
 {
-    
+
     /**
       * @param  ObjectHelper $objectHelper
       * @param  mixed  $filters

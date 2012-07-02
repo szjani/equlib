@@ -16,5 +16,5 @@ class RadioCreator extends \Equ\Form\ElementCreator\AbstractCreator
         ));
         return $element;
     }
-    
+
 }

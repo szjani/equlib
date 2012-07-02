@@ -19,38 +19,38 @@ use
   */
 class TemplateVersioner extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * @var ArrayObject
       */
     protected $versionChanges;
-    
+
     public function __construct()
     {
         $this->versionChanges = new ArrayObject();
     }
-    
+
     /**
       * @param DateTime $dateTime
       * @param string $newVersion
-      * @return \Equ\Controller\Action\Helper\TemplateVersioner 
+      * @return \Equ\Controller\Action\Helper\TemplateVersioner
       */
     public function addVersionChangeDate(DateTime $dateTime, $newVersion)
     {
         $this->versionChanges[$newVersion] = $dateTime;
         return $this;
     }
-    
+
     /**
       * @param string $version
-      * @return \Equ\Controller\Action\Helper\TemplateVersioner 
+      * @return \Equ\Controller\Action\Helper\TemplateVersioner
       */
     public function change($version)
     {
         $this->getRequest()->setParam(PageVersionViewRenderer::PAGE_VERSION, $version);
         return $this;
     }
-    
+
     public function init()
     {
         if (null !== $this->getRequest()->getParam(PageVersionViewRenderer::PAGE_VERSION, null)) {
@@ -66,5 +66,5 @@ class TemplateVersioner extends Zend_Controller_Action_Helper_Abstract
         }
         $this->change($correctVersion);
     }
-    
+
 }

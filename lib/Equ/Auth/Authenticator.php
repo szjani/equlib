@@ -16,5 +16,5 @@ interface Authenticator
       * @return mixed
       */
     public function authenticate($principal, $password);
-    
+
 }

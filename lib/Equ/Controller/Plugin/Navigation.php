@@ -12,29 +12,29 @@ class Navigation extends Zend_Controller_Plugin_Abstract
 {
 
     const KEY = 'navigation';
-    
+
     /**
       * @var Zend_Navigation
       */
     private $navigation;
-    
+
     /**
       *
       * @var NavigationItemRepository
       */
     private $itemRepo;
-    
+
     /**
       *
       * @var Zend_Cache_Core
       */
     private $cache;
-    
+
     /**
       * @var boolean
       */
     private $autoDisableForAjaxRequest = true;
-    
+
     /**
       * @param Zend_Navigation $navigation
       * @param NavigationItemRepository $itemRepo
@@ -46,18 +46,18 @@ class Navigation extends Zend_Controller_Plugin_Abstract
         $this->itemRepo    = $itemRepo;
         $this->cache       = $cache;
     }
-    
+
     /**
       *
       * @param boolean $disable
-      * @return Navigation 
+      * @return Navigation
       */
     public function setAutoDisableForAjaxRequest($disable = true)
     {
         $this->autoDisableForAjaxRequest = $disable;
         return $this;
     }
-    
+
     /**
       * @return boolean
       */
@@ -65,10 +65,10 @@ class Navigation extends Zend_Controller_Plugin_Abstract
     {
         return $this->autoDisableForAjaxRequest;
     }
-    
+
     /**
       * @param Zend_Controller_Request_Abstract $request
-      * @return void 
+      * @return void
       */
     public function routeShutdown(Zend_Controller_Request_Abstract $request)
     {

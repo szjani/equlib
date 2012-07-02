@@ -8,5 +8,5 @@ class MultiCreator extends \Equ\Form\ElementCreator\AbstractCreator
     {
         return new \Zend_Form_Element_Multiselect($fieldName);
     }
-    
+
 }

@@ -43,7 +43,7 @@ abstract class AbstractCreator implements IOptionFlaggable
       * @var Validator
       */
     private $validator;
-    
+
     /**
       * @var OptionFlags
       */
@@ -58,27 +58,28 @@ abstract class AbstractCreator implements IOptionFlaggable
         $this->setNamespace($namespace);
         $this->optionFlags = $flags;
     }
-    
+
     protected function validatorAdded(\Zend_Form_Element $element, \Zend_Validate_Abstract $validator)
-    {}
+    {
+    }
 
     /**
       * @return \Zend_Form_Element
       */
     protected abstract function buildElement($fieldName);
-    
+
     /**
       * @param OptionFlags $flags
-      * @return AbstractCreator 
+      * @return AbstractCreator
       */
     public function setOptionFlags(OptionFlags $flags)
     {
         $this->optionFlags = $flags;
         return $this;
     }
-    
+
     /**
-      * @return OptionFlags 
+      * @return OptionFlags
       */
     public function getOptionFlags()
     {
@@ -90,7 +91,7 @@ abstract class AbstractCreator implements IOptionFlaggable
 
     /**
       * @param string $namespace
-      * @return AbstractCreator 
+      * @return AbstractCreator
       */
     public function setNamespace($namespace)
     {
@@ -159,10 +160,11 @@ abstract class AbstractCreator implements IOptionFlaggable
     {
         return $this->validator;
     }
-    
+
     public function initDecorators(\Zend_Form_Element $element)
-    {}
-    
+    {
+    }
+
     /**
       * You should pass $values from
       * $em->getClassMetadata($className)->fieldMappings

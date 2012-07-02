@@ -14,7 +14,7 @@ use Doctrine\Common\EventArgs;
 
 abstract class MappedEventSubscriber extends GedmoMappedEventSubscriber
 {
-    
+
     public function __construct()
     {
         $reader = null;
@@ -47,9 +47,9 @@ abstract class MappedEventSubscriber extends GedmoMappedEventSubscriber
             $reader->setAnnotationNamespaceAlias('Equ\\Doctrine\\Mapping\\Annotation\\', 'equ');
             $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
         }
-        
+
         $this->setAnnotationReader($reader);
 //    return $this->defaultAnnotationReader;
     }
-    
+
 }

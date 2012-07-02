@@ -8,5 +8,5 @@ class PasswordCreator extends \Equ\Form\ElementCreator\AbstractCreator
     {
         return new \Zend_Form_Element_Password($fieldName);
     }
-    
+
 }

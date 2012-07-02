@@ -32,14 +32,14 @@ class CaptchaCreator extends BaseCreator
         $element
             ->removeDecorator('HtmlTag')
             ->removeDecorator('Label');
-        
+
         if ($this->getOptionFlags()->hasFlag(OptionFlags::HORIZONTAL)) {
             $element
                 ->addDecorator(new \Zend_Form_Decorator_Callback(array(
                     'placement' => 'prepend',
                     'callback' => function($content, $element)
                     {
-                        return '<div id="recaptcha_image"></div>' . 
+                        return '<div id="recaptcha_image"></div>' .
                             $element->getView()->formText(
                                 $element->getBelongsTo() . '[recaptcha_response_field]',
                                 null,

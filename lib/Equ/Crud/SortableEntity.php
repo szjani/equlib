@@ -14,5 +14,5 @@ interface SortableEntity
       * @return string Name of the default sortable field
       */
     public static function getSortField();
-    
+
 }

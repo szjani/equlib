@@ -16,5 +16,5 @@ class CheckboxCreator extends \Equ\Form\ElementCreator\AbstractCreator
         ));
         return $element;
     }
-    
+
 }

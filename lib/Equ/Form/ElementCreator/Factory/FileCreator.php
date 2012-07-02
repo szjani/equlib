@@ -16,5 +16,5 @@ class FileCreator extends \Equ\Form\ElementCreator\AbstractCreator
         ));
         return $element;
     }
-    
+
 }

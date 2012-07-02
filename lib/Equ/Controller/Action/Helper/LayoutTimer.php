@@ -18,39 +18,39 @@ use
   */
 class LayoutTimer extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * @var ArrayObject
       */
     protected $changes;
-    
+
     public function __construct()
     {
         $this->changes = new ArrayObject();
     }
-    
+
     /**
       * @param DateTime $dateTime
-      * @param string $layout 
+      * @param string $layout
       */
     public function addChangeDate(DateTime $dateTime, $layout)
     {
         $this->changes[$layout] = $dateTime;
     }
-    
+
     /**
-      * @param string $layout 
+      * @param string $layout
       */
     protected function change($layout)
     {
         $this->getActionController()->getHelper('layout')->setLayout($layout);
     }
-    
+
     public function direct()
     {
         $this->autoSwitch();
     }
-    
+
     public function autoSwitch()
     {
         $now = new DateTime();
@@ -64,5 +64,5 @@ class LayoutTimer extends Zend_Controller_Action_Helper_Abstract
             $this->change($correctLayout);
         }
     }
-    
+
 }

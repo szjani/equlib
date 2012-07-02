@@ -16,25 +16,25 @@ use
   */
 class AuthenticatedUser extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * @var AuthenticatedUserStorage
       */
     private $storage;
-    
+
     /**
-      * @param AuthenticatedUserStorage $storage 
+      * @param AuthenticatedUserStorage $storage
       */
     public function __construct(AuthenticatedUserStorage $storage)
     {
         $this->storage = $storage;
     }
-    
+
     public function direct()
     {
         return $this->storage->getAuthenticatedUser();
     }
-    
+
     public function preDispatch()
     {
         $user = $this->storage->getAuthenticatedUser();
@@ -44,5 +44,5 @@ class AuthenticatedUser extends Zend_Controller_Action_Helper_Abstract
             $this->_actionController->view->authenticatedUser = $user;
         }
     }
-    
+
 }

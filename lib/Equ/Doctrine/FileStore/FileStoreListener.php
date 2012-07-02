@@ -103,9 +103,8 @@ class FileStoreListener extends MappedEventSubscriber
     private function detectMimeType($filename)
     {
         $result = null;
-        
-        if (class_exists('finfo', false))
-{
+
+        if (class_exists('finfo', false)) {
             $const = defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_MIME;
             $mime = @finfo_open($const);
             if (!empty($mime)) {
@@ -114,8 +113,7 @@ class FileStoreListener extends MappedEventSubscriber
             unset($mime);
         }
 
-        if (empty($result) && (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')))
-        {
+        if (empty($result) && (function_exists('mime_content_type') && ini_get('mime_magic.magicfile'))) {
             $result = mime_content_type($filename);
         }
 

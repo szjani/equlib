@@ -19,16 +19,16 @@ use
   */
 class LookUp extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * Usefull for autocomplete fields
       * Use $id or $q but not at the same time
-      * 
+      *
       * $key   Key field in response
       * $value Value field in response
       * $id    Search one field by id (init form element)
       * $q     Search value
-      * 
+      *
       * @param LookUpable $lookUpable
       * @return array
       */
@@ -51,5 +51,5 @@ class LookUp extends Zend_Controller_Action_Helper_Abstract
         }
         return $res;
     }
-    
+
 }

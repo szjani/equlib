@@ -9,4 +9,5 @@ namespace Equ\Crud\Exception;
   * @author      Szurovecz János <szjani@szjani.hu>
   */
 class UnexpectedValueException extends \UnexpectedValueException implements \Equ\Crud\Exception
-{}
+{
+}

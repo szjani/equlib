@@ -3,7 +3,7 @@ namespace Equ\Form\ElementCreator\Dojo;
 
 class Factory extends \Equ\Form\ElementCreator\AbstractFactory
 {
-    
+
     public function createArrayCreator()
     {
         return new ArrayCreator($this->getNamespace());
@@ -13,7 +13,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
     {
         return new SubmitCreator($this->getNamespace());
     }
-    
+
     /**
       * @return \Zend_Form_Element
       */
@@ -29,7 +29,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
     {
         return new NumberCreator($this->getNamespace());
     }
-    
+
     /**
       * @return \Zend_Form_Element
       */
@@ -61,7 +61,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
     {
         return new NumberCreator($this->getNamespace());
     }
-    
+
     /**
       * @return \Zend_Form_Element
       */
@@ -69,7 +69,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
     {
         return new CheckboxCreator($this->getNamespace());
     }
-    
+
     /**
       * @return \Zend_Form_Element
       */
@@ -93,7 +93,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
     {
         return new StringCreator($this->getNamespace());
     }
-    
+
     /**
       * @return \Zend_Form_Element
       */
@@ -109,7 +109,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
     {
         return new StringCreator($this->getNamespace());
     }
-    
+
     /**
       * @return \Zend_Form_Element
       */

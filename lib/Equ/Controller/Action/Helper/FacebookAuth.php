@@ -18,14 +18,14 @@ use
   */
 class FacebookAuth extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * @var Facebook
       */
     protected $facebook;
 
     /**
-      * @param Facebook $facebook 
+      * @param Facebook $facebook
       */
     public function __construct(Facebook $facebook)
     {
@@ -35,13 +35,13 @@ class FacebookAuth extends Zend_Controller_Action_Helper_Abstract
             $ns->signedRequest = $this->facebook->getSignedRequest();
         }
     }
-    
+
     protected function getSignedRequest()
     {
         $ns = new Zend_Session_Namespace('equ_fb');
         return $ns->signedRequest;
     }
-    
+
     public function getPageUrl()
     {
         $appId  = $this->facebook->getAppId();
@@ -55,7 +55,7 @@ class FacebookAuth extends Zend_Controller_Action_Helper_Abstract
         $pageId = $signedRequest['page']['id'];
         return $this->getRequest()->getScheme() . "://www.facebook.com/pages/null/$pageId?sk=app_$appId";
     }
-    
+
     /**
       * Server-side page tab authentication
       */
@@ -70,5 +70,5 @@ class FacebookAuth extends Zend_Controller_Action_Helper_Abstract
             exit;
         }
     }
-    
+
 }

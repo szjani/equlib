@@ -3,7 +3,7 @@ namespace Equ\Mapper;
 
 class Object2Array implements IMapper
 {
-    
+
     /**
       * @var array
       */
@@ -15,7 +15,7 @@ class Object2Array implements IMapper
     private $inputObject = null;
 
     /**
-      * @param object $object 
+      * @param object $object
       * @param array $values
       */
     public function __construct($object, array $values = array())
@@ -24,10 +24,10 @@ class Object2Array implements IMapper
             ->setValues($values)
             ->setObject($object);
     }
-    
+
     /**
       * @param array $values
-      * @return Object2Array 
+      * @return Object2Array
       */
     public function setValues(array $values)
     {
@@ -37,7 +37,7 @@ class Object2Array implements IMapper
 
     /**
       * @param object $object
-      * @return Object2Array 
+      * @return Object2Array
       */
     public function setObject($object)
     {
@@ -47,7 +47,7 @@ class Object2Array implements IMapper
         $this->inputObject = $object;
         return $this;
     }
-    
+
     /**
       * @return object
       */
@@ -61,7 +61,7 @@ class Object2Array implements IMapper
         }
         return $this->values;
     }
-    
+
     /**
       * @param string $method
       * @return boolean
@@ -80,5 +80,5 @@ class Object2Array implements IMapper
         return lcfirst(substr($method, 3));
     }
 
-    
+
 }

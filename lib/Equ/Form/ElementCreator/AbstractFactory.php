@@ -32,10 +32,10 @@ abstract class AbstractFactory implements IFactory
         $this->namespace = $ns;
         return $this;
     }
-    
+
     /**
       * @param type $nsPart
-      * @return AbstractFactory 
+      * @return AbstractFactory
       */
     public function appendNamespacePart($nsPart)
     {
@@ -68,10 +68,10 @@ abstract class AbstractFactory implements IFactory
     {
         return $this->namespace;
     }
-    
+
     /**
       * Retrieves a creator by $type
-      * 
+      *
       * @param  string $type
       * @return AbstractCreator
       */
@@ -83,5 +83,5 @@ abstract class AbstractFactory implements IFactory
         }
         return $this->$method();
     }
-    
+
 }

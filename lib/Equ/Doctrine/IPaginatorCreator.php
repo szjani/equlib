@@ -6,7 +6,7 @@ use
 
 interface IPaginatorCreator
 {
-    
+
     /**
       * @param ObjectHelper $objectHelper
       * @param mixed $filters
@@ -18,5 +18,5 @@ interface IPaginatorCreator
       * @return \Zend_Paginator
       */
     public function createPaginator(ObjectHelper $objectHelper, $filters, $page = 1, $itemPerPage = 10, $sort = null, $order = 'ASC', QueryBuilder $queryBuilder = null);
-    
+
 }

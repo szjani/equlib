@@ -15,9 +15,9 @@ use
   */
 class RecursiveFormIterator extends IteratorIterator implements RecursiveIterator
 {
-    
+
     /**
-      * @param array $forms 
+      * @param array $forms
       */
     public function __construct(array $forms)
     {
@@ -25,7 +25,7 @@ class RecursiveFormIterator extends IteratorIterator implements RecursiveIterato
     }
 
     /**
-      * @return RecursiveFormIterator 
+      * @return RecursiveFormIterator
       */
     public function getChildren()
     {
@@ -39,5 +39,5 @@ class RecursiveFormIterator extends IteratorIterator implements RecursiveIterato
     {
         return 0 < count($this->current()->getSubForms());
     }
-    
+
 }

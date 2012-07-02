@@ -16,26 +16,25 @@ use
   */
 class SendFile extends SendContent
 {
-    
+
     /**
       * @param SplFileInfo $file
-      * @param array $options 
+      * @param array $options
       */
     public function direct(SplFileInfo $file, array $options = array())
     {
         $this->sendFile($file, $options);
     }
-    
+
     /**
       * @param type $filename
-      * @return string 
+      * @return string
       */
     private function detectMimeType($filename)
     {
         $result = null;
-        
-        if (class_exists('finfo', false))
-{
+
+        if (class_exists('finfo', false)) {
             $const = defined('FILEINFO_MIME_TYPE') ? FILEINFO_MIME_TYPE : FILEINFO_MIME;
             $mime = @finfo_open($const);
             if (!empty($mime)) {
@@ -44,8 +43,7 @@ class SendFile extends SendContent
             unset($mime);
         }
 
-        if (empty($result) && (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')))
-        {
+        if (empty($result) && (function_exists('mime_content_type') && ini_get('mime_magic.magicfile'))) {
             $result = mime_content_type($filename);
         }
 
@@ -54,12 +52,12 @@ class SendFile extends SendContent
         }
         return $result;
     }
-    
+
     /**
       * @param SplFileInfo $file
       * @param array $options
       * @throws InvalidArgumentException
-      * @throws RuntimeException 
+      * @throws RuntimeException
       */
     public function sendFile(SplFileInfo $file, array $options = array())
     {
@@ -70,13 +68,13 @@ class SendFile extends SendContent
             ->setContentType($this->detectMimeType($file->getPathname()))
             ->setOptions($options)
             ->sendHeaders();
-        
+
         ob_end_clean();
         ignore_user_abort(1);
         if (!ini_get('safe_mode')) {
             set_time_limit(0);
         }
-        
+
         $fp = fopen($file->getPathname(), 'rb');
         if (!$fp) {
             throw new InvalidArgumentException('Invalid filename: '.$file->getPathname());

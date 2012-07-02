@@ -13,10 +13,10 @@ use Zend_Controller_Plugin_Abstract;
   */
 class IEIframe extends Zend_Controller_Plugin_Abstract
 {
-    
+
     public function dispatchLoopShutdown()
     {
         $this->getResponse()->setHeader('P3P', 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
     }
-    
+
 }

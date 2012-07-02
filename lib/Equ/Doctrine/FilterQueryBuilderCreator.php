@@ -15,43 +15,43 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator
       * @var EntityManager
       */
     protected $entityManager;
-    
+
     /**
-      * @param EntityManager $em 
+      * @param EntityManager $em
       */
     public function __construct(EntityManager $em)
     {
         $this->entityManager = $em;
     }
-    
+
     protected function addAndWhereForArray(QueryBuilder $queryBuilder, $field, $value)
     {
         $queryBuilder
             ->andWhere("m.{$field} IN (:{$field})")
             ->setParameter($field, implode(',', $value));
     }
-    
+
     protected function addAndWhereForNumeric(QueryBuilder $queryBuilder, $field, $value)
     {
         $queryBuilder
             ->andWhere("m.{$field} = :{$field}")
             ->setParameter($field, $value);
     }
-    
+
     protected function addAndWhereForBoolean(QueryBuilder $queryBuilder, $field, $value)
     {
         $queryBuilder
             ->andWhere("m.{$field} = :{$field}")
             ->setParameter($field, $value);
     }
-    
+
     protected function addAndWhereForString(QueryBuilder $queryBuilder, $field, $value)
     {
         $queryBuilder
             ->andWhere("m.{$field} LIKE :{$field}")
             ->setParameter($field, '%'.$value.'%');
     }
-    
+
     protected function addAndWhereForCollection(QueryBuilder $queryBuilder, $field, ArrayCollection $value)
     {
         $valueIds = array();
@@ -64,19 +64,19 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator
         }
         $queryBuilder->add('where', $queryBuilder->expr()->in("m." . $field, $valueIds));
     }
-    
+
     protected function addAndWhereForObject(QueryBuilder $queryBuilder, $field, $value)
     {
         $queryBuilder
             ->andWhere("m.{$field} = :$field")
             ->setParameter($field, $value);
     }
-    
-    
+
+
     /**
       * @param QueryBuilder $queryBuilder
       * @param string $field
-      * @param mixed  $value 
+      * @param mixed  $value
       */
     protected function addAndWhere(QueryBuilder $queryBuilder, $field, $value)
     {
@@ -142,7 +142,8 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator
                     $value = $objectHelper->get($property);
                     $this->addAndWhere($queryBuilder, $property, $value);
                 }
-            } catch (\InvalidArgumentException $e) {}
+            } catch (\InvalidArgumentException $e) {
+            }
         }
 
         if ($sort !== null) {
@@ -159,5 +160,5 @@ class FilterQueryBuilderCreator implements IQueryBuilderCreator
 
         return $queryBuilder;
     }
-    
+
 }

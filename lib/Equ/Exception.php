@@ -2,4 +2,5 @@
 namespace Equ;
 
 interface Exception
-{}
+{
+}

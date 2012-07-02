@@ -10,12 +10,12 @@ class PasswordCreator extends \Equ\Form\ElementCreator\AbstractCreator
             $element->setRegExp('\w{' . $validator->getMin() . ',' . $validator->getMax() . '}');
         }
     }
-    
+
     protected function buildElement($fieldName)
     {
         return new \Zend_Dojo_Form_Element_PasswordTextBox($fieldName);
     }
-    
+
     /**
       * @param \Zend_Form_Element $element
       * @return AbstractCreator
@@ -30,5 +30,5 @@ class PasswordCreator extends \Equ\Form\ElementCreator\AbstractCreator
         }
         return $this;
     }
-    
+
 }

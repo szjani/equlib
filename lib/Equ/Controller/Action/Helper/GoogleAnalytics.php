@@ -13,27 +13,27 @@ use Zend_Controller_Action_Helper_Abstract;
   */
 class GoogleAnalytics extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * @var string
       */
     protected $code;
-    
+
     /**
       * @var boolean
       */
     protected $enabled;
-    
+
     /**
       * @param string $code
-      * @param boolean $enabled 
+      * @param boolean $enabled
       */
     public function __construct($code, $enabled = true)
     {
         $this->code    = $code;
         $this->enabled = $enabled;
     }
-    
+
     public function preDispatch()
     {
         if ($this->enabled) {
@@ -52,5 +52,5 @@ class GoogleAnalytics extends Zend_Controller_Action_Helper_Abstract
             ");
         }
     }
-    
+
 }

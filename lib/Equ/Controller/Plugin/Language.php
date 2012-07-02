@@ -6,15 +6,15 @@ class Language extends \Zend_Controller_Plugin_Abstract
 {
 
     private $translate;
-    
+
     private $locale;
-    
+
     public function __construct(\Zend_Translate $translate, \Zend_Locale $locale)
     {
         $this->translate = $translate;
         $this->locale    = $locale;
     }
-    
+
     /**
       * (non-PHPdoc)
       * @see \Zend_Controller_Plugin_Abstract::routeStartup()
@@ -80,7 +80,7 @@ class Language extends \Zend_Controller_Plugin_Abstract
                 throw new UnexpectedValueException("Invalid language '$origLang'");
             }
         }
-        
+
         $router = \Zend_Controller_Front::getInstance()->getRouter();
         /* @var $router Zend_Controller_Router_Rewrite */
         if (false !== \strpos($router->getCurrentRouteName(), 'lang')) {

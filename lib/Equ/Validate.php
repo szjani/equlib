@@ -3,9 +3,9 @@ namespace Equ;
 
 class Validate extends \Zend_Validate implements \Iterator
 {
-    
+
     private $current = false;
-    
+
     /**
       * @return \Zend_Validate_Interface
       */
@@ -33,5 +33,5 @@ class Validate extends \Zend_Validate implements \Iterator
     {
         return $this->current !== false;
     }
-    
+
 }

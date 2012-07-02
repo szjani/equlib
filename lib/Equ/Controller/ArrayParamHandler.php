@@ -4,9 +4,9 @@ use \Zend_Controller_Request_Abstract as Request;
 
 class ArrayParamHandler
 {
-    
+
     const DELIMITER = '-';
-    
+
     /**
       * @param  string $key
       * @param  array $data
@@ -25,13 +25,13 @@ class ArrayParamHandler
         }
         return $ret;
     }
-    
+
     /**
       * Create ZF parameters from array notation:
       * ?user[name]=john&user[age]=25
       *  ->
       * /user:name/john/user:age/25
-      * 
+      *
       * @param array $params
       * @return array $newParams
       */
@@ -48,10 +48,10 @@ class ArrayParamHandler
         }
         return $newParams;
     }
-    
+
     /**
       * @param array $params
-      * @return type 
+      * @return type
       */
     public function convertStringToArray(array $params)
     {
@@ -71,5 +71,5 @@ class ArrayParamHandler
         }
         return $newParams;
     }
-    
+
 }

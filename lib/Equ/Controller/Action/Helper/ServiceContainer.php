@@ -28,10 +28,10 @@ class ServiceContainer extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->getContainer()->get($name);
     }
-    
+
     /**
       * @param object $container
-      * @return \Equ\Controller\Action\Helper\ServiceContainer 
+      * @return \Equ\Controller\Action\Helper\ServiceContainer
       */
     public function setContainer($container)
     {

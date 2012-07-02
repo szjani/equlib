@@ -17,37 +17,37 @@ use
   */
 abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * @var array
       */
     protected $caches = array();
-    
+
     /**
       * @var string
       */
     protected $disposition = 'attachment';
-    
+
     /**
       * @var int
       */
     protected $modified = null;
-    
+
     /**
       * @var string
       */
     protected $fileName;
-    
+
     /**
       * @var string
       */
     protected $contentType;
-    
+
     /**
       * @var string
       */
     protected $contentLength;
-    
+
     /**
       * @param string $contentType
       * @return SendContent $this
@@ -57,7 +57,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         $this->contentType = $contentType;
         return $this;
     }
-    
+
     /**
       * @param string $contentLength
       * @return SendContent $this
@@ -67,7 +67,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         $this->contentLength = $contentLength;
         return $this;
     }
-    
+
     /**
       * @param int $modified
       * @return SendContent $this
@@ -77,7 +77,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         $this->modified = (int)$modified;
         return $this;
     }
-    
+
     /**
       * @param string $fileName
       * @return SendContent $this
@@ -90,7 +90,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         $this->fileName = $fileName;
         return $this;
     }
-    
+
     /**
       * @param $disposition attachment|inline
       * @return SendContent $this
@@ -107,7 +107,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         $this->disposition = $disposition;
         return $this;
     }
-    
+
     /**
       * @param string $cache no-cache|no-store|public|must-revalidate|proxy-validation
       * @return SendContent $this
@@ -131,7 +131,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         }
         return $this;
     }
-    
+
     /**
       * @param array $caches
       * @return SendContent $this
@@ -143,7 +143,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         }
         return $this;
     }
-    
+
     /**
       * @param array $options Keys: cache, disposition, modified, fileName, contentType
       * @return SendContent $this
@@ -167,7 +167,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         }
         return $this;
     }
-    
+
     /**
       * @return array
       */
@@ -175,7 +175,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->caches;
     }
-    
+
     /**
       * @return string
       */
@@ -183,7 +183,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->disposition;
     }
-    
+
     /**
       * @return int
       */
@@ -191,7 +191,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->modified;
     }
-    
+
     /**
       * @return string
       */
@@ -199,7 +199,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->fileName;
     }
-    
+
     /**
       * @return string
       */
@@ -215,7 +215,7 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->contentType;
     }
-    
+
     /**
       * @return SendContent $this
       */
@@ -230,32 +230,32 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         if (Zend_Controller_Action_HelperBroker::hasHelper('ViewRenderer')) {
             $this->getActionController()->getHelper('ViewRenderer')->setNoRender();
         }
-        
+
         $response = $this->getResponse();
         if (empty($this->caches)) {
             $this
                 ->addCache('must-revalidate')
                 ->addCache('post-check=0')
                 ->addCache('pre-check=0');
-                
+
         }
         $response->setHeader('Cache-Control', implode(',', $this->caches), true);
         $response->setHeader('Pragma', 'no-cache', true);
-        
+
         $request = $this->getRequest();
         if ($request instanceof Zend_Controller_Request_Http
                 && !in_array('no-store', $this->caches)
                 && $this->modified <= strtotime($request->getServer('HTTP_IF_MODIFIED_SINCE'))) {
-            
+
             $response->setHttpResponseCode(304);
             return true;
         }
-        
+
         // Required for IE, otherwise Content-disposition is ignored
         if (ini_get('zlib.output_compression')) {
             ini_set('zlib.output_compression', false);
         }
-        
+
         $response->setHttpResponseCode(200);
         $response->setHeader('Content-Type', $this->contentType, true);
         $response->setHeader('Content-Description', $this->fileName);
@@ -265,5 +265,5 @@ abstract class SendContent extends Zend_Controller_Action_Helper_Abstract
         $response->sendHeaders();
         return $this;
     }
-    
+
 }

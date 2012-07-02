@@ -9,4 +9,5 @@ namespace Equ\Crud\Exception;
   * @author      Szurovecz János <szjani@szjani.hu>
   */
 class RuntimeException extends \RuntimeException implements \Equ\Crud\Exception
-{}
+{
+}

@@ -12,19 +12,19 @@ namespace Equ\Controller\Action\Helper;
   */
 class SendData extends SendContent
 {
-    
+
     /**
       * @param type $data
-      * @param array $options 
+      * @param array $options
       */
     public function direct($data, array $options = array())
     {
         $this->sendData($data, $options);
     }
-    
+
     /**
       * @param type $data
-      * @param array $options 
+      * @param array $options
       */
     public function sendData($data, array $options = array())
     {
@@ -37,5 +37,5 @@ class SendData extends SendContent
             ->sendHeaders();
         $this->getResponse()->setBody((string)$data);
     }
-    
+
 }

@@ -15,7 +15,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
             APPLICATION_PATH . '/configs/development.xml'
         );
     }
-    
+
     private function getCache()
     {
         $cache = \Zend_Cache::factory(
@@ -31,7 +31,7 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
         );
         return $cache;
     }
-    
+
     public function getContainer()
     {
         $options = $this->getOption('bootstrap');
@@ -40,13 +40,13 @@ class Bootstrap extends \Zend_Application_Bootstrap_Bootstrap
             $container = null;
             $name = 'Container'.$this->getEnvironment().'ServiceContainer';
             $file = APPLICATION_PATH.'/../data/cache/'.$name.'.php';
-            
+
             $cache = $this->getCache();
             $diContainerLoaded = $cache->load('DIContainerLoaded');
             if (!$diContainerLoaded) {
                 $cache->save('loaded', 'DIContainerLoaded');
             }
-            
+
             if ($diContainerLoaded && file_exists($file)) {
                 require_once $file;
                 $container = new $name();

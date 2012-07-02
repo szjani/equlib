@@ -18,44 +18,44 @@ use
   */
 class AutoTitle extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     /**
       * @var Zend_Navigation
       */
     protected $navigation;
-    
+
     /**
       * @var string
       */
     protected $title;
-    
+
     /**
-      * @param Zend_Navigation $nav 
+      * @param Zend_Navigation $nav
       */
     public function __construct(Zend_Navigation $nav)
     {
         $this->navigation = $nav;
     }
-    
+
     /**
       * @param string $title
-      * @return AutoTitle 
+      * @return AutoTitle
       */
     public function setTitle($title)
     {
         $this->title = (string)$title;
         return $this;
     }
-    
+
     /**
       * @param string $title
-      * @return AutoTitle 
+      * @return AutoTitle
       */
     public function direct($title = null)
     {
         return $this->setTitle($title);
     }
-    
+
     public function postDispatch()
     {
         $request = $this->getRequest();

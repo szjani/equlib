@@ -18,19 +18,19 @@ use
   */
 class FlashMessenger extends Zend_Controller_Action_Helper_FlashMessenger
 {
-    
+
     /**
       * @param string|\Exception $message
       * @param string $type
       * @param string $namespace
       * @param boolean $translate
-      * @return FlashMessenger 
+      * @return FlashMessenger
       */
     public function direct($message, $type = Message::SUCCESS, $namespace = 'default', $translate = true)
     {
         return $this->addMessage($message, $type, $namespace, $translate);
     }
-    
+
     /**
       * @return array
       */
@@ -50,7 +50,7 @@ class FlashMessenger extends Zend_Controller_Action_Helper_FlashMessenger
         }
         return $viewTypes;
     }
-    
+
     public function postDispatch()
     {
         $controller = $this->getActionController();
@@ -59,7 +59,7 @@ class FlashMessenger extends Zend_Controller_Action_Helper_FlashMessenger
         }
         parent::postDispatch();
     }
-    
+
     /**
       * Add a message object to flashmessenger
       *
@@ -79,5 +79,5 @@ class FlashMessenger extends Zend_Controller_Action_Helper_FlashMessenger
         }
         return parent::addMessage($messageObj);
     }
-    
+
 }

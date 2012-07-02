@@ -17,7 +17,7 @@ final class FileStore extends Annotation
 
     /**
       * move|copy
-      * 
+      *
       * @var string
       */
     public $method;

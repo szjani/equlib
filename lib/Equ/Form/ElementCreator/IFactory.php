@@ -19,7 +19,7 @@ interface IFactory
       * @return IFactory
       */
     public function setNamespace($ns);
-    
+
     /**
       * @param string $nsPart
       * @return IFactory
@@ -39,12 +39,12 @@ interface IFactory
 
     /**
       * Retrieves a creator by $type
-      * 
+      *
       * @param  string $type
       * @return AbstractCreator
       */
     public function createCreator($type);
-    
+
     /**
       * @return AbstractCreator
       */
@@ -54,7 +54,7 @@ interface IFactory
       * @return AbstractCreator
       */
     public function createIntegerCreator();
-    
+
     /**
       * @return AbstractCreator
       */
@@ -74,12 +74,12 @@ interface IFactory
       * @return AbstractCreator
       */
     public function createFloatCreator();
-    
+
     /**
       * @return AbstractCreator
       */
     public function createBooleanCreator();
-    
+
     /**
       * @return AbstractCreator
       */
@@ -94,7 +94,7 @@ interface IFactory
       * @return AbstractCreator
       */
     public function createDateTimeCreator();
-    
+
     /**
       * @return AbstractCreator
       */
@@ -109,12 +109,12 @@ interface IFactory
       * @return AbstractCreator
       */
     public function createArrayCreator();
-    
+
     /**
       * @return AbstractCreator
       */
     public function createSubmitCreator();
-    
+
     /**
       * @return AbstractCreator
       */

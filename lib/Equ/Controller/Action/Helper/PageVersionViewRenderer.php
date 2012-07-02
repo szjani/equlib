@@ -8,10 +8,10 @@ use
   * You can use versioned template files.
   * The version number can be defined by request parameter,
   * which key must be the constant defined below.
-  * 
+  *
   * Template file's name should looks like this: template-0.phtml,
   * where 0 is the version number
-  * 
+  *
   * @category    Equ
   * @package     Controller
   * @subpackage  Action\Helper
@@ -20,20 +20,20 @@ use
   */
 class PageVersionViewRenderer extends Zend_Controller_Action_Helper_ViewRenderer
 {
-    
+
     const PAGE_VERSION = 'page_version';
-    
+
     /**
       * @var int
       */
     protected $version = 0;
-    
+
     public function preDispatch()
     {
         parent::preDispatch();
         $this->version = $this->getRequest()->getParam(self::PAGE_VERSION, 0);
     }
-    
+
     /**
       * Render a view based on path specifications
       *
@@ -54,7 +54,7 @@ class PageVersionViewRenderer extends Zend_Controller_Action_Helper_ViewRenderer
             return parent::render($action, $name, $noController);
         }
     }
-    
+
     /**
       * @return string
       */
@@ -62,5 +62,5 @@ class PageVersionViewRenderer extends Zend_Controller_Action_Helper_ViewRenderer
     {
         return 'ViewRenderer';
     }
-    
+
 }

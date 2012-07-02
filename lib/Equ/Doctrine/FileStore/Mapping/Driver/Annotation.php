@@ -25,7 +25,7 @@ class Annotation implements AnnotationDriverInterface
         'smallint',
         'bigint',
     );
-    
+
     /**
       * Annotation reader instance
       *
@@ -62,13 +62,13 @@ class Annotation implements AnnotationDriverInterface
     {
         $reader = $this->reader;
         $class = $meta->getReflectionClass();
-        
+
         if ($annot = $reader->getClassAnnotation($class, self::ANNOTATION_FILESTORE)) {
             if (!file_exists($annot->path) || !is_writable($annot->path) || !is_dir($annot->path)) {
                 throw new InvalidMappingException("Directory '{$annot->path}' has be a writtable directory!");
             }
             $config['path'] = rtrim($annot->path, '/');
-            
+
             if (!\in_array($annot->method, array('move', 'copy'))) {
                 throw new InvalidMappingException("Method '{$annot->method}' has to be 'move' or 'copy'!");
             }
@@ -152,7 +152,7 @@ class Annotation implements AnnotationDriverInterface
         //  throw new InvalidMappingException("Missing properties: " . implode(', ', $missingFields) . " in class - {$meta->name}");
         //}
     }
-    
+
     /**
       * Passes in the original driver
       *
@@ -161,7 +161,7 @@ class Annotation implements AnnotationDriverInterface
       */
     public function setOriginalDriver($driver)
     {
-        
+
     }
 
 }

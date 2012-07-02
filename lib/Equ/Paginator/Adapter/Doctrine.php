@@ -9,27 +9,27 @@ class Doctrine implements Zend_Paginator_Adapter_Interface
 {
 
     private $query;
-    
+
     private $doctrinePaginator;
-    
+
     public function __construct(Query $query)
     {
         $this->query = $query;
         $this->doctrinePaginator = new Paginator($query, true);
     }
-    
+
     public function count()
     {
         return count($this->doctrinePaginator);
     }
-    
+
     public function useArrayResult($use = true)
     {
         if ($use) {
             $this->query->setHydrationMode(Query::HYDRATE_ARRAY);
         }
     }
-    
+
     /**
       * Gets the current page of items
       *

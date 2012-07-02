@@ -15,64 +15,64 @@ use
   */
 class Builder implements IBuilder
 {
-    
+
     /**
       * @var ObjectHelper
       */
     private $objectHelper;
-    
+
     /**
       * @var ElementCreator\IFactory
       */
     private $elementCreatorFactory = null;
-    
+
     /**
       * @var EntityManager
       */
     protected $entityManager = null;
-    
+
     /**
       * You can map form values to object with this mapper
-      * 
+      *
       * @var Mapper
       */
     protected $mapper = null;
-    
+
     /**
       *
       * @var \Zend_Form
       */
     private $form = null;
-    
+
     private $formKey = null;
-    
+
     /**
       * array(propertyName => className, ...)
-      * 
+      *
       * @var \ArrayObject
       */
     private $objectHelpers;
-    
+
     /**
       *
       * @var \Equ\Object\Validator
       */
     private $objectValidator = null;
-    
+
     /**
       * @var OptionFlags
       */
     private $optionFlags = null;
-    
+
     private $formClass = '\Zend_Form';
-    
+
     private $subFormClass = '\Zend_Form_SubForm';
 
     /**
       * @param mixed $object
       * @param EntityManager $em
       * @param ElementCreator\IFactory $elementCreatorFactory
-      * @param \ArrayObject $objectHelpers 
+      * @param \ArrayObject $objectHelpers
       */
     public function __construct($object, EntityManager $em, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null)
     {
@@ -104,20 +104,20 @@ class Builder implements IBuilder
     {
         return $this->subFormClass;
     }
-    
+
     /**
       * @param string $class
-      * @return Builder 
+      * @return Builder
       */
     public function setFormClass($class)
     {
         $this->formClass = $class;
         return $this;
     }
-    
+
     /**
       * @param string $class
-      * @return Builder 
+      * @return Builder
       */
     public function setSubFormClass($class)
     {
@@ -125,23 +125,23 @@ class Builder implements IBuilder
         return $this;
     }
 
-    
+
     /**
-      * @return \ArrayObject 
+      * @return \ArrayObject
       */
     public function getObjectHelpers()
     {
         return $this->objectHelpers;
     }
-    
+
     /**
-      * @return ObjectHelper 
+      * @return ObjectHelper
       */
     public function getObjectHelper()
     {
         return $this->objectHelper;
     }
-    
+
     /**
       * @return OptionFlags
       */
@@ -155,7 +155,7 @@ class Builder implements IBuilder
 
     /**
       * @param OptionFlags $flags
-      * @return Builder 
+      * @return Builder
       */
     public function setOptionFlags(OptionFlags $flags)
     {
@@ -163,7 +163,7 @@ class Builder implements IBuilder
         return $this;
     }
 
-    
+
     /**
       * @return EntityManager $em
       */
@@ -171,17 +171,17 @@ class Builder implements IBuilder
     {
         return $this->entityManager;
     }
-    
+
     /**
       * @param  EntityManager $em
-      * @return Builder 
+      * @return Builder
       */
     public function setEntityManager(EntityManager $em)
     {
         $this->entityManager = $em;
         return $this;
     }
-    
+
     /**
       * @return ElementCreator\IFactory
       */
@@ -189,7 +189,7 @@ class Builder implements IBuilder
     {
         return $this->elementCreatorFactory;
     }
-    
+
     /**
       * @param  ElementCreator\IFactory $factory
       * @return Builder
@@ -199,7 +199,7 @@ class Builder implements IBuilder
         $this->elementCreatorFactory = $factory;
         return $this;
     }
-    
+
     /**
       * @param  string $type
       * @return AbstractCreator
@@ -208,7 +208,7 @@ class Builder implements IBuilder
     {
         return $this->getElementCreatorFactory()->createCreator($type);
     }
-    
+
     /**
       * @param string $elementName
       * @param string $targetEntity
@@ -230,7 +230,7 @@ class Builder implements IBuilder
             ->getArrayResult();
         return $res;
     }
-    
+
     /**
       * @param string $elementName
       * @param array  $def
@@ -263,24 +263,24 @@ class Builder implements IBuilder
 
 //    $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
 //      ->getFieldValue($this->objectHelper->getObject(), $elementName);
-//    
+//
 //    if ($value instanceof $def['targetEntity']) {
 //      $select->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
 //    }
         return $select;
     }
-    
+
     /**
       * @param \Zend_Form_Element $element
       * @param type $elementName
-      * @param array $def 
+      * @param array $def
       */
     protected function fillForeignElement(\Zend_Form_Element $element, $elementName, array $def)
     {
         $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
         $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
             ->getFieldValue($this->objectHelper->getObject(), $elementName);
-        
+
         if ($value instanceof $def['targetEntity']) {
             if ($value instanceof \Doctrine\ORM\Proxy\Proxy) {
                 $this->entityManager->refresh($value);
@@ -301,29 +301,30 @@ class Builder implements IBuilder
             $element->setValue($selected);
         }
     }
-    
+
     /**
       * Add a field
-      * 
+      *
       * @param  string $field
       * @param  strig $type
-      * @return Builder 
+      * @return Builder
       */
     public function add($field, $type = null)
     {
         $fieldValue = null;
         try {
             $fieldValue = $this->objectHelper->get($field);
-        } catch (\InvalidArgumentException $e) {}
+        } catch (\InvalidArgumentException $e) {
+        }
         $element = null;
         try {
             $metadata = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType());
-            
+
             // $field property is a foreign-key/ID
             if ($metadata->hasAssociation($field)
                 /*&& array_key_exists('isOwningSide', $metadata->associationMappings[$field])
                 && $metadata->associationMappings[$field]['isOwningSide']*/) {
-                
+
                 if ($type instanceof \Zend_Form_Element) {
                     $element = $type;
                     $validator = $this->getObjectValidator();
@@ -333,8 +334,7 @@ class Builder implements IBuilder
                 }
                 $this->fillForeignElement($element, $field, $metadata->associationMappings[$field]);
                 $this->objectHelpers[$field] = new ObjectHelper($metadata->associationMappings[$field]['targetEntity']);
-            }
-            else {
+            } else {
                 if (null === $type) {
                     $type = $metadata->fieldMappings[$field]['type'];
                 }
@@ -373,16 +373,17 @@ class Builder implements IBuilder
         $this->getForm()->addElement($element);
         return $this;
     }
-    
+
     private function addValidatorsFromObjectClass($elementCreator, $field)
     {
         try {
             $elementCreator->setValidator($this->getObjectValidator()->getFieldValidate($field));
-        } catch (\Equ\Object\Exception\InvalidArgumentException $e) {}
+        } catch (\Equ\Object\Exception\InvalidArgumentException $e) {
+        }
     }
-    
+
     /**
-      * @return \Equ\Object\Validator 
+      * @return \Equ\Object\Validator
       */
     private function getObjectValidator()
     {
@@ -394,11 +395,11 @@ class Builder implements IBuilder
 
     /**
       * Add a subform
-      * 
+      *
       * @param  string $field
       * @param  IMappedType $type
       * @param  boolean $collection
-      * @return Builder 
+      * @return Builder
       */
     public function addSub($field, IMappedType $type, $collection = false)
     {
@@ -409,7 +410,7 @@ class Builder implements IBuilder
             }
             $fieldValue = $type->getObjectClass();
         }
-        
+
         if ($collection) {
             if (!is_array($fieldValue) && !($fieldValue instanceof \Traversable)) {
                 throw new Exception\InvalidArgumentException("'$field' has to be a Traversable object or an array()");
@@ -423,13 +424,13 @@ class Builder implements IBuilder
         }
         return $this;
     }
-    
+
     /**
       *
       * @param mixed $subObject
       * @param string $field
       * @param IMappedType $type
-      * @param int $index 
+      * @param int $index
       */
     private function buildSubForm($subObject, $field, IMappedType $type, $index = '')
     {
@@ -455,7 +456,7 @@ class Builder implements IBuilder
         $this->form = $form;
         return $this;
     }
-    
+
     private function getFormKey()
     {
         if (null === $this->formKey) {
@@ -486,7 +487,7 @@ class Builder implements IBuilder
 
     /**
       * Retrieves a mapper to sync datas from form to object
-      * 
+      *
       * @return Mapper
       */
     public function getMapper()

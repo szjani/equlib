@@ -8,5 +8,5 @@ class CheckboxCreator extends \Equ\Form\ElementCreator\AbstractCreator
     {
         return new \Zend_Dojo_Form_Element_CheckBox($fieldName);
     }
-    
+
 }

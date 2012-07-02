@@ -33,22 +33,22 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
       * @var EntityManager
       */
     public $em;
-    
+
     /**
       * @var \Zend_Navigation
       */
     public $navigation;
-    
+
     /**
       * @var \Zend_Log
       */
     public $log;
-    
+
     /**
       * @var \Doctrine\Common\EventManager
       */
     public $doctrineEventmanager;
-    
+
     /**
       * @var array
       */
@@ -58,7 +58,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
       * @var boolean
       */
     protected $useFilterForm = true;
-    
+
     /**
       * @var string
       */
@@ -75,7 +75,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
             'postUpdate',
         );
     }
-    
+
     /**
       * Adds general CRUD script path
       */
@@ -83,7 +83,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
     {
         parent::init();
         $this->view->addScriptPath(dirname(__FILE__) . '/views/scripts');
-        
+
         $contextSwitch = $this->_helper->getHelper('contextSwitch');
         $contextSwitch
             ->addActionContext('delete', 'json')
@@ -92,69 +92,76 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
             ->addActionContext('create', 'json')
             ->addActionContext('lookup', 'json')
             ->initContext();
-        
+
         $this->doctrineEventmanager->addEventSubscriber($this);
     }
-    
+
     public function postDispatch()
     {
         if (!$this->_helper->viewRenderer->getNoRender()) {
             $this->renderScript($this->_request->getParam('action') . '.phtml');
         }
     }
-    
+
     /**
       * @return \Equ\Form\IMappedType
       */
     public abstract function getMainForm();
-    
+
     /**
       * @return \Equ\Form\IMappedType
       */
     public abstract function getFilterForm();
-    
+
     /**
-      * @param IBuilder $builder 
+      * @param IBuilder $builder
       */
     protected function formBuilderCreated(IBuilder $builder)
-    {}
-    
+    {
+    }
+
     /**
       * @param LifecycleEventArgs $args
       */
     public function prePersist(LifecycleEventArgs $args)
-    {}
-    
+    {
+    }
+
     /**
       * @param LifecycleEventArgs $args
       */
     public function postPersist(LifecycleEventArgs $args)
-    {}
-    
+    {
+    }
+
     /**
-      * @param PreUpdateEventArgs $args 
+      * @param PreUpdateEventArgs $args
       */
     public function preUpdate(PreUpdateEventArgs $args)
-    {}
-    
+    {
+    }
+
     /**
       * @param LifecycleEventArgs $args
       */
     public function postUpdate(LifecycleEventArgs $args)
-    {}
-    
+    {
+    }
+
     /**
       * @param LifecycleEventArgs $args
       */
     public function preRemove(LifecycleEventArgs $args)
-    {}
-    
+    {
+    }
+
     /**
       * @param LifecycleEventArgs $args
       */
     public function postRemove(LifecycleEventArgs $args)
-    {}
-    
+    {
+    }
+
     /**
       * @return \Equ\Form\IMappedType
       */
@@ -162,26 +169,26 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
     {
         return $this->getMainForm();
     }
-    
+
     /**
-      * @return \Equ\Form\IMappedType 
+      * @return \Equ\Form\IMappedType
       */
     public function getCreateForm()
     {
         return $this->getMainForm();
     }
-    
+
     /**
       *
       * @param IMappedType $mappedType
       * @param mixed $object
-      * @return FormBuilder 
+      * @return FormBuilder
       */
     protected function createFormBuilder(IMappedType $mappedType, $object)
     {
         return $this->_helper->createFormBuilder($mappedType, $object);
     }
-    
+
     /**
       * @return array of column names
       */
@@ -241,15 +248,15 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
                 ->setVisible(true);
         }
     }
-    
+
     /**
-      * @param \Zend_Form $form 
+      * @param \Zend_Form $form
       */
     protected function formHasErrors(\Zend_Form $form)
     {
         $this->view->formErrors = $form->getMessages();
     }
-    
+
     protected function exceptionIsThrowed(\Exception $e)
     {
         $this->log->err($e);
@@ -272,7 +279,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
             parent::renderScript($script, $name);
         }
     }
-    
+
     /**
       * Redirects to listAction
       */
@@ -280,7 +287,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
     {
         $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
     }
-    
+
     /**
       * Calls create method of service with form values
       */
@@ -375,16 +382,16 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
             $this->_helper->flashMessenger('Crud/Delete/UnSuccess', Message::ERROR);
         }
     }
-    
+
     protected function getListQueryBuilder()
     {
         return null;
     }
-    
+
     /**
       * Usefull for autocomplete fields
       * Use $id or $q but not at the same time
-      * 
+      *
       * @param string $key Key field in response
       * @param string $value Value field in response
       * @param string $id Search one field by id (init form element)
@@ -408,7 +415,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
         $this->view->keys        = \array_diff($this->getTableFieldNames(), $this->getIgnoredFields());
         $this->view->currentSort = $this->_getParam('sort');
         $this->view->nextOrder   = $this->_getParam('order', 'ASC') == 'ASC' ? 'DESC' : 'ASC';
-        
+
         // create filter form
         if ($this->useFilterForm) {
             $filterForm = null;
@@ -438,7 +445,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
                 $this->_helper->flashMessenger('Crud/Filter/UnSuccess', Message::ERROR);
             }
         }
-        
+
         // create paginator
         $jsonRequest = ($this->_getParam('format') == 'json');
         /* @var $paginatorCreator IPaginatorCreator */

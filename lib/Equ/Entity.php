@@ -15,7 +15,7 @@ use
   * @link        $Link$
   * @version     $Revision$
   * @author      Szurovecz János <szjani@szjani.hu>
-  * 
+  *
   * @ORM\MappedSuperclass
   * @ORM\HasLifecycleCallbacks
   */
@@ -23,39 +23,39 @@ abstract class Entity implements \ArrayAccess, SortableEntity, DisplayableEntity
 {
 
     /**
-      * @var Validator 
+      * @var Validator
       */
     private $validator;
-    
+
     /**
       * Retrieves the class name,
       * usefull for parameter of $em->getRepository() method
-      * 
+      *
       * @return string
       */
     public final static function className()
     {
         return get_called_class();
     }
-    
+
     /**
       * @param Validator $validator
-      * @return Entity 
+      * @return Entity
       */
     public function setValidator(Validator $validator)
     {
         $this->validator = $validator;
         return $this;
     }
-    
+
     /**
-      * @return type 
+      * @return type
       */
     public function getValidator()
     {
         return $this->validator;
     }
-    
+
     /**
       * @ORM\PrePersist @ORM\PreUpdate
       */
@@ -98,12 +98,12 @@ abstract class Entity implements \ArrayAccess, SortableEntity, DisplayableEntity
     {
         throw new BadMethodCallException("ArrayAccess readonly!");
     }
-    
+
     public static function getSortField()
     {
         return static::getDisplayField();
     }
-    
+
     public static function getDisplayField()
     {
         return 'id';

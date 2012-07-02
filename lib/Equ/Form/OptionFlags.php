@@ -3,7 +3,7 @@ namespace Equ\Form;
 
 class OptionFlags
 {
-    
+
     const PLACEHOLDER          = 0x1;
     const LABEL                = 0x2;
     const IMPLICIT_VALIDATORS  = 0x4;
@@ -13,15 +13,15 @@ class OptionFlags
     const ALL                  = 0x3F;
 
     private $flags;
-    
+
     /**
-      * @param int $flags 
+      * @param int $flags
       */
     public function __construct($flags = 0)
     {
         $this->setFlags($flags);
     }
-    
+
     public function addFlag($const)
     {
         $this->flags = $this->flags | (int)$const;
@@ -49,5 +49,5 @@ class OptionFlags
         $this->flags = $flags;
         return $this;
     }
-    
+
 }

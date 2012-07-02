@@ -16,5 +16,5 @@ class PasswordCreator extends \Equ\Form\ElementCreator\AbstractCreator
         ));
         return $element;
     }
-    
+
 }

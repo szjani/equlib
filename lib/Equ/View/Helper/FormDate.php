@@ -22,7 +22,7 @@ class FormDate extends \Zend_View_Helper_FormElement
         $dayAttribs = isset($attribs['dayAttribs']) ? $attribs['dayAttribs'] : array();
         $monthAttribs = isset($attribs['monthAttribs']) ? $attribs['monthAttribs'] : array();
         $yearAttribs = isset($attribs['yearAttribs']) ? $attribs['yearAttribs'] : array();
-        
+
         if (isset($attribs['class']))
 {
             $dayAttribs['class'] = $attribs['class'];
@@ -46,7 +46,7 @@ class FormDate extends \Zend_View_Helper_FormElement
         foreach ($months['format']['abbreviated'] as $key => $value) {
             $index = str_pad($key, 2, '0', STR_PAD_LEFT);
             $monthMultiOptions[$index] = $value;
-        } 
+        }
 
         $startYear = date('Y');
         if (isset($attribs['startYear'])) {

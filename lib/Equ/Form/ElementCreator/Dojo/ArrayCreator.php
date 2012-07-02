@@ -8,7 +8,7 @@ class ArrayCreator extends \Equ\Form\ElementCreator\AbstractCreator
     {
         return new \Zend_Dojo_Form_Element_FilteringSelect($fieldName);
     }
-    
+
     /**
       * @param \Zend_Form_Element $element
       * @return AbstractCreator

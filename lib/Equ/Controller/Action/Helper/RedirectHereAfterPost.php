@@ -20,34 +20,34 @@ use
   */
 class RedirectHereAfterPost extends Zend_Controller_Action_Helper_Abstract
 {
-    
+
     const DEFAULT_KEY = 'redirect';
-    
+
     /**
       * @var boolean
       */
     protected $hasUrl = false;
-    
+
     /**
       * @var boolean
       */
     protected $autoRedirect = true;
-    
+
     /**
       * @var string
       */
     private $key = self::DEFAULT_KEY;
-    
+
     /**
       * @param type $key
-      * @return \Equ\Controller\Action\Helper\RedirectHereAfterPost 
+      * @return \Equ\Controller\Action\Helper\RedirectHereAfterPost
       */
     public function setKey($key)
     {
         $this->key = $key;
         return $this;
     }
-    
+
     /**
       * @return string
       */
@@ -55,12 +55,12 @@ class RedirectHereAfterPost extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->key;
     }
-    
+
     public function direct()
     {
         $this->saveCurrentUrl();
     }
-    
+
     /**
       * @return boolean
       */
@@ -68,17 +68,17 @@ class RedirectHereAfterPost extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->hasUrl;
     }
-    
+
     /**
       * @param boolean $autoRedirect
-      * @return \Equ\Controller\Action\Helper\RedirectHereAfterPost 
+      * @return \Equ\Controller\Action\Helper\RedirectHereAfterPost
       */
     public function setAutoRedirect($autoRedirect = true)
     {
         $this->autoRedirect = $autoRedirect;
         return $this;
     }
-    
+
     public function saveCurrentUrl()
     {
         $router = $this->getActionController()->getFrontController()->getRouter();
@@ -87,13 +87,13 @@ class RedirectHereAfterPost extends Zend_Controller_Action_Helper_Abstract
             $this->hasUrl = true;
         }
     }
-    
+
     public function preDispatch()
     {
         $encodedRedirectUrl = $this->getRequest()->getParam($this->getKey());
         $this->hasUrl = isset($encodedRedirectUrl);
     }
-    
+
     public function postDispatch()
     {
         if ($this->autoRedirect && $this->getRequest()->isPost()) {
@@ -103,5 +103,5 @@ class RedirectHereAfterPost extends Zend_Controller_Action_Helper_Abstract
             }
         }
     }
-    
+
 }

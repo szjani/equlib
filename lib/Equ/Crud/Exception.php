@@ -8,4 +8,5 @@ namespace Equ\Crud;
   * @author      Szurovecz János <szjani@szjani.hu>
   */
 interface Exception extends \Equ\Exception
-{}
+{
+}

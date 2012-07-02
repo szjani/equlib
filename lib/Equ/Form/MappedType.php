@@ -3,9 +3,9 @@ namespace Equ\Form;
 
 abstract class MappedType implements IMappedType
 {
-    
+
     /**
-      * @return OptionFlags 
+      * @return OptionFlags
       */
     public function getOptionFlags()
     {
@@ -15,5 +15,5 @@ abstract class MappedType implements IMappedType
             |OptionFlags::IMPLICIT_VALIDATORS
         );
     }
-    
+
 }

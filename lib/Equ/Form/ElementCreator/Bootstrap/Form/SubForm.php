@@ -22,5 +22,5 @@ class SubForm extends \Zend_Form_SubForm
         }
         return $this;
     }
-    
+
 }
