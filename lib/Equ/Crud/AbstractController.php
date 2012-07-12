@@ -311,12 +311,10 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
                     $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
                 }
             }
-        } catch (ValidationException $e) {
+        } catch (\Exception $e) {
             if ($form instanceof \Zend_Form) {
                 $this->formHasErrors($form);
             }
-            $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
-        } catch (\Exception $e) {
             $this->exceptionIsThrowed($e);
             $this->_helper->flashMessenger('Crud/Create/UnSuccess', Message::ERROR);
         }
@@ -347,12 +345,10 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
                     $this->_helper->redirector->gotoRouteAndExit(array('action' => 'list'));
                 }
             }
-        } catch (ValidationException $e) {
+        } catch (\Exception $e) {
             if ($form instanceof \Zend_Form) {
                 $this->formHasErrors($form);
             }
-            $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
-        } catch (\Exception $e) {
             $this->exceptionIsThrowed($e);
             $this->_helper->flashMessenger('Crud/Update/UnSuccess', Message::ERROR);
         }
