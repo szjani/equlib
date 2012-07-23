@@ -85,6 +85,36 @@ class Helper
         }
         return $method;
     }
+    
+    public function hasGetter($field)
+    {
+        try {
+            $this->getGetter($field);
+            return true;
+        } catch (Exception\InvalidArgumentException $e) {
+            return false;
+        }
+    }
+    
+    public function hasSetter($field)
+    {
+        try {
+            $this->getSetter($field);
+            return true;
+        } catch (Exception\InvalidArgumentException $e) {
+            return false;
+        }
+    }
+    
+    public function hasIsser($field)
+    {
+        try {
+            $this->getIsser($field);
+            return true;
+        } catch (Exception\InvalidArgumentException $e) {
+            return false;
+        }
+    }
 
     private function getGetter($field)
     {
