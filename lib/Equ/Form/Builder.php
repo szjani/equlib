@@ -24,7 +24,7 @@ class Builder implements IBuilder
     /**
       * @var ElementCreator\IFactory
       */
-    private $elementCreatorFactory = null;
+    private $elementFactory = null;
 
     /**
       * @var EntityManager
@@ -71,10 +71,10 @@ class Builder implements IBuilder
     /**
       * @param mixed $object
       * @param EntityManager $em
-      * @param ElementCreator\IFactory $elementCreatorFactory
+      * @param ElementCreator\IFactory $elementFactory
       * @param \ArrayObject $objectHelpers
       */
-    public function __construct($object, EntityManager $em, ElementCreator\IFactory $elementCreatorFactory, \ArrayObject $objectHelpers = null, $key = null)
+    public function __construct($object, EntityManager $em, ElementCreator\IFactory $elementFactory, \ArrayObject $objectHelpers = null, $key = null)
     {
         $this->objectHelper = new ObjectHelper($object);
         $this->setEntityManager($em);
@@ -86,7 +86,8 @@ class Builder implements IBuilder
         } else {
             $this->objectHelpers = $objectHelpers;
         }
-        $this->setElementCreatorFactory($elementCreatorFactory);
+        $this->setElementFactory($elementFactory);
+        $elementFactory->setNamespace($this->objectHelper->getType());
     }
 
     /**
@@ -183,30 +184,21 @@ class Builder implements IBuilder
     }
 
     /**
-      * @return ElementCreator\IFactory
+      * @return \Equ\Form\ElementCreator\IFactory
       */
-    public function getElementCreatorFactory()
+    public function getElementFactory()
     {
-        return $this->elementCreatorFactory;
+        return $this->elementFactory;
     }
 
     /**
       * @param  ElementCreator\IFactory $factory
       * @return Builder
       */
-    public function setElementCreatorFactory(ElementCreator\IFactory $factory)
+    public function setElementFactory(ElementCreator\IFactory $factory)
     {
-        $this->elementCreatorFactory = $factory;
+        $this->elementFactory = $factory;
         return $this;
-    }
-
-    /**
-      * @param  string $type
-      * @return AbstractCreator
-      */
-    protected function createElementCreator($type)
-    {
-        return $this->getElementCreatorFactory()->createCreator($type);
     }
 
     /**
@@ -241,14 +233,7 @@ class Builder implements IBuilder
         if ($type === null) {
             $type = 'array';
         }
-        $elementCreator = $this->getElementCreatorFactory()->createCreator($type);
-        $elementCreator->setOptionFlags($this->getOptionFlags());
-        $select = null;
-        if (array_key_exists('joinColumns', $def)) {
-            $select = $elementCreator->createElement($elementName, $def['joinColumns'][0]);
-        } else {
-            $select = $elementCreator->createElement($elementName, array());
-        }
+        $select = $this->getElementFactory()->createElement($type, $elementName, $this->getOptionFlags());
         if ($select instanceof \Zend_Form_Element_Multi) {
             $select->addMultiOption('', '');
             $targetMetaData = $this->getEntityManager()->getClassMetadata($def['targetEntity']);
@@ -260,13 +245,6 @@ class Builder implements IBuilder
                 );
             }
         }
-
-//    $value = $this->getEntityManager()->getClassMetadata($this->objectHelper->getType())
-//      ->getFieldValue($this->objectHelper->getObject(), $elementName);
-//
-//    if ($value instanceof $def['targetEntity']) {
-//      $select->setValue($targetMetaData->getFieldValue($value, $targetMetaData->getSingleIdentifierFieldName()));
-//    }
         return $select;
     }
 
@@ -327,8 +305,9 @@ class Builder implements IBuilder
 
                 if ($type instanceof \Zend_Form_Element) {
                     $element = $type;
-                    $validator = $this->getObjectValidator();
-                    $element->addValidator($validator->getFieldValidate($field));
+                    if ($this->getOptionFlags()->hasFlag(OptionFlags::EXPLICIT_VALIDATORS)) {
+                      $element->addValidator($this->getObjectValidator()->getFieldValidate($field));
+                    }
                 } else {
                     $element = $this->createForeignElement($field, $metadata->associationMappings[$field], $type);
                 }
@@ -338,48 +317,33 @@ class Builder implements IBuilder
                 if (null === $type) {
                     $type = $metadata->fieldMappings[$field]['type'];
                 }
-                if ($type instanceof \Zend_Form_Element) {
-                    $element = $type;
-                    $validator = $this->getObjectValidator();
-                    $element->addValidator($validator->getFieldValidate($field));
-                } else {
-                    $elementCreator = $this->createElementCreator($type);
-                    $elementCreator->setOptionFlags($this->getOptionFlags());
-                    $this->addValidatorsFromObjectClass($elementCreator, $field);
-                    if (array_key_exists($field, $metadata->fieldMappings)) {
-                        $element = $elementCreator->createElement($field, $metadata->fieldMappings[$field]);
-                    } else {
-                        $element = $elementCreator->createElement($field);
-                    }
+                $element = ($type instanceof \Zend_Form_Element)
+                  ? $type
+                  : $this->elementFactory->createElement($type, $field, $this->getOptionFlags());
+                if ($this->getOptionFlags()->hasFlag(OptionFlags::EXPLICIT_VALIDATORS)) {
+                  $element->addValidator($this->getObjectValidator()->getFieldValidate($field));
                 }
                 $element->setValue((string)$fieldValue);
+            }
+            if ($this->getOptionFlags()->hasFlag(OptionFlags::IMPLICIT_VALIDATORS)) {
+                $doctrineValidator = new \Equ\Validate\DoctrineExplicitValidators($metadata, $field);
+                $element->addValidator($doctrineValidator);
+                $element->setRequired($doctrineValidator->isRequired());
             }
         } catch (\Doctrine\ORM\Mapping\MappingException $e) {
             if (null === $type) {
                 $type = 'text';
             }
-            if ($type instanceof \Zend_Form_Element) {
-                $element = $type;
-                $validator = $this->getObjectValidator();
-                $element->addValidator($validator->getFieldValidate($field));
-            } else {
-                $elementCreator = $this->createElementCreator($type);
-                $elementCreator->setOptionFlags($this->getOptionFlags());
-                $this->addValidatorsFromObjectClass($elementCreator, $field);
-                $element = $elementCreator->createElement($field);
+            $element = ($type instanceof \Zend_Form_Element)
+              ? $type
+              : $this->elementFactory->createElement($type, $field, $this->getOptionFlags());
+            if ($this->getOptionFlags()->hasFlag(OptionFlags::EXPLICIT_VALIDATORS)) {
+              $element->addValidator($this->getObjectValidator()->getFieldValidate($field));
             }
             $element->setValue((string)$fieldValue);
         }
         $this->getForm()->addElement($element);
         return $this;
-    }
-
-    private function addValidatorsFromObjectClass($elementCreator, $field)
-    {
-        try {
-            $elementCreator->setValidator($this->getObjectValidator()->getFieldValidate($field));
-        } catch (\Equ\Object\Exception\InvalidArgumentException $e) {
-        }
     }
 
     /**
@@ -436,10 +400,9 @@ class Builder implements IBuilder
     {
         $subFormKey  = $this->getFormKey() . '-' . $field . ($index === '' ? $index : ('[' . $index . ']'));
         $subFormName = $field . ($index === '' ? $index : ('[' . $index . ']'));
-        $builder     = new self($subObject, $this->entityManager, $this->getElementCreatorFactory(), $this->objectHelpers, $subFormKey);
-        $builder->setEntityManager($this->getEntityManager());
-        $class = $this->getSubFormClass();
-        $subForm = new $class;
+        $builder     = new self($subObject, $this->entityManager, $this->elementFactory, $this->objectHelpers, $subFormKey);
+        $builder->setEntityManager($this->entityManager);
+        $subForm = $this->elementFactory->createSubForm($this->getOptionFlags());
         $subForm->setElementsBelongTo($subFormName);
         $this->getForm()->addSubForm($subForm, $subFormName);
         $this->objectHelpers[$subFormKey] = $builder->getObjectHelper();
@@ -472,14 +435,12 @@ class Builder implements IBuilder
     public function getForm()
     {
         if ($this->form === null) {
-            $class = $this->getFormClass();
-            $this->form = new $class;
+            $this->form = $this->elementFactory->createForm($this->getOptionFlags());
             if ($this->getOptionFlags()->hasFlag(OptionFlags::ARRAY_ELEMENTS)) {
                 $this->form->setElementsBelongTo($this->getFormKey());
             }
-            $submit = $this->getElementCreatorFactory()->createSubmitCreator()->setOptionFlags($this->getOptionFlags())->createElement('OK');
+            $submit = $this->elementFactory->createSubmitElement('OK', $this->getOptionFlags());
             $submit->setOrder('999');
-            $this->form->setAttrib('class', $this->getOptionFlags()->hasFlag(OptionFlags::HORIZONTAL) ? 'form-horizontal' : 'form-vertical');
             $this->form->addElement($submit);
         }
         return $this->form;
@@ -493,7 +454,7 @@ class Builder implements IBuilder
     public function getMapper()
     {
         if (null === $this->mapper) {
-            $this->mapper = new Mapper($this->getForm(), $this->getFormKey(), $this->objectHelpers, $this->getEntityManager());
+            $this->mapper = new Mapper($this->getForm(), $this->getFormKey(), $this->objectHelpers, $this->entityManager);
         }
         return $this->mapper;
     }

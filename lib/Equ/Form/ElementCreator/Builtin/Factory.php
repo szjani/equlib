@@ -1,81 +1,162 @@
 <?php
 namespace Equ\Form\ElementCreator\Builtin;
 
+use Equ\Form\OptionFlags;
+
 class Factory extends \Equ\Form\ElementCreator\AbstractFactory
 {
+    private $pubkey;
+    private $privkey;
 
-    public function createStringCreator()
+    public function setCaptchaPubKey($pubKey)
     {
-        return new StringCreator($this->getNamespace());
+        $this->pubkey = $pubKey;
+        return $this;
     }
 
-    public function createIntegerCreator()
+    public function setCaptchaPrivKey($privKey)
     {
-        return new StringCreator($this->getNamespace());
+        $this->privkey = $privKey;
+        return $this;
+    }
+    
+    private function initDecorators(\Zend_Form_Element $element, OptionFlags $optionFlags = null)
+    {
+        $translateKey = ltrim($this->getNamespace() . '.' . $element->getName(), '.');
+        if (\Zend_Form::getDefaultTranslator()->isTranslated($translateKey)) {
+            if ($element->getLabel() === null && $optionFlags->hasFlag(OptionFlags::LABEL)) {
+                $element->setLabel($translateKey);
+            }
+        } else {
+            $element->setLabel($element->getName());
+        }
+        if ($optionFlags->hasFlag(OptionFlags::PLACEHOLDER)) {
+            $element->setAttrib('placeholder', $element->getLabel());
+        }
+        
+        return $element;
+    }
+    
+    protected function createDefaultElement($fieldName, OptionFlags $optionFlags = null)
+    {
+        $element = new \Zend_Form_Element_Text($fieldName);
+        $this->initDecorators($element, $optionFlags);
+        return $element;
     }
 
-    public function createSmallintCreator()
+    public function createStringElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createBigintCreator()
+    public function createIntegerElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createBooleanCreator()
+    public function createSmallintElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new CheckboxCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createDecimalCreator()
+    public function createBigintElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createArrayCreator()
+    public function createBooleanElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new ArrayCreator($this->getNamespace());
+        $element = new \Zend_Form_Element_Checkbox($fieldName);
+        $this->initDecorators($element, $optionFlags);
+        return $element;
     }
 
-    public function createDateCreator()
+    public function createDecimalElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createDateTimeCreator()
+    public function createArrayElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        $element = new \Zend_Form_Element_Select($fieldName);
+        $this->initDecorators($element, $optionFlags);
+        return $element;
     }
 
-    public function createFloatCreator()
+    public function createRadioElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        $element = new \Zend_Form_Element_Radio($fieldName);
+        $this->initDecorators($element, $optionFlags);
+        return $element;
     }
 
-    public function createObjectCreator()
+    public function createDateElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createTextCreator()
+    public function createDateTimeElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new TextCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createTimeCreator()
+    public function createFloatElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new StringCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createSubmitCreator()
+    public function createObjectElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new SubmitCreator($this->getNamespace());
+        return $this->createDefaultElement($fieldName, $optionFlags);
     }
 
-    public function createPasswordCreator()
+    public function createTextElement($fieldName, OptionFlags $optionFlags = null)
     {
-        return new PasswordCreator($this->getNamespace());
+        $element = new \Zend_Form_Element_Textarea($fieldName);
+        $element->setAttrib('rows', 6);
+        $this->initDecorators($element, $optionFlags);
+        return $element;
     }
+
+    public function createTimeElement($fieldName, OptionFlags $optionFlags = null)
+    {
+        return $this->createDefaultElement($fieldName, $optionFlags);
+    }
+
+    public function createResetElement($fieldName, OptionFlags $optionFlags = null)
+    {
+        $element = new \Zend_Form_Element_Reset($fieldName);
+        $element->setAttrib('class', 'btn');
+        return $element;
+    }
+
+    public function createSubmitElement($fieldName, OptionFlags $optionFlags = null)
+    {
+        $element = new \Zend_Form_Element_Submit($fieldName);
+        $element->setAttrib('class', 'btn btn-primary');
+        $translateKey = ltrim($this->getNamespace() . '.' . $element->getName(), '.');
+        if (\Zend_Form::getDefaultTranslator()->isTranslated($translateKey)) {
+            $element->setLabel($translateKey);
+        }
+        return $element;
+    }
+
+    public function createPasswordElement($fieldName, OptionFlags $optionFlags = null)
+    {
+        $element = new \Zend_Form_Element_Password($fieldName);
+        $this->initDecorators($element, $optionFlags);
+        return $element;
+    }
+
+    public function createCaptchaElement($fieldName, OptionFlags $optionFlags = null)
+    {
+        $reCaptcha = new \Zend_Service_ReCaptcha($this->pubkey, $this->privkey, array('ssl' => true));
+        $reCaptcha->setOption('theme', 'custom');
+        $element = new \Zend_Form_Element_Captcha($fieldName, array(
+            'captcha' => 'ReCaptcha',
+            'captchaOptions' => array('captcha' => 'ReCaptcha', 'service' => $reCaptcha),
+        ));
+        return $element;
+    }
+    
 }

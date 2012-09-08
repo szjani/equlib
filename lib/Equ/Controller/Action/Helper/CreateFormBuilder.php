@@ -31,16 +31,6 @@ class CreateFormBuilder extends Zend_Controller_Action_Helper_Abstract
     protected $defaultElementCreatorFactory;
 
     /**
-      * @var string
-      */
-    protected $defaultFormClass;
-
-    /**
-      * @var string
-      */
-    protected $defaultSubFormClass;
-
-    /**
       * @var EntityManager
       */
     protected $entityManager;
@@ -48,14 +38,10 @@ class CreateFormBuilder extends Zend_Controller_Action_Helper_Abstract
     /**
       * @param EntityManager $em
       * @param ElementCreatorFactory $factory
-      * @param string $formClass
-      * @param string $subFormClass
       */
-    public function __construct(EntityManager $em, ElementCreatorFactory $factory, $formClass, $subFormClass)
+    public function __construct(EntityManager $em, ElementCreatorFactory $factory)
     {
         $this->defaultElementCreatorFactory = $factory;
-        $this->defaultFormClass             = $formClass;
-        $this->defaultSubFormClass          = $subFormClass;
         $this->entityManager                = $em;
     }
 
@@ -63,13 +49,11 @@ class CreateFormBuilder extends Zend_Controller_Action_Helper_Abstract
       * @param IMappedType $mappedType
       * @param object $object
       * @param ElementCreatorFactory $factory
-      * @param string $formClass
-      * @param string $subFormClass
       * @return FormBuilder
       */
-    public function direct(IMappedType $mappedType, $object, ElementCreatorFactory $factory = null, $formClass = null, $subFormClass = null)
+    public function direct(IMappedType $mappedType, $object, ElementCreatorFactory $factory = null)
     {
-        return $this->create($mappedType, $object, $factory, $formClass, $subFormClass);
+        return $this->create($mappedType, $object, $factory);
     }
 
     /**
@@ -80,15 +64,10 @@ class CreateFormBuilder extends Zend_Controller_Action_Helper_Abstract
       * @param string $subFormClass
       * @return FormBuilder
       */
-    public function create(IMappedType $mappedType, $object, ElementCreatorFactory $factory = null, $formClass = null, $subFormClass = null)
+    public function create(IMappedType $mappedType, $object, ElementCreatorFactory $factory = null)
     {
         $factory      = $factory      ?: $this->defaultElementCreatorFactory;
-        $formClass    = $formClass    ?: $this->defaultFormClass;
-        $subFormClass = $subFormClass ?: $this->defaultSubFormClass;
         $formBuilder  = new FormBuilder($object, $this->entityManager, $factory);
-        $formBuilder
-            ->setSubFormClass($subFormClass)
-            ->setFormClass($formClass);
         $mappedType->buildForm($formBuilder);
         return $formBuilder;
     }

@@ -1,6 +1,8 @@
 <?php
 namespace Equ\Form\ElementCreator;
 
+use Equ\Form\OptionFlags;
+
 /**
   * FormBuilder objects use an implementation
   * of this interface to create form elements.
@@ -36,88 +38,92 @@ interface IFactory
       * @return boolean
       */
     public function isUsedPlaceHolders();
+    
+    public function createForm(OptionFlags $optionFlags = null);
+    
+    public function createSubForm(OptionFlags $optionFlags = null);
 
     /**
       * Retrieves a creator by $type
       *
       * @param  string $type
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createCreator($type);
+    public function createElement($type, $fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createStringCreator();
+    public function createStringElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createIntegerCreator();
+    public function createIntegerElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createSmallintCreator();
+    public function createSmallintElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createBigintCreator();
+    public function createBigintElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createDecimalCreator();
+    public function createDecimalElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createFloatCreator();
+    public function createFloatElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createBooleanCreator();
+    public function createBooleanElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createDateCreator();
+    public function createDateElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createTimeCreator();
+    public function createTimeElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createDateTimeCreator();
+    public function createDateTimeElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createTextCreator();
+    public function createTextElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createObjectCreator();
+    public function createObjectElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createArrayCreator();
+    public function createArrayElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createSubmitCreator();
+    public function createSubmitElement($fieldName, OptionFlags $optionFlags = null);
 
     /**
-      * @return AbstractCreator
+      * @return Zend_Form_Element
       */
-    public function createPasswordCreator();
+    public function createPasswordElement($fieldName, OptionFlags $optionFlags = null);
 
 }

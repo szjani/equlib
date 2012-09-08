@@ -41,20 +41,12 @@ interface IBuilder extends IOptionFlaggable
     /**
       * @return ElementCreator\IFactory
       */
-    public function getElementCreatorFactory();
+    public function getElementFactory();
 
     /**
       * @param  ElementCreator\IFactory $factory
       * @return Builder
       */
-    public function setElementCreatorFactory(ElementCreator\IFactory $factory);
-
-    public function getFormClass();
-
-    public function setFormClass($class);
-
-    public function getSubFormClass();
-
-    public function setSubFormClass($class);
+    public function setElementFactory(ElementCreator\IFactory $factory);
 
 }

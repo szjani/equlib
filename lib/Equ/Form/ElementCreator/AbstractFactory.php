@@ -1,6 +1,8 @@
 <?php
 namespace Equ\Form\ElementCreator;
 
+use Equ\Form\OptionFlags;
+
 /**
   * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
   * @link        $Link$
@@ -75,13 +77,22 @@ abstract class AbstractFactory implements IFactory
       * @param  string $type
       * @return AbstractCreator
       */
-    public function createCreator($type)
+    public function createElement($type, $fieldName, OptionFlags $optionFlags = null)
     {
-        $method = 'create' . ucfirst(strtolower($type)) . 'Creator';
+        $method = 'create' . ucfirst(strtolower($type)) . 'Element';
         if (!method_exists($this, $method)) {
             throw new Exception\InvalidArgumentException("$type is not a valid type");
         }
-        return $this->$method();
+        return $this->$method($fieldName, $optionFlags);
     }
 
+    public function createForm(OptionFlags $optionFlags = null)
+    {
+        return new \Zend_Form();
+    }
+    
+    public function createSubForm(OptionFlags $optionFlags = null)
+    {
+        return new \Zend_Form_SubForm();
+    }
 }

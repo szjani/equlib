@@ -1,6 +1,10 @@
 <?php
 namespace Equ\Object;
+
 use Doctrine\ORM\EntityManager;
+use Zend_Validate_Interface;
+use IteratorAggregate;
+use Exception\InvalidArgumentException;
 
 /**
   * Validate objects
@@ -10,7 +14,7 @@ use Doctrine\ORM\EntityManager;
   * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
   * @author      Szurovecz János <szjani@szjani.hu>
   */
-class Validator implements \IteratorAggregate
+class Validator implements IteratorAggregate, Zend_Validate_Interface
 {
 
     /**
@@ -77,11 +81,14 @@ class Validator implements \IteratorAggregate
       * @param  Validatable $object
       * @return boolean
       */
-    public function isValid(Validatable $object)
+    public function isValid($object)
     {
+        if (!($object instanceof Validatable)) {
+            throw new InvalidArgumentException('Parameter has to be an Equ\Object\Validatable instance!');
+        }
         $valid = true;
         try {
-            $metadata = $this->em->getClassMetadata($class);
+            $metadata = $this->em->getClassMetadata($this->class);
             foreach ($metadata->fieldMappings as $field => $map) {
                 if (array_key_exists($field, $this->fieldValidators)) {
                     $value = $metadata->getFieldValue($object, $field);
