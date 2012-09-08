@@ -457,6 +457,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
             $jsonRequest
         );
         $this->view->paginatorParameters = $this->view->paginator->getPages();
+        $this->view->headerKeyPrefix = $this->getEntityClass() . '.';
         if ($jsonRequest) {
             $this->view->paginator = $this->view->paginator->getCurrentItems()->getArrayCopy();
         }
