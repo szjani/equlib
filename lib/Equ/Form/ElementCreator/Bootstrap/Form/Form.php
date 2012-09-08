@@ -18,6 +18,7 @@ class Form extends \Zend_Form
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('FormElements')
+                ->addDecorator('Fieldset')
                 ->addDecorator('Form');
         }
         return $this;

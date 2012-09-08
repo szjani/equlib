@@ -421,6 +421,7 @@ abstract class AbstractController extends \Zend_Controller_Action implements Eve
                 $filterForm = $builder->getForm();
                 $this->view->filterForm = $filterForm;
                 $filterForm->setMethod(\Zend_Form::METHOD_GET);
+                $filterForm->setLegend('Crud/Filter');
                 $this->formBuilderCreated($builder);
                 $namespace = $filterForm->getElementsBelongTo();
                 if (is_array($this->_request->getParam($namespace))) {

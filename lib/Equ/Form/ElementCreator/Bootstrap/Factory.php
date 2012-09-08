@@ -41,7 +41,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
         if (null !== $optionFlags && $optionFlags->hasFlag(OptionFlags::HORIZONTAL)) {
             $element
                 ->addDecorator(array('controls' => 'HtmlTag'), array('tag' => 'div', 'class' => 'controls'))
-                ->addDecorator('Label')
+                ->addDecorator('Label', array('class' => 'control-label'))
                 ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => array('callback' => function($decorator)
                 {
                     $id = $decorator->getElement()->getId();
