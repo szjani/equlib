@@ -15,7 +15,7 @@ use Zend_Log_Formatter_Simple;
 class Extended extends Zend_Log_Formatter_Simple
 {
     protected $_format = "%timestamp% %priorityName% (%priority%): %message%\nUname:\t\t%uname%\nHost:\t\t%host%
-Client IP:\t%clientIP%\nURI:\t\t%requestURI%\nModule:\t\t%module%\nController:\t%controller%\nAction:\t\t%action%\nUser: \t\t%user%";
+Client IP:\t%clientIP%\nURI:\t\t%requestURI%\nModule:\t\t%module%\nController:\t%controller%\nAction:\t\t%action%\nUser: \t\t%user%\n";
     
     public function __construct($format = null)
     {
