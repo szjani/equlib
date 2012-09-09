@@ -86,7 +86,8 @@ class Navigation extends Zend_Controller_Plugin_Abstract
                 if (false !== strpos((string)$item->getNavigationPage()->getResource(), 'update')) {
                     $item->getNavigationPage()->setVisible(false);
                 }
-                $parentNav = $item->getParent() ? $item->getParent()->getNavigationPage() : $navigation;
+                $parent = $item->getParent();
+                $parentNav = ($parent instanceof NavigationItem) ? $parent->getNavigationPage() : $navigation;
                 $parentNav->addPage($item->getNavigationPage());
             }
             $this->cache->save($navigation->getPages(), self::KEY);
