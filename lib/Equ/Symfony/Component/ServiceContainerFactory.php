@@ -10,13 +10,12 @@ class ServiceContainerFactory
 
     protected static $_container;
 
-    public static function getContainer(array $options)
+    public static function getContainer(array $files)
     {
         self::$_container = new DependencyInjection\ContainerBuilder();
-        foreach ($options['configFiles'] as $file) {
+        foreach ($files as $file) {
             self::_loadConfigFile($file);
         }
-
         return self::$_container;
     }
 
