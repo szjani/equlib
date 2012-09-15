@@ -47,6 +47,11 @@ class Application extends \Zend_Application
         }
         parent::__construct($environment, $options);
     }
+    
+    protected function getCacheKey()
+    {
+        return 'Zend_Application_Config_' . ucfirst($this->getEnvironment());
+    }
 
     /**
       * Load configuration file of options.
@@ -81,10 +86,10 @@ class Application extends \Zend_Application
             )
         );
 
-        $config = $cache->load('Zend_Application_Config');
+        $config = $cache->load($this->getCacheKey());
         if (!$config) {
             $config = parent::_loadConfig($file);
-            $cache->save($config, 'Zend_Application_Config');
+            $cache->save($config, $this->getCacheKey());
         }
 
         return $config;
