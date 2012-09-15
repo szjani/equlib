@@ -65,6 +65,7 @@ abstract class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 $container = new $name();
             } else {
                 $container = ServiceContainerFactory::getContainer($this->getLeafConfigFiles());
+                $container->compile();
                 $dumper = new DependencyInjection\Dumper\PhpDumper($container);
                 file_put_contents($file, $dumper->dump(array('class' => $name)));
             }
