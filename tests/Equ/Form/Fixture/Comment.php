@@ -1,7 +1,7 @@
 <?php
 namespace Form\Fixture;
 
-class Comment {
+class Comment implements \Equ\Object\Validatable {
   
   private $author = null;
   
@@ -29,5 +29,10 @@ class Comment {
   public function setAuthor($author) {
     $this->author = $author;
   }
+
+    public static function loadValidators(\Equ\Object\Validator $validator)
+    {
+        
+    }
   
 }

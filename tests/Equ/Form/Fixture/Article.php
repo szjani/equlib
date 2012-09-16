@@ -4,7 +4,7 @@ use
   Equ\Object\Validator,
   Equ\Object\Validatable;
 
-class Article {
+class Article implements Validatable {
   
   private $text;
   
@@ -43,5 +43,10 @@ class Article {
   public function setComments(\ArrayObject $comments) {
     $this->comments = $comments;
   }
+
+    public static function loadValidators(Validator $validator)
+    {
+        
+    }
   
 }

@@ -23,7 +23,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
     private function initDecorators(\Zend_Form_Element $element, OptionFlags $optionFlags = null)
     {
         $translateKey = ltrim($this->getNamespace() . '.' . $element->getName(), '.');
-        if (\Zend_Form::getDefaultTranslator()->isTranslated($translateKey)) {
+        if (\Zend_Form::hasDefaultTranslator() && \Zend_Form::getDefaultTranslator()->isTranslated($translateKey)) {
             if ($element->getLabel() === null && $optionFlags->hasFlag(OptionFlags::LABEL)) {
                 $element->setLabel($translateKey);
             }
@@ -158,7 +158,7 @@ class Factory extends \Equ\Form\ElementCreator\AbstractFactory
             $element->addDecorator(array('form-actions' => 'HtmlTag'), array('tag' => 'div', 'class' => 'form-actions'));
         }
         $translateKey = ltrim($this->getNamespace() . '.' . $element->getName(), '.');
-        if (\Zend_Form::getDefaultTranslator()->isTranslated($translateKey)) {
+        if (\Zend_Form::hasDefaultTranslator() && \Zend_Form::getDefaultTranslator()->isTranslated($translateKey)) {
             $element->setLabel($translateKey);
         }
         return $element;
