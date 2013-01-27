@@ -6,3 +6,5 @@ nbproject/
 /build/pdepend
 /build/phpdox
 cache.properties
+/vendor/
+composer.lock
