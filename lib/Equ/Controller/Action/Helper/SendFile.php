@@ -87,6 +87,7 @@ class SendFile extends SendContent
             }
         }
         fclose($fp);
+        $this->getResponse()->clearAllHeaders();
         $this->getResponse()->sendResponse();
     }
 
